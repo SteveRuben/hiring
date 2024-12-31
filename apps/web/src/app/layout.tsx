@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import "../styles/globals.css";
 
+/* 
+import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
+className={`${inter.className}`} */
 
 export const metadata: Metadata = {
   title: "Basic assistant",
@@ -17,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
       <html suppressHydrationWarning lang="en">
-        <body className={`${inter.className}`}>
+        <body>
           {children}
         </body>
       </html>
