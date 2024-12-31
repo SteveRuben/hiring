@@ -1,0 +1,191 @@
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: prepai_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          yarn global add turbo
+          yarn global add nps
+          yarn install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: npx nps prisma.generate
+
+      - name: Setup Database
+        run: npx nps prisma.migrate.dev
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/prepai_test
+
+      - name: Build
+        run: |
+          cd out
+          yarn install --frozen-lockfile
+          npx nps build.ci.api build.ci.web
+
+      - name: Test
+        run: npx nps test.ci.api test.ci.web
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/prepai_test
+
+---
+# .github/workflows/deploy-staging.yml
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          yarn global add turbo
+          yarn global add nps
+          yarn install --frozen-lockfile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-3
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push Docker images
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          # Build and push API image
+          npx nps docker.build.api
+          docker tag api:latest $ECR_REGISTRY/prepai-api:staging
+          docker push $ECR_REGISTRY/prepai-api:staging
+          
+          # Build and push Web image
+          npx nps docker.build.web
+          docker tag web:latest $ECR_REGISTRY/prepai-web:staging
+          docker push $ECR_REGISTRY/prepai-web:staging
+
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service --cluster prepai-staging --service prepai-api-staging --force-new-deployment
+          aws ecs update-service --cluster prepai-staging --service prepai-web-staging --force-new-deployment
+
+---
+# .github/workflows/deploy-production.yml
+name: Deploy to Production
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          yarn global add turbo
+          yarn global add nps
+          yarn install --frozen-lockfile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-3
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push Docker images
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          VERSION: ${{ github.ref_name }}
+        run: |
+          # Build and push API image
+          npx nps docker.build.api
+          docker tag api:latest $ECR_REGISTRY/prepai-api:$VERSION
+          docker tag api:latest $ECR_REGISTRY/prepai-api:latest
+          docker push $ECR_REGISTRY/prepai-api:$VERSION
+          docker push $ECR_REGISTRY/prepai-api:latest
+          
+          # Build and push Web image
+          npx nps docker.build.web
+          docker tag web:latest $ECR_REGISTRY/prepai-web:$VERSION
+          docker tag web:latest $ECR_REGISTRY/prepai-web:latest
+          docker push $ECR_REGISTRY/prepai-web:$VERSION
+          docker push $ECR_REGISTRY/prepai-web:latest
+
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service --cluster prepai-prod --service prepai-api --force-new-deployment
+          aws ecs update-service --cluster prepai-prod --service prepai-web --force-new-deployment
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ github.ref_name }}
+          generate_release_notes: true

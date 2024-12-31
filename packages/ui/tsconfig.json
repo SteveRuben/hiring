@@ -1,5 +1,11 @@
 {
-  "extends": "tsconfig/react-library.json",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"]
+  "extends": "@prep-ai/tsconfig/react-library.json",
+  "include": ["src"],
+  "exclude": ["dist", "build", "node_modules"],
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+    }
 }

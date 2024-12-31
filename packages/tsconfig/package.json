@@ -1,11 +1,16 @@
 {
-  "name": "tsconfig",
-  "version": "0.0.0",
+  "name": "@prep-ai/tsconfig",
+  "version": "0.1.0",
   "private": true,
-  "main": "index.js",
   "files": [
     "base.json",
     "nextjs.json",
+    "nestjs.json",
     "react-library.json"
-  ]
+  ],
+  "dependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
+  }
 }
