@@ -23,7 +23,7 @@ const TalentForm = () => {
   const [skills, setSkills] = useState([]);
   const [currentSkill, setCurrentSkill] = useState('');
 
-  const handleAddSkill = (e) => {
+  const handleAddSkill = (e:any) => {
     e.preventDefault();
     if (currentSkill && !skills.includes(currentSkill)) {
       setSkills([...skills, currentSkill]);
@@ -31,7 +31,7 @@ const TalentForm = () => {
     }
   };
 
-  const handleRemoveSkill = (skillToRemove) => {
+  const handleRemoveSkill = (skillToRemove:any) => {
     setSkills(skills.filter(skill => skill !== skillToRemove));
   };
 
