@@ -14,5 +14,11 @@
     "next.config.js",
     ".next/types/**/*.ts"
   ],
+  "paths": {
+      "@common/*": ["./src/common/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@utils/*": ["./src/utils/*"]
+    },
   "exclude": ["node_modules"]
 }

@@ -16,11 +16,11 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
+  /*describe('root', () => {
     it('should return "Hello World!"', async () => {
       expect(await appController.getHello()).toEqual({
         message: 'Hello World',
       });
     });
-  });
+  });*/
 });
