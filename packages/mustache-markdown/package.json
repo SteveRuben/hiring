@@ -1,0 +1,26 @@
+{
+    "name": "@prep-ai/mustache-markdown",
+    "version": "0.1.0",
+    "main": "dist/index.js",
+    "license": "MIT",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "@types/node": "^13.7.6",
+        "dotenv": "^8.2.0",
+        "typescript": "^3.8.2"
+    },
+    "dependencies": {
+        "@types/marked": "^0.7.2",
+        "@types/mustache": "^4.0.1",
+        "marked": "^15.0.4",
+        "mustache": "^4.0.0"
+    },
+    "peerDependencies": {
+        "dotenv": "^8.2.0"
+    }
+}
