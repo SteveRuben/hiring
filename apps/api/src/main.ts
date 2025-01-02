@@ -1,30 +1,41 @@
-import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-
-declare const module: any;
+import { promises } from 'fs';
+import helmet from 'helmet';
+import { AppModule } from './app.module';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { join } from 'path';
+import responseTime from 'response-time';
+import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 async function bootstrap() {
   const logger = new Logger('EntryPoint');
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{
+    logger: ['error', 'warn', 'debug', 'log', 'verbose'], 
+  });
+  app.useGlobalPipes(new ValidationPipe());
+  app.use(helmet());
+  app.enableCors();
+  app.setGlobalPrefix('v1');
+  const pkg = JSON.parse(
+    await promises.readFile(join('.', 'package.json'), 'utf8'),
+  );
+
+  //app.useGlobalFilters(new AllExceptionsFilter());
 
   const config = new DocumentBuilder()
-    .setTitle('Leaves Tracker')
-    .setDescription('Api Docs for leaves tracker')
-    .setVersion('1.0')
+    .setTitle('API')
+    .setDescription('Api Description')
+    .setVersion(pkg.version)
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
-
-  const PORT = 5002;
+  
+  /* app.use(responseTime()); */
+  
+  const PORT = process.env.PORT ?? 5002;
 
   await app.listen(PORT);
-
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
-  }
   logger.log(`Server running on http://localhost:${PORT}`);
 }
 bootstrap();
