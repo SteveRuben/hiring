@@ -24,6 +24,7 @@ import { ApprovedSubnetsModule } from '@/modules/approved-subnets/approved-subne
 import { MembershipsModule } from '@/modules/memberships/memberships.module';
 import { MailModule } from '@/providers/mail/mail.module';
 import { S3Module } from '@/providers/s3/s3.module';
+import { TalentModule } from '@modules/talents/talent.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { S3Module } from '@/providers/s3/s3.module';
     /* SlackModule,
     AirtableModule, */
     S3Module,
+    TalentModule
   /*   CloudinaryModule,
     FirebaseModule,
     GitHubModule,

@@ -17,25 +17,17 @@ import {
 import { Badge } from "@prep-ai/ui/components/ui/badge";
 import { X } from "lucide-react";
 import { useTranslation } from '../i18n';
+import { useReferenceData } from '../../hooks/seReferenceData';
 
 
 const TalentForm = () => {
-  const [skills, setSkills] = useState([]);
-  const [currentSkill, setCurrentSkill] = useState('');
+  
+  const { data, loading, error } = useReferenceData();
+  const { t } = useTranslation();
 
-  const handleAddSkill = (e:any) => {
-    e.preventDefault();
-    if (currentSkill && !skills.includes(currentSkill)) {
-      setSkills([...skills, currentSkill]);
-      setCurrentSkill('');
-    }
-  };
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading reference data</div>;
 
-  const handleRemoveSkill = (skillToRemove:any) => {
-    setSkills(skills.filter(skill => skill !== skillToRemove));
-  };
-
-   const { t } = useTranslation();
    
   return (
     <div className="container mx-auto px-4 py-12">
@@ -75,65 +67,46 @@ const TalentForm = () => {
                   <Label htmlFor="experience">{t('talent.formExperienceYear')}</Label>
                   <Select>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select years of experience" />
+                      <SelectValue placeholder={t('talent.selectExperience')} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1-3">1-3 years</SelectItem>
-                      <SelectItem value="4-6">4-6 years</SelectItem>
-                      <SelectItem value="7-10">7-10 years</SelectItem>
-                      <SelectItem value="10+">10+ years</SelectItem>
+                      {data?.experienceLevels.map(level => (
+                        <SelectItem key={level.id} value={level.id}>
+                          {t(level.label)} ({level.range.min}-{level.range.max ?? '∞'} {t('years')})
+                        </SelectItem>
+                      ))}
                     </SelectContent>
-                  </Select>
+                </Select>
                 </div>
 
                 <div className="space-y-2">
                   <Label>{t('talent.formPrimaryExpertise')}</Label>
                   <Select>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select your primary expertise" />
+                      <SelectValue placeholder={t('talent.selectExpertise')} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="frontend">Frontend Development</SelectItem>
-                      <SelectItem value="backend">Backend Development</SelectItem>
-                      <SelectItem value="fullstack">Full Stack Development</SelectItem>
-                      <SelectItem value="mobile">Mobile Development</SelectItem>
-                      <SelectItem value="devops">DevOps</SelectItem>
+                      {data?.expertiseAreas.map(area => (
+                        <SelectItem key={area.id} value={area.id}>
+                          {t(area.label)}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
-                  </Select>
+                </Select>
                 </div>
 
                 <div className="space-y-2">
                   <Label>{t('talent.formSkills')}</Label>
-                  <div className="flex gap-2">
-                    <Input 
-                      value={currentSkill}
-                      onChange={(e) => setCurrentSkill(e.target.value)}
-                      placeholder="Add a skill (e.g., React, Node.js)"
-                    />
-                    <Button 
-                      type="button" 
-                      onClick={handleAddSkill}
-                    >
-                      {t('talent.formAddSkill')}
-                    </Button>
-                  </div>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {skills.map((skill) => (
-                      <Badge 
-                        key={skill}
-                        variant="secondary"
-                        className="flex items-center gap-1"
-                      >
-                        {skill}
-                        <button
-                          onClick={() => handleRemoveSkill(skill)}
-                          className="hover:text-red-500"
-                        >
-                          <X className="h-3 w-3" />
-                        </button>
-                      </Badge>
+                  <Input
+                    type="text"
+                    list="skills"
+                    placeholder={t('talent.enterSkill')}
+                  />
+                  <datalist id="skills">
+                    {data?.skills.map(skill => (
+                      <option key={skill.id} value={skill.name} />
                     ))}
-                  </div>
+                  </datalist>
                 </div>
 
                 <div className="space-y-2">

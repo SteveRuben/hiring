@@ -244,6 +244,65 @@ model AuditLog {
   @@index([userId], name: "auditLog_userId_idx")
 }
 
+model TalentApplication {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Personal Information
+  firstName String
+  lastName  String
+  email     String
+
+  // Professional Information
+  experience ExperienceLevel
+  expertise  ExpertiseArea
+  skills     Skill[] // Relation avec les skills
+  bio        String          @db.Text
+
+  // CV Document
+  resumeUrl  String // URL du fichier stocké
+  resumeSize Int // Taille en bytes
+  resumeType String // Type MIME du fichier
+
+  // Status tracking
+  status ApplicationStatus @default(PENDING)
+
+  // Metadata
+  active Boolean @default(true)
+}
+
+model Skill {
+  id           Int                 @id @default(autoincrement())
+  name         String              @unique
+  applications TalentApplication[] // Relation many-to-many
+
+  @@index([name])
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWING
+  INTERVIEWED
+  ACCEPTED
+  REJECTED
+}
+
+enum ExperienceLevel {
+  JUNIOR // 1-3 years
+  INTERMEDIATE // 4-6 years
+  SENIOR // 7-10 years
+  EXPERT // 10+ years
+}
+
+enum ExpertiseArea {
+  FRONTEND
+  BACKEND
+  FULLSTACK
+  MOBILE
+  DEVOPS
+}
+
 enum Gender {
   MALE
   FEMALE
