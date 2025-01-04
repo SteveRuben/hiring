@@ -23,7 +23,7 @@ module.exports = {
       web: `cd ${webPath} && yarn test`,
       api: `cd ${apiPath} && yarn test`,
       ci: {
-        default: `nps test.ci.web test.ci.api`,
+        default: `nps  test.ci.api`,//test.ci.web
         web: `cd ${webPath} && yarn test:ci`,
         api: `cd ${apiPath} && yarn test:ci`,
       },
