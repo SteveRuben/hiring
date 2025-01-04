@@ -1,4 +1,4 @@
-import { Client } from '@elastic/elasticsearch';
+//import { Client } from '@elastic/elasticsearch';
 /* import { Index, Search } from '@elastic/elasticsearch/lib/api/';
 import { TransportRequestOptions } from '@elastic/elasticsearch/lib/Transport'; */
 import { Injectable, Logger } from '@nestjs/common';
@@ -13,7 +13,7 @@ import { Configuration } from '@/config/configuration.interface'; */
 export class ElasticSearchService {
 /*   private logger = new Logger(ElasticSearchService.name);
   private queue = new PQueue({ concurrency: 1 }); */
-  client?: Client;
+  //client?: Client;
 
   constructor(private configService: ConfigService) {
     /* const config = this.configService.get<Configuration['elasticSearch']>(
@@ -69,27 +69,7 @@ export class ElasticSearchService {
    * @param days - Number of days ago (e.g., 30 will delete month-old data)
    */
   deleteOldRecords = async (index: string, days: number) => {
-    const now = new Date();
-    now.setDate(now.getDate() - days);
-    if (this.client)
-      return this.client.deleteByQuery({
-        index,
-        body: {
-          query: {
-            bool: {
-              must: [
-                {
-                  range: {
-                    date: {
-                      lte: now,
-                    },
-                  },
-                },
-              ],
-            },
-          },
-        },
-      });
+    
   };
 
 /*   private async indexRecord(

@@ -5,7 +5,7 @@ import { API_KEY_NOT_FOUND,
 import { groupOwnerScopes, userScopes } from '@/helpers/scopes';
 import { Expose } from '@/prisma/prisma.interface';
 import { PrismaService } from '@/prisma/prisma.service';
-import { ElasticSearchService } from '@/providers/elasticsearch/elasticsearch.service';
+//import { ElasticSearchService } from '@/providers/elasticsearch/elasticsearch.service';
 import { TokensService } from '@/providers/tokens/tokens.service';
 import {
   Injectable,
@@ -16,7 +16,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import type {Prisma } from '@prisma/client';
 import { ApiKey } from '@prisma/client';
-import QuickLRU from 'quick-lru';
+
 
 
 
@@ -31,7 +31,7 @@ export class ApiKeysService {
     private prisma: PrismaService,
     private tokensService: TokensService,
     private configService: ConfigService,
-    private elasticSearchService: ElasticSearchService,
+    //private elasticSearchService: ElasticSearchService,
   ) {}
 
   async createApiKeyForGroup(
