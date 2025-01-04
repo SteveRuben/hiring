@@ -1,1 +1,0 @@
-module.exports = require('@prep-ai/ui/postcss.config');

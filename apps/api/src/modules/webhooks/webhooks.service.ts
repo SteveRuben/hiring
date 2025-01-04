@@ -7,7 +7,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import type { Prisma } from '@prisma/client';
 import { Webhook } from '@prisma/client';
-import got from 'got';
+
 import PQueue from 'p-queue';
 import pRetry from 'p-retry';
 import {
@@ -184,9 +184,9 @@ export class WebhooksService {
   }
 
   private async callWebhook(webhook: Webhook, event: string) {
-    if (webhook.contentType === 'application/json')
+    /* if (webhook.contentType === 'application/json')
       await got(webhook.url, { method: 'POST', body: event });
-    else await got(webhook.url, { method: 'POST', body: event });
+    else await got(webhook.url, { method: 'POST', body: event }); */
     await this.prisma.webhook.update({
       where: { id: webhook.id },
       data: { lastFiredAt: new Date() },
