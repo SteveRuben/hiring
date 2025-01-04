@@ -1,6 +1,22 @@
-
-import { BearerAuth, ApiKeyAuth } from '@elastic/elasticsearch';
 import Stripe from 'stripe';
+
+export interface ApiKeyAuth {
+  apiKey:
+  | string
+  | {
+    id: string
+    api_key: string
+  }
+}
+
+export interface BasicAuth {
+  username: string
+  password: string
+}
+
+export interface BearerAuth {
+  bearer: string
+}
 
 export interface BasicAuth {
   username: string;
