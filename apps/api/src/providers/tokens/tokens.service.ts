@@ -9,7 +9,7 @@ import {
   VerifyOptions,
 } from 'jsonwebtoken';
 import { v4 } from 'uuid';
-import { INVALID_TOKEN } from '@/errors/errors.constants';
+import { INVALID_TOKEN } from '../../errors/errors.constants';
 import cryptoRandomString from 'crypto-random-string';
 
 @Injectable()
