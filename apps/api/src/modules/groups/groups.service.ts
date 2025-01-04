@@ -6,7 +6,6 @@ import type { Prisma } from '@prisma/client';
 import { Group } from '@prisma/client';
 import randomColor from 'randomcolor';
 
-
 @Injectable()
 export class GroupsService {
   constructor(private prisma: PrismaService) {}

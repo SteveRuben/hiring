@@ -11,7 +11,7 @@ import { Configuration } from '@/config/configuration.interface'; */
 /* import createAwsElasticsearchConnector from 'aws-elasticsearch-connector'; */
 @Injectable()
 export class ElasticSearchService {
-/*   private logger = new Logger(ElasticSearchService.name);
+  /*   private logger = new Logger(ElasticSearchService.name);
   private queue = new PQueue({ concurrency: 1 }); */
   //client?: Client;
 
@@ -68,11 +68,9 @@ export class ElasticSearchService {
    * @param index - Index
    * @param days - Number of days ago (e.g., 30 will delete month-old data)
    */
-  deleteOldRecords = async (index: string, days: number) => {
-    
-  };
+  deleteOldRecords = async (index: string, days: number) => {};
 
-/*   private async indexRecord(
+  /*   private async indexRecord(
     index: string,
     record: Record<string, any>,
     params?: Index,

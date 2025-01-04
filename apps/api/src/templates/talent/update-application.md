@@ -2,7 +2,7 @@
 
 Hello {{name}},
 
-Your application has been updated. 
+Your application has been updated.
 
 Here is a summary of your skills: {{skills}}
 

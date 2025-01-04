@@ -1,6 +1,6 @@
 // hooks/useReferenceData.ts
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/v1';
-import { useState, useEffect } from 'react';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/v1";
+import { useState, useEffect } from "react";
 
 interface ReferenceData {
   expertiseAreas: Array<{
@@ -32,19 +32,19 @@ export function useReferenceData() {
         const [expertiseRes, experienceRes, skillsRes] = await Promise.all([
           fetch(`${API_URL}/reference-data/expertise-areas`),
           fetch(`${API_URL}/reference-data/experience-levels`),
-          fetch(`${API_URL}/reference-data/skills`)
+          fetch(`${API_URL}/reference-data/skills`),
         ]);
 
         const [expertise, experience, skills] = await Promise.all([
           expertiseRes.json(),
           experienceRes.json(),
-          skillsRes.json()
+          skillsRes.json(),
         ]);
 
         setData({
           expertiseAreas: expertise.expertiseAreas,
           experienceLevels: experience.experienceLevels,
-          skills: skills.skills
+          skills: skills.skills,
         });
       } catch (err) {
         setError(err as Error);

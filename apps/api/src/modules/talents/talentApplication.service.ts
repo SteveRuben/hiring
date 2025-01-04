@@ -22,7 +22,15 @@ export class TalentApplicationService {
     resumeSize: number;
     resumeType: string;
   }) {
-    const { firstName, lastName, skills, email, experience, expertise, ...applicationData } = data;
+    const {
+      firstName,
+      lastName,
+      skills,
+      email,
+      experience,
+      expertise,
+      ...applicationData
+    } = data;
     if (!Object.values(ExperienceLevel).includes(experience)) {
       throw new Error('Invalid experience level');
     }
@@ -32,7 +40,7 @@ export class TalentApplicationService {
 
     const existingApplication = await this.prisma.talentApplication.findFirst({
       where: { email },
-      include: { skills: true }
+      include: { skills: true },
     });
 
     if (existingApplication) {
@@ -41,22 +49,24 @@ export class TalentApplicationService {
         data: {
           ...applicationData,
           email,
-          firstName, 
+          firstName,
           lastName,
           experience,
           expertise,
           updatedAt: new Date(),
           skills: {
             // Déconnecter tous les skills existants
-            disconnect: existingApplication.skills.map(skill => ({ id: skill.id })),
+            disconnect: existingApplication.skills.map((skill) => ({
+              id: skill.id,
+            })),
             // Connecter ou créer les nouveaux skills
-            connectOrCreate: skills.map(skillName => ({
+            connectOrCreate: skills.map((skillName) => ({
               where: { name: skillName },
-              create: { name: skillName }
-            }))
-          }
+              create: { name: skillName },
+            })),
+          },
         },
-        include: { skills: true }
+        include: { skills: true },
       });
       await this.sendUpdateEmail(updated);
       return updated;
@@ -65,22 +75,22 @@ export class TalentApplicationService {
         data: {
           ...applicationData,
           email,
-          firstName, 
+          firstName,
           lastName,
           experience,
           expertise,
           skills: {
-            connectOrCreate: skills.map(skillName => ({
+            connectOrCreate: skills.map((skillName) => ({
               where: { name: skillName },
-              create: { name: skillName }
-            }))
-          }
+              create: { name: skillName },
+            })),
+          },
         },
-        include: { skills: true }
+        include: { skills: true },
       });
       await this.sendNewApplicationEmail(created);
       return created;
-    } 
+    }
   }
 
   async findAll(params: {
@@ -92,8 +102,8 @@ export class TalentApplicationService {
     return this.prisma.talentApplication.findMany({
       ...params,
       include: {
-        skills: true
-      }
+        skills: true,
+      },
     });
   }
 
@@ -101,8 +111,8 @@ export class TalentApplicationService {
     return this.prisma.talentApplication.findUnique({
       where: { id },
       include: {
-        skills: true
-      }
+        skills: true,
+      },
     });
   }
 
@@ -111,14 +121,14 @@ export class TalentApplicationService {
       where: { id },
       data,
       include: {
-        skills: true
-      }
+        skills: true,
+      },
     });
   }
 
   async remove(id: number) {
     return this.prisma.talentApplication.delete({
-      where: { id }
+      where: { id },
     });
   }
 
@@ -148,13 +158,12 @@ export class TalentApplicationService {
     });
   }
 
-
   private getExperienceLabel(level: ExperienceLevel): string {
     const labels = {
       [ExperienceLevel.JUNIOR]: '1-3 years',
       [ExperienceLevel.INTERMEDIATE]: '4-6 years',
       [ExperienceLevel.SENIOR]: '7-10 years',
-      [ExperienceLevel.EXPERT]: '10+ years'
+      [ExperienceLevel.EXPERT]: '10+ years',
     };
     return labels[level];
   }
@@ -165,7 +174,7 @@ export class TalentApplicationService {
       [ExpertiseArea.BACKEND]: 'Backend Development',
       [ExpertiseArea.FULLSTACK]: 'Full Stack Development',
       [ExpertiseArea.MOBILE]: 'Mobile Development',
-      [ExpertiseArea.DEVOPS]: 'DevOps'
+      [ExpertiseArea.DEVOPS]: 'DevOps',
     };
     return labels[area];
   }

@@ -9,13 +9,12 @@ import { NextFunction, Response } from 'express';
 export class ApiLoggerMiddleware implements NestMiddleware {
   constructor(
     private configService: ConfigService,
-   // private elasticSearchService: ElasticSearchService,
+    // private elasticSearchService: ElasticSearchService,
   ) {}
 
   use(request: UserRequest, res: Response, next: NextFunction) {
-    const config = this.configService.get<Configuration['tracking']>(
-      'tracking',
-    );
+    const config =
+      this.configService.get<Configuration['tracking']>('tracking');
     let date = new Date();
     res.on('finish', () => {
       let authorizationKey = '';
@@ -40,7 +39,7 @@ export class ApiLoggerMiddleware implements NestMiddleware {
         (config.mode === 'api-key-or-user' &&
           (request.user?.type === 'api-key' || request.user?.type === 'user'))
       )
-        console.log("next");// this.elasticSearchService.index(config.index, obj); 
+        console.log('next'); // this.elasticSearchService.index(config.index, obj);
     });
     next();
   }

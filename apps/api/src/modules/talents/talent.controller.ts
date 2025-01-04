@@ -3,7 +3,15 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
 import { SkillsService } from './skills.service';
-import { BadRequestException, Body, Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { TalentApplicationService } from './talentApplication.service';
 import { ExperiencesService } from './experiences.service';
 import { ExpertiseAreasService } from './expertise-areas.service';
@@ -48,7 +56,11 @@ export class TalentController {
         },
       }),
       fileFilter: (_, file, callback) => {
-        const allowedMimes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        const allowedMimes = [
+          'application/pdf',
+          'application/msword',
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ];
         if (allowedMimes.includes(file.mimetype)) {
           callback(null, true);
         } else {
@@ -56,11 +68,14 @@ export class TalentController {
         }
       },
       limits: {
-        fileSize: 15 * 1024 * 1024 // 15MB max
-      }
-    })
-  )//@ts-ignore
-  async submit(@UploadedFile() file: Express.Multer.File, @Body() data: CreateTalentApplicationDto) {
+        fileSize: 15 * 1024 * 1024, // 15MB max
+      },
+    }),
+  ) //@ts-ignore
+  async submit(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() data: CreateTalentApplicationDto,
+  ) {
     return this.talentService.create({
       ...data,
       skills: JSON.parse(data.skills),

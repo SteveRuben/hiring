@@ -64,7 +64,12 @@ import {
   PASSWORD_RESET_TOKEN,
 } from '@/providers/tokens/tokens.constants';
 import { Expose } from '@/prisma/prisma.interface';
-import { groupAdminScopes, groupMemberScopes, groupOwnerScopes, userScopes } from '@/helpers/scopes';
+import {
+  groupAdminScopes,
+  groupMemberScopes,
+  groupOwnerScopes,
+  userScopes,
+} from '@/helpers/scopes';
 
 @Injectable()
 export class AuthService {
@@ -856,7 +861,7 @@ export class AuthService {
     for await (const dataType of [
       this.prisma.membership,
       this.prisma.email,
-      this.prisma.session, 
+      this.prisma.session,
       this.prisma.approvedSubnet,
       this.prisma.backupCode,
       this.prisma.identity,
@@ -866,12 +871,12 @@ export class AuthService {
       // @ts-ignore
       for await (const item of await dataType.findMany({
         where: { userId: mergeUserId },
-        select: { id: true }
+        select: { id: true },
       })) {
         // @ts-ignore
         await dataType.update({
           where: { id: item.id },
-          data: { userId: baseUserId }
+          data: { userId: baseUserId },
         });
       }
     }

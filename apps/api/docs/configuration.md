@@ -7,7 +7,7 @@ You can use environment variables to set configuration values.
 | Environment variable        | Description                     | Default value |
 | --------------------------- | ------------------------------- | ------------- |
 | `SALT_ROUNDS`               | Number of password salt rounds  | 10            |
-| `JWT_SECRET`                | Secret to sign JWTs             | Prep-AI        |
+| `JWT_SECRET`                | Secret to sign JWTs             | Prep-AI       |
 | `TOTP_WINDOW_PAST`          | Expired TOTP tokens to accept   | 1             |
 | `TOTP_WINDOW_FUTURE`        | Future TOTP tokens to accept    | 0             |
 | `MFA_TOKEN_EXPIRY`          | Expiry time for MFA tokens      | 10m           |

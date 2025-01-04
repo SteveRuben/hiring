@@ -35,9 +35,9 @@ export class RegisterDto {
   countryCode?: string;
 
   @IsString()
-  @IsIn(['MALE', 'FEMALE',  'UNKNOWN'])
+  @IsIn(['MALE', 'FEMALE', 'UNKNOWN'])
   @IsOptional()
-  gender?: 'MALE' | 'FEMALE' |  'UNKNOWN';
+  gender?: 'MALE' | 'FEMALE' | 'UNKNOWN';
 
   @IsIn(['ACCOUNT', 'UPDATES', 'PROMOTIONS'])
   @IsOptional()

@@ -12,7 +12,7 @@ import { TokensService } from '@/providers/tokens/tokens.service';
 import { LOGIN_ACCESS_TOKEN } from '@/providers/tokens/tokens.constants';
 
 class PrepaiStrategyName extends Strategy {
-  name='prepai';
+  name = 'prepai';
 }
 
 @Injectable()
@@ -22,7 +22,7 @@ export class PrepaiStrategy extends PassportStrategy(PrepaiStrategyName) {
     private tokensService: TokensService,
   ) {
     super();
-    this.name='prepai';
+    this.name = 'prepai';
   }
 
   private safeSuccess(result: AccessTokenParsed) {
@@ -49,13 +49,12 @@ export class PrepaiStrategy extends PassportStrategy(PrepaiStrategyName) {
         )
       )
         try {
-          const apiKeyDetails = await this.apiKeyService.getApiKeyFromKey(
-            authorizationKey,
-          );
+          const apiKeyDetails =
+            await this.apiKeyService.getApiKeyFromKey(authorizationKey);
           const referer = request.headers.referer;
           if (Array.isArray(apiKeyDetails.referrerRestrictions) && referer) {
-            let referrerRestrictionsMet = !apiKeyDetails.referrerRestrictions
-              .length;
+            let referrerRestrictionsMet =
+              !apiKeyDetails.referrerRestrictions.length;
             apiKeyDetails.referrerRestrictions.forEach((restriction) => {
               referrerRestrictionsMet =
                 referrerRestrictionsMet ||
@@ -73,7 +72,7 @@ export class PrepaiStrategy extends PassportStrategy(PrepaiStrategyName) {
             if (
               !ipRangeCheck(ipAddress, apiKeyDetails.ipRestrictions as string[])
             )
-            // @ts-ignore
+              // @ts-ignore
               return this.fail('IP address restrictions not met', 401);
           }
           return this.safeSuccess({

@@ -7,7 +7,6 @@ import {
   PipeTransform,
 } from '@nestjs/common';
 
-
 /** Convert a string like "name asc, address desc" to { name: "asc", address: "desc" } */
 @Injectable()
 export class OrderByPipe implements PipeTransform {

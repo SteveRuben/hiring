@@ -31,7 +31,7 @@ import { TalentModule } from '@modules/talents/talent.module';
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      load:[configuration]
+      load: [configuration],
     }),
     PrismaModule,
     /* TasksModule,
@@ -44,7 +44,7 @@ import { TalentModule } from '@modules/talents/talent.module';
     MultiFactorAuthenticationModule, */
     ApiKeysModule,
     ApprovedSubnetsModule,
-   /*  DomainsModule,
+    /*  DomainsModule,
     DnsModule, */
     GeolocationModule,
     MembershipsModule,
@@ -55,14 +55,15 @@ import { TalentModule } from '@modules/talents/talent.module';
     /* SlackModule,
     AirtableModule, */
     S3Module,
-    TalentModule
-  /*   CloudinaryModule,
+    TalentModule,
+    /*   CloudinaryModule,
     FirebaseModule,
     GitHubModule,
     GoogleMapsModule, */
-    ],
+  ],
   controllers: [AppController],
-  providers: [AppService,
+  providers: [
+    AppService,
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
@@ -82,7 +83,7 @@ import { TalentModule } from '@modules/talents/talent.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: AuditLogger,
-    }
+    },
   ],
 })
 export class AppModule {

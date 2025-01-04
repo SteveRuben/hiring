@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import dns from 'dns';
 import { RecordResult, RecordType } from './dns.interface';
 
-
 @Injectable()
 export class DnsService {
   async lookup(

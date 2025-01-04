@@ -49,11 +49,11 @@ export class TokensService {
    */
   verify<T>(subject: string, token: string, options?: VerifyOptions) {
     try {
-      return (verify(
+      return verify(
         token,
         this.configService.get<string>('security.jwtSecret') ?? '',
         { ...options, subject },
-      ) as any) as T;
+      ) as any as T;
     } catch (error) {
       throw new UnauthorizedException(INVALID_TOKEN);
     }

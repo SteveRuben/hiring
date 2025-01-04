@@ -8,7 +8,7 @@ import QuickLRU from 'quick-lru';
 export class GeolocationService implements OnModuleDestroy {
   constructor(private configService: ConfigService) {}
 
- /*  private lookup: Reader<CityResponse> | null = null;
+  /*  private lookup: Reader<CityResponse> | null = null;
   private lru = new QuickLRU<string, Partial<CityResponse>>({
     maxSize:
       this.configService.get<number>('caching.geolocationLruSize') ?? 100,
@@ -20,7 +20,7 @@ export class GeolocationService implements OnModuleDestroy {
 
   /** Get the geolocation from an IP address */
   async getLocation(ipAddress: string): Promise<Partial<CityResponse>> {
-   /*  if (this.lru.has(ipAddress)) return this.lru.get(ipAddress) ?? {};
+    /*  if (this.lru.has(ipAddress)) return this.lru.get(ipAddress) ?? {};
     const result = await this.getSafeLocation(ipAddress);
     this.lru.set(ipAddress, result);
     return result; */
@@ -35,7 +35,7 @@ export class GeolocationService implements OnModuleDestroy {
     } catch (error) {
       return {};
     } */
-   return null;
+    return null;
   }
 
   private async getUnsafeLocation(

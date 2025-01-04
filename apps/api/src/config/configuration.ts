@@ -12,11 +12,11 @@ const bool = (val: string | undefined, bool: boolean): boolean =>
   val == null ? bool : val == 'true';
 
 export default () => ({
-  DATABASE_URL:process.env.DATABASE_URL ,
+  DATABASE_URL: process.env.DATABASE_URL,
   port: parseInt(process.env.PORT, 10) || 3000,
   database: {
     host: process.env.DATABASE_HOST,
-    port: parseInt(process.env.DATABASE_PORT, 10) || 5432
+    port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
   },
   frontendUrl: process.env.FRONTEND_URL ?? 'http://localhost:3000',
   meta: {
@@ -63,15 +63,15 @@ export default () => ({
           password: process.env.ELASTICSEARCH_AUTH_PASSWORD,
         }
       : process.env.ELASTICSEARCH_AUTH_API_KEY
-      ? process.env.ELASTICSEARCH_AUTH_API_KEY_ID
-        ? {
-            apiKey: {
-              api_key: process.env.ELASTICSEARCH_AUTH_API_KEY,
-              id: process.env.ELASTICSEARCH_AUTH_API_KEY_ID,
-            },
-          }
-        : { apiKey: process.env.ELASTICSEARCH_AUTH_API_KEY }
-      : undefined,
+        ? process.env.ELASTICSEARCH_AUTH_API_KEY_ID
+          ? {
+              apiKey: {
+                api_key: process.env.ELASTICSEARCH_AUTH_API_KEY,
+                id: process.env.ELASTICSEARCH_AUTH_API_KEY_ID,
+              },
+            }
+          : { apiKey: process.env.ELASTICSEARCH_AUTH_API_KEY }
+        : undefined,
     aws: {
       accessKeyId: process.env.ELASTICSEARCH_AWS_ACCESS_KEY_ID ?? '',
       secretAccessKey: process.env.ELASTICSEARCH_AWS_SECRET_ACCESS_KEY ?? '',
@@ -150,7 +150,7 @@ export default () => ({
   },
   gravatar: {
     enabled: bool(process.env.PASSWORD_PWNED_CHECK, true),
-  }
+  },
 });
 
 /* const configuration: Configuration = {

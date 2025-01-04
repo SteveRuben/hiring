@@ -28,7 +28,7 @@ export class AuditLogUserController {
       skip,
       take,
       orderBy,
-     /*  cursor, */
+      /*  cursor, */
       where: { ...where, user: { id: userId } },
     });
   }

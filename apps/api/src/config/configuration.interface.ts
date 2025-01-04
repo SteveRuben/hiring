@@ -2,20 +2,20 @@ import Stripe from 'stripe';
 
 export interface ApiKeyAuth {
   apiKey:
-  | string
-  | {
-    id: string
-    api_key: string
-  }
+    | string
+    | {
+        id: string;
+        api_key: string;
+      };
 }
 
 export interface BasicAuth {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
 export interface BearerAuth {
-  bearer: string
+  bearer: string;
 }
 
 export interface BasicAuth {

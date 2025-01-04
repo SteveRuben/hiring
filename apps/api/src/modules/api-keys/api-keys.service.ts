@@ -1,7 +1,8 @@
-import { API_KEY_NOT_FOUND,
+import {
+  API_KEY_NOT_FOUND,
   UNAUTHORIZED_RESOURCE,
-  USER_NOT_FOUND
- } from '@/errors/errors.constants';
+  USER_NOT_FOUND,
+} from '@/errors/errors.constants';
 import { groupOwnerScopes, userScopes } from '@/helpers/scopes';
 import { Expose } from '@/prisma/prisma.interface';
 import { PrismaService } from '@/prisma/prisma.service';
@@ -14,15 +15,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type {Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { ApiKey } from '@prisma/client';
-
-
-
 
 @Injectable()
 export class ApiKeysService {
-   private readonly logger = new Logger(ApiKeysService.name);
+  private readonly logger = new Logger(ApiKeysService.name);
   /* private lru = new QuickLRU<string, ApiKey>({
     maxSize: this.configService.get<number>('caching.apiKeyLruSize') ?? 100,
   }); */
@@ -128,12 +126,12 @@ export class ApiKeysService {
 
   async getApiKeyFromKey(key: string): Promise<Expose<ApiKey>> {
     //if (this.lru.has(key)) returnthis.lru.get(key);
-    this.logger.verbose(" key"+ key);
+    this.logger.verbose(' key' + key);
     const apiKey = await this.prisma.apiKey.findFirst({
       where: { apiKey: key },
     });
     if (!apiKey) throw new NotFoundException(API_KEY_NOT_FOUND);
-   //this.lru.set(key, apiKey);
+    //this.lru.set(key, apiKey);
     return this.prisma.expose<ApiKey>(apiKey);
   }
 
@@ -153,7 +151,7 @@ export class ApiKeysService {
       where: { id },
       data,
     });
-   //this.lru.delete(testApiKey.apiKey);
+    //this.lru.delete(testApiKey.apiKey);
     return this.prisma.expose<ApiKey>(apiKey);
   }
   async updateApiKeyForUser(
@@ -172,7 +170,7 @@ export class ApiKeysService {
       where: { id },
       data,
     });
-   //this.lru.delete(testApiKey.apiKey);
+    //this.lru.delete(testApiKey.apiKey);
     return this.prisma.expose<ApiKey>(apiKey);
   }
 
@@ -192,7 +190,7 @@ export class ApiKeysService {
       where: { id },
       data,
     });
-   //this.lru.delete(testApiKey.apiKey);
+    //this.lru.delete(testApiKey.apiKey);
     return this.prisma.expose<ApiKey>(apiKey);
   }
   async replaceApiKeyForUser(
@@ -211,7 +209,7 @@ export class ApiKeysService {
       where: { id },
       data,
     });
-   //this.lru.delete(testApiKey.apiKey);
+    //this.lru.delete(testApiKey.apiKey);
     return this.prisma.expose<ApiKey>(apiKey);
   }
 
@@ -228,7 +226,7 @@ export class ApiKeysService {
     const apiKey = await this.prisma.apiKey.delete({
       where: { id },
     });
-   //this.lru.delete(testApiKey.apiKey);
+    //this.lru.delete(testApiKey.apiKey);
     return this.prisma.expose<ApiKey>(apiKey);
   }
   async deleteApiKeyForUser(
@@ -244,7 +242,7 @@ export class ApiKeysService {
     const apiKey = await this.prisma.apiKey.delete({
       where: { id },
     });
-   //this.lru.delete(testApiKey.apiKey);
+    //this.lru.delete(testApiKey.apiKey);
     return this.prisma.expose<ApiKey>(apiKey);
   }
 
@@ -373,7 +371,7 @@ export class ApiKeysService {
 
   private async cleanScopesForGroup(
     groupId: number,
-    scopes: Prisma.InputJsonValue  | Prisma.NullableJsonNullValueInput,
+    scopes: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput,
   ): Promise<Prisma.JsonValue[]> {
     if (!Array.isArray(scopes)) return [];
     return (scopes as string[]).filter((i) =>

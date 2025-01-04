@@ -2,9 +2,9 @@
 
 Hello {{name}},
 
-We have received your application. 
+We have received your application.
 
-Thanks to join us as {{expertise}}. 
+Thanks to join us as {{expertise}}.
 
 Here is a summary of your skills: {{skills}}
 

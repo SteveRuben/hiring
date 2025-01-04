@@ -6,7 +6,6 @@ import {
   PipeTransform,
 } from '@nestjs/common';
 
-
 /** Convert a string like "1" to a number, but without NaN */
 @Injectable()
 export class OptionalIntPipe implements PipeTransform {

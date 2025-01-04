@@ -27,7 +27,7 @@ export class AuditLogController {
       skip,
       take,
       orderBy,
-     /*  cursor, */
+      /*  cursor, */
       where,
     });
   }

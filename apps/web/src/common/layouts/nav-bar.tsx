@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
 import { Menu, Globe } from "lucide-react";
 import { Button } from "@prep-ai/ui/components/ui/button";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-  } from "@prep-ai/ui/components/ui/dropdown-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@prep-ai/ui/components/ui/dropdown-menu";
 import { useTranslation } from "../i18n";
 
 const Navbar = () => {
@@ -22,31 +22,39 @@ const Navbar = () => {
           {/* Logo */}
           <a href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-            {t('nav.home')}
+              {t("nav.home")}
             </span>
           </a>
 
           {/* Main Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            
-           
-          </nav>
+          <nav className="hidden md:flex items-center gap-8"></nav>
 
           {/* Auth and Language */}
           <div className="hidden md:flex items-center gap-4">
-          <a href="#features" className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors">
-              {t('nav.features')}
+            <a
+              href="#features"
+              className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
+            >
+              {t("nav.features")}
             </a>
-            <a href="#experts" className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors">
-            {t('nav.findExperts')}
+            <a
+              href="#experts"
+              className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
+            >
+              {t("nav.findExperts")}
             </a>
-            <a href="talent" className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors">
-              {t('nav.talents')}
-            </a>  
+            <a
+              href="talent"
+              className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
+            >
+              {t("nav.talents")}
+            </a>
             <a href="/login">
-              <Button variant="ghost">{t('nav.signIn')}</Button>
+              <Button variant="ghost">{t("nav.signIn")}</Button>
             </a>
-            <Button onClick={() => window.location.href = '/register'}>{t('nav.getStarted')}</Button>
+            <Button onClick={() => (window.location.href = "/register")}>
+              {t("nav.getStarted")}
+            </Button>
 
             {/* Language Selector */}
             <DropdownMenu>
@@ -55,15 +63,15 @@ const Navbar = () => {
                 <span className="uppercase">{language}</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem 
-                  onSelect={() => setLanguage('en')}
-                  className={language === 'en' ? 'bg-slate-100' : ''}
+                <DropdownMenuItem
+                  onSelect={() => setLanguage("en")}
+                  className={language === "en" ? "bg-slate-100" : ""}
                 >
                   English
                 </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onSelect={() => setLanguage('fr')}
-                  className={language === 'fr' ? 'bg-slate-100' : ''}
+                <DropdownMenuItem
+                  onSelect={() => setLanguage("fr")}
+                  className={language === "fr" ? "bg-slate-100" : ""}
                 >
                   Français
                 </DropdownMenuItem>

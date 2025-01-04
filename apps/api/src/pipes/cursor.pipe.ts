@@ -2,11 +2,10 @@ import { CURSOR_PIPE_FORMAT } from '@/errors/errors.constants';
 import { parseObjectLiteral } from '@/helpers/parse-object-literal';
 import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 
-
 /** Convert a string like "id: 12, b: 'Anand'" to { id: 12, name: "Anand" } */
 @Injectable()
 export class CursorPipe implements PipeTransform {
-  transform(value: string): Record<string, number | string> | undefined  {
+  transform(value: string): Record<string, number | string> | undefined {
     if (value == null) return undefined;
     if (!value.includes(':')) value = `id:${value}`;
     try {

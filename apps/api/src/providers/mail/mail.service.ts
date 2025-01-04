@@ -12,7 +12,6 @@ import { join } from 'path';
 import { MailOptions } from './mail.interface';
 import { Configuration } from '@/config/configuration.interface';
 
-
 @Injectable()
 export class MailService {
   private readonly logger = new Logger(MailService.name);
@@ -22,8 +21,8 @@ export class MailService {
 
   //private templateCache = new NodeCache({ stdTTL: 60 * 5 }); // 5 minutes
   //TODO: Read file and update process
-  private readTemplate  = this.readTemplateUnmemoized;
- /*  private readTemplate  = memoize(this.readTemplateUnmemoized, {
+  private readTemplate = this.readTemplateUnmemoized;
+  /*  private readTemplate  = memoize(this.readTemplateUnmemoized, {
     maxAge: 1000 * 60 * 35 // Example: cache for 5 minutes
   }); */
 
@@ -79,7 +78,7 @@ export class MailService {
           markdown = markdown.replace(`# ${markdown.split('\n', 1)[0]}`, '');
         }
       }
-      
+
       options.html = options.noLayout
         ? html
         : (await Promise.all(render(layout, { content: html })))[1];
@@ -103,7 +102,7 @@ export class MailService {
     return result;
   } */
 
- /*  async readTemplate(key: string) {
+  /*  async readTemplate(key: string) {
     if (this.templateCache.has(key)) {
       return this.templateCache.get(key);
     }

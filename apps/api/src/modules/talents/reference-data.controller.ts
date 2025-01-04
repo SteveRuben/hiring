@@ -12,23 +12,23 @@ export class ReferenceDataController {
   @Get('/expertise-areas')
   async getExpertiseAreas() {
     return {
-      expertiseAreas: Object.values(ExpertiseArea).map(area => ({
+      expertiseAreas: Object.values(ExpertiseArea).map((area) => ({
         id: area,
         name: area,
-        label: `expertise.${area.toLowerCase()}`
-      }))
+        label: `expertise.${area.toLowerCase()}`,
+      })),
     };
   }
 
   @Get('/experience-levels')
   async getExperienceLevels() {
     return {
-      experienceLevels: Object.values(ExperienceLevel).map(level => ({
+      experienceLevels: Object.values(ExperienceLevel).map((level) => ({
         id: level,
         name: level,
         range: this.getExperienceRange(level),
-        label: `experience.${level.toLowerCase()}`
-      }))
+        label: `experience.${level.toLowerCase()}`,
+      })),
     };
   }
 
@@ -40,17 +40,17 @@ export class ReferenceDataController {
         id: true,
         name: true,
         _count: {
-          select: { applications: true }
-        }
-      }
+          select: { applications: true },
+        },
+      },
     });
 
     return {
-      skills: skills.map(skill => ({
+      skills: skills.map((skill) => ({
         id: skill.id,
         name: skill.name,
-        usageCount: skill._count.applications
-      }))
+        usageCount: skill._count.applications,
+      })),
     };
   }
 

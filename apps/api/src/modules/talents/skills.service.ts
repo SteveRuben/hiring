@@ -1,5 +1,5 @@
-import { PrismaService } from "@/prisma/prisma.service";
-import { Injectable } from "@nestjs/common";
+import { PrismaService } from '@/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class SkillsService {
@@ -7,7 +7,7 @@ export class SkillsService {
 
   async findAll() {
     return this.prisma.skill.findMany({
-      orderBy: { name: 'asc' }
+      orderBy: { name: 'asc' },
     });
   }
 }

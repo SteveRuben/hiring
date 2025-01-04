@@ -9,8 +9,8 @@ import responseTime from 'response-time';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 async function bootstrap() {
   const logger = new Logger('EntryPoint');
-  const app = await NestFactory.create(AppModule,{
-    logger: ['error', 'warn', 'debug', 'log', 'verbose'], 
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'debug', 'log', 'verbose'],
   });
   app.useGlobalPipes(new ValidationPipe());
   app.use(helmet());
@@ -30,9 +30,9 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
-  
+
   /* app.use(responseTime()); */
-  
+
   const PORT = process.env.PORT ?? 5002;
 
   await app.listen(PORT);

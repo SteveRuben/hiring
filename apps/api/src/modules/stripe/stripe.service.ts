@@ -18,7 +18,6 @@ import {
 } from '@/errors/errors.constants';
 import { PrismaService } from '@/prisma/prisma.service';
 
-
 @Injectable()
 export class StripeService {
   stripe: Stripe;
@@ -28,9 +27,7 @@ export class StripeService {
     private configService: ConfigService,
     private prisma: PrismaService,
   ) {
-    let stripeApiKey = this.configService.get<string>(
-      'payments.stripeApiKey',
-    );
+    let stripeApiKey = this.configService.get<string>('payments.stripeApiKey');
     // @ts-ignore
     this.stripe = new Stripe(stripeApiKey, {
       // @ts-ignore

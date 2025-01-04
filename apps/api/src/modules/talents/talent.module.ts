@@ -10,13 +10,19 @@ import { ReferenceDataController } from './reference-data.controller';
 import { MailModule } from '@/providers/mail/mail.module';
 
 @Module({
-  imports: [
-    PrismaModule,
-    MailModule,
-    S3Module,
-  ],
+  imports: [PrismaModule, MailModule, S3Module],
   controllers: [TalentController, ReferenceDataController],
-  providers: [TalentApplicationService, SkillsService, ExpertiseAreasService, ExperiencesService],
-  exports: [TalentApplicationService, SkillsService, ExpertiseAreasService, ExperiencesService],
+  providers: [
+    TalentApplicationService,
+    SkillsService,
+    ExpertiseAreasService,
+    ExperiencesService,
+  ],
+  exports: [
+    TalentApplicationService,
+    SkillsService,
+    ExpertiseAreasService,
+    ExperiencesService,
+  ],
 })
 export class TalentModule {}

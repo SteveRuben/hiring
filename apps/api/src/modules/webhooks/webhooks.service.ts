@@ -17,7 +17,6 @@ import {
 import { PrismaService } from '@/prisma/prisma.service';
 import { Expose } from '@/prisma/prisma.interface';
 
-
 @Injectable()
 export class WebhooksService {
   private readonly logger = new Logger(WebhooksService.name);

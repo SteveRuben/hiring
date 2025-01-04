@@ -20,15 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-      <html  lang="en" className="h-full" suppressHydrationWarning>
-        <body className={`${geistSans.className} h-full antialiased min-h-screen bg-white`}>
+    <html lang="en" className="h-full" suppressHydrationWarning>
+      <body
+        className={`${geistSans.className} h-full antialiased min-h-screen bg-white`}
+      >
         <I18nProvider>
-            <Navbar />
-            <div className="pt-16">
-              {children}
-            </div>
-          </I18nProvider>
-        </body>
-      </html>
+          <Navbar />
+          <div className="pt-16">{children}</div>
+        </I18nProvider>
+      </body>
+    </html>
   );
 }

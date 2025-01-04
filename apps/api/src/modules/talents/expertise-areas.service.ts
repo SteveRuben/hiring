@@ -1,6 +1,6 @@
-import { PrismaService } from "@/prisma/prisma.service";
-import { Injectable } from "@nestjs/common";
-import { ExpertiseArea } from "@prisma/client";
+import { PrismaService } from '@/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
+import { ExpertiseArea } from '@prisma/client';
 
 @Injectable()
 export class ExpertiseAreasService {

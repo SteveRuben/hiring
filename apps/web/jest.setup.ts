@@ -1,5 +1,5 @@
 // jest.setup.ts
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Extend expect matchers
 expect.extend({
@@ -7,9 +7,9 @@ expect.extend({
 });
 
 // Mock window properties that aren't available in JSDOM
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -27,8 +27,8 @@ global.fetch = jest.fn(() =>
     json: () => Promise.resolve({}),
     ok: true,
     status: 200,
-    statusText: 'OK',
-  } as Response)
+    statusText: "OK",
+  } as Response),
 );
 
 // Clean up after each test

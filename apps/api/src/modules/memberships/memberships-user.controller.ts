@@ -46,7 +46,7 @@ export class UserMembershipController {
       skip,
       take,
       orderBy,
-     /*  cursor, */
+      /*  cursor, */
       where: { ...where, user: { id: userId } },
     });
   }

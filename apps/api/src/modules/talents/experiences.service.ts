@@ -1,6 +1,6 @@
-import { PrismaService } from "@/prisma/prisma.service";
-import { Injectable } from "@nestjs/common";
-import { ExperienceLevel } from "@prisma/client";
+import { PrismaService } from '@/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
+import { ExperienceLevel } from '@prisma/client';
 
 @Injectable()
 export class ExperiencesService {

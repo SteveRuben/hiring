@@ -18,7 +18,6 @@ import {
   USER_NOT_FOUND,
 } from '@/errors/errors.constants';
 
-
 @Injectable()
 export class EmailsService {
   constructor(

@@ -41,7 +41,12 @@ export class UserController {
     @Query('where', WherePipe) where?: Record<string, number | string>,
     @Query('orderBy', OrderByPipe) orderBy?: Record<string, 'asc' | 'desc'>,
   ): Promise<Expose<User>[]> {
-    return this.usersService.getUsers({ skip, take, orderBy, /*cursor, */ where });
+    return this.usersService.getUsers({
+      skip,
+      take,
+      orderBy,
+      /*cursor, */ where,
+    });
   }
 
   /** Get a user */

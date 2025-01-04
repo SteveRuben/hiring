@@ -2,7 +2,6 @@ import { CURSOR_PIPE_FORMAT } from '@/errors/errors.constants';
 import { parseObjectLiteral } from '@/helpers/parse-object-literal';
 import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 
-
 /** Convert a string like "slug: "ok", name: 'Anand'" to { slug: "ok", name: "Anand" } */
 @Injectable()
 export class CursorSlugPipe implements PipeTransform {

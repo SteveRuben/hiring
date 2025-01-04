@@ -15,7 +15,6 @@ import { CursorPipe } from '@/pipes/cursor.pipe';
 import { WherePipe } from '@/pipes/where.pipe';
 import { OrderByPipe } from '@/pipes/order-by.pipe';
 
-
 @Controller('users/:userId/approved-subnets')
 export class ApprovedSubnetController {
   constructor(private approvedSubnetsService: ApprovedSubnetsService) {}

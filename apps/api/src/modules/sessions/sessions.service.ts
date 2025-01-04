@@ -12,7 +12,6 @@ import {
 import type { Prisma } from '@prisma/client';
 import { Session } from '@prisma/client';
 
-
 @Injectable()
 export class SessionsService {
   constructor(private prisma: PrismaService) {}
