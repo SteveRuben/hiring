@@ -1,8 +1,6 @@
 "use client"
 
-import { useState } from "react";
-
-import { Menu, ChevronDown, Globe } from "lucide-react";
+import { Menu, Globe } from "lucide-react";
 import { Button } from "@prep-ai/ui/components/ui/button";
 import {
     DropdownMenu,
@@ -14,8 +12,8 @@ import { useTranslation } from "../i18n";
 
 const Navbar = () => {
   const { t, language, setLanguage } = useTranslation();
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  /* const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false); */
 
   return (
     <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">

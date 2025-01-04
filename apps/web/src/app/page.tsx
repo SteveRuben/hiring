@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@prep-ai/ui/components/ui/button";
 import { ExpertsList, Features, Hero } from "../common/home";
 
 

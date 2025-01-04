@@ -56,7 +56,7 @@ export class TalentController {
         }
       },
       limits: {
-        fileSize: 15 * 1024 * 1024 // 5MB max
+        fileSize: 15 * 1024 * 1024 // 15MB max
       }
     })
   )//@ts-ignore

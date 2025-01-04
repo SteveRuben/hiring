@@ -1,4 +1,3 @@
-import { title } from "process";
 
 export const translations = {
     en: {
@@ -129,7 +128,32 @@ export const translations = {
         experience: "Years of Experience",
         bio: "Professional Bio",
         bioPlaceholder: "Tell us about your experience and what you're looking to achieve",
-        submit: "Submit Application"
+        submit: "Submit Application",
+        formSubmitting: 'Sending...',
+        submitSuccess: "Well received",
+        submitSuccessMessage: "Thanks for sharing, we'll revert back to you asap",
+        submitError: "Something went wrong",
+        submitErrorMessage: "Sorry, we've not been able to process it",
+        selectExperience: 'Select years of experience',
+        selectExpertise: 'Select your primary expertise',
+        enterSkill: 'Add a skill (e.g., React, Node.js)',
+        formProfessionnalResume: 'Upload your Resume',
+        skilltooltips: 'Press Enter or comma to add a skill'
+      },
+      experience: {
+        junior: 'Junior',
+        intermediate: 'Intermediate',
+        senior : 'Senior',
+        expert: 'Expert'
+      },
+      expertise: {
+        frontend: 'Frontend Development',
+        backend: 'Backend Development',
+        fullstack: 'Full Stack Development',
+        mobile: 'Mobile Development',
+        devops: 'DevOps Development',
+        network: 'Network Development',
+        security: 'Security',
       }
 
     },
