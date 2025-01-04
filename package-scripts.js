@@ -24,8 +24,8 @@ module.exports = {
       api: `cd ${apiPath} && yarn test`,
       ci: {
         default: `nps test.ci.web test.ci.api`,
-        web: `cd ${ciWebPath} && yarn test:ci`,
-        api: `cd ${ciApiPath} && yarn test:ci`,
+        web: `cd ${webPath} && yarn test:ci`,
+        api: `cd ${apiPath} && yarn test:ci`,
       },
       watch: {
         default: `nps test.watch.web test.watch.api`,
