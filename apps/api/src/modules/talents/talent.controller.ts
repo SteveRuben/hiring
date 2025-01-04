@@ -71,7 +71,7 @@ export class TalentController {
         fileSize: 15 * 1024 * 1024, // 15MB max
       },
     }),
-  ) //@ts-ignore
+  )
   async submit(
     @UploadedFile() file: Express.Multer.File,
     @Body() data: CreateTalentApplicationDto,
