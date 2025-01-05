@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@prep-ai/ui/components/ui/dropdown-menu";
 import { useTranslation } from "@/components/i18n";
+import Link from "next/link";
 
 const Navbar = () => {
   const { t, language, setLanguage } = useTranslation();
@@ -20,38 +21,38 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
               {t("nav.home")}
             </span>
-          </a>
+          </Link>
 
           {/* Main Navigation */}
           <nav className="hidden md:flex items-center gap-8"></nav>
 
           {/* Auth and Language */}
           <div className="hidden md:flex items-center gap-4">
-            <a
+            <Link
               href="#features"
               className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
             >
               {t("nav.features")}
-            </a>
-            <a
+            </Link>
+            <Link
               href="#experts"
               className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
             >
               {t("nav.findExperts")}
-            </a>
-            <a
+            </Link>
+            <Link
               href="talent"
               className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
             >
               {t("nav.talents")}
-            </a>
-            <a href="/login">
+            </Link>
+            <Link href="/login">
               <Button variant="ghost">{t("nav.signIn")}</Button>
-            </a>
+            </Link>
             <Button onClick={() => (window.location.href = "/register")}>
               {t("nav.getStarted")}
             </Button>
