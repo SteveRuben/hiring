@@ -65,7 +65,6 @@ export const I18nProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    // @ts-expect-error(if )
     <I18nContext.Provider value={value}>{children}</I18nContext.Provider>
   );
 };
