@@ -1,3 +1,5 @@
+import { availableMemory } from "process";
+
 export const translations = {
   en: {
     // Navigation
@@ -29,7 +31,7 @@ export const translations = {
       title: "Why Choose BalafondDreams aka Prep AI",
       subtitle: "Everything you need to accelerate your learning journey",
       live: {
-        title: "Live Coding Sessions",
+        title: "Live Sessions",
         description:
           "Get real-time help with your code through interactive pair programming",
       },
@@ -50,6 +52,14 @@ export const translations = {
       subtitle: "Learn from industry professionals with years of experience",
       viewProfile: "View Profile",
       sessions: "sessions",
+    },
+    // error page aka waiting list
+    error:{
+      available: "Available soon",
+      join: "Join the waiting list to be among the first to benefit from sessions personalized learning sessions with experienced developers.",
+      us: "Thanks for subscribing",
+      intouch: "We will keep you informed of the launch of the platform.",
+      waiting: "Join the waiting list"
     },
     // Auth forms
     login: {

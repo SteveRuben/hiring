@@ -4,30 +4,30 @@ import { Card, CardContent } from "@prep-ai/ui/components/ui/card";
 import { Badge } from "@prep-ai/ui/components/ui/badge";
 import { Button } from "@prep-ai/ui/components/ui/button";
 import { Star } from "lucide-react";
-import { useTranslation } from "../i18n";
+import { useTranslation } from "@/components/i18n";
 
 export const ExpertsList = () => {
   const { t } = useTranslation();
 
   const experts = [
     {
-      name: "Sarah Johnson",
+      name: "E. Wandji",
       role: "Senior Frontend Developer",
       specialties: ["React", "TypeScript", "UI/UX"],
       rating: 4.9,
       sessions: 156,
     },
     {
-      name: "Michael Chen",
-      role: "Full Stack Engineer",
-      specialties: ["Node.js", "Python", "AWS"],
+      name: "P. Manga",
+      role: "Marketing Expert",
+      specialties: ["Marketing", "Branding", "Personna definition"],
       rating: 4.8,
       sessions: 203,
     },
     {
-      name: "Emma Williams",
-      role: "DevOps Engineer",
-      specialties: ["Docker", "Kubernetes", "CI/CD"],
+      name: "B. Ella",
+      role: "Product Owner Expert",
+      specialties: ["Design Thinking", "Scaling", "Attract customer"],
       rating: 4.9,
       sessions: 178,
     },
@@ -64,9 +64,9 @@ export const ExpertsList = () => {
                       </Badge>
                     ))}
                   </div>
-                  <Button variant="outline" className="w-full">
+                  {/* <Button variant="outline" className="w-full">
                     {t("experts.viewProfile")}
-                  </Button>
+                  </Button> */}
                 </div>
               </CardContent>
             </Card>

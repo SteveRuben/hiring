@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@prep-ai/ui/components/ui/card";
 import { Code, Video, BookOpen } from "lucide-react";
-import { useTranslation } from "../i18n";
+import { useTranslation } from "@/components/i18n";
 
 export const Features = () => {
   const { t } = useTranslation();
