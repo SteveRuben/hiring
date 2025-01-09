@@ -14,6 +14,8 @@ export default function Custom404() {
     e.preventDefault();
     setLoading(true);
     // Simuler l'appel API
+    console.log(email);
+    
     await new Promise(resolve => setTimeout(resolve, 1000));
     setSubmitted(true);
     setLoading(false);

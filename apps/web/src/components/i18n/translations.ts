@@ -1,4 +1,3 @@
-import { availableMemory } from "process";
 
 export const translations = {
   en: {

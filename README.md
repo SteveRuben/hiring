@@ -209,3 +209,5 @@ The app should be running at `http://localhost` with reverse proxy configured.
 ## Other available commands
 
 Run `nps` in the terminal to see list of all available commands.
+
+# balaSpace.com
