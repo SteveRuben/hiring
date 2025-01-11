@@ -5,8 +5,8 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
-import responseTime from 'response-time';
-import { AllExceptionsFilter } from './filters/all-exceptions.filter';
+
+
 async function bootstrap() {
   const logger = new Logger('EntryPoint');
   const app = await NestFactory.create(AppModule, {
@@ -31,9 +31,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  /* app.use(responseTime()); */
+  /* app.use(responseTime());  */
 
-  const PORT = process.env.PORT ?? 5002;
+  const PORT = process.env.PORT ?? 80;
 
   await app.listen(PORT);
   logger.log(`Server running on http://localhost:${PORT}`);

@@ -8,8 +8,8 @@ import { ConfigService } from '@nestjs/config';
 import type { Prisma } from '@prisma/client';
 import { Webhook } from '@prisma/client';
 
-import PQueue from 'p-queue';
-import pRetry from 'p-retry';
+//import pRetry from 'p-retry';
+
 import {
   UNAUTHORIZED_RESOURCE,
   WEBHOOK_NOT_FOUND,
@@ -17,10 +17,12 @@ import {
 import { PrismaService } from '@/prisma/prisma.service';
 import { Expose } from '@/prisma/prisma.interface';
 
+
+
 @Injectable()
 export class WebhooksService {
   private readonly logger = new Logger(WebhooksService.name);
-  private queue = new PQueue({ concurrency: 1 });
+  //private queue = new PQueue({ concurrency: 1 });
 
   constructor(
     private prisma: PrismaService,
@@ -155,7 +157,7 @@ export class WebhooksService {
       })
       .then((webhooks) => {
         webhooks.forEach((webhook) =>
-          this.queue
+         /*  this.queue
             .add(() =>
               pRetry(() => this.callWebhook(webhook, event), {
                 retries:
@@ -177,7 +179,8 @@ export class WebhooksService {
               }),
             )
             .then(() => {})
-            .catch(() => {}),
+            .catch(() => {}), */
+            this.logger.error(`Triggering webhoook failed, retrying (webhooks attempts left)`)
         );
       })
       .catch((error) => this.logger.error('Unable to get webhooks', error));

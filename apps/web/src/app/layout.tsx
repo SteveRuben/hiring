@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/components/i18n";
 import Navbar from "@/components/layouts/nav-bar";
+import { QueryProvider } from "@/lib/providers/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,12 +28,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} h-full antialiased min-h-screen bg-white`}>
-       <I18nProvider>
-          <Navbar />
-          <div className="pt-16">{children}</div>
-        </I18nProvider>
-      </body>
+        <body className={`${geistSans.variable} ${geistMono.variable} h-full antialiased min-h-screen bg-white`}>
+          <QueryProvider>
+            <I18nProvider>
+              <Navbar />
+              <div className="pt-16">{children}</div>
+            </I18nProvider>
+          </QueryProvider>
+        </body>
     </html>
   );
 }

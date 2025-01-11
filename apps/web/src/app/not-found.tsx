@@ -10,12 +10,12 @@ export default function Custom404() {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
-  const handleSubmit = async (e: ) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     // Simuler l'appel API
     console.log(email);
-    
+
     await new Promise(resolve => setTimeout(resolve, 1000));
     setSubmitted(true);
     setLoading(false);

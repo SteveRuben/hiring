@@ -96,7 +96,8 @@ export class TokensService {
         'alphanumeric',
       ].includes(charactersOrType)
     )
-      return cryptoRandomString({
+    return "error";
+     return cryptoRandomString({
         length,
         type: charactersOrType as
           | 'hex'

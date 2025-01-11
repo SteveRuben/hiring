@@ -5,6 +5,7 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from '@/filters/http-exception.filter';
 import { RawBodyMiddleware } from '@/middleware/raw-body.middleware';
 import { JsonBodyMiddleware } from '@/middleware/json-body.middleware';
+import { ResponseTimeMiddleware } from '@nest-middlewares/response-time';
 import { ApiLoggerMiddleware } from '@/middleware/api-logger.middleware';
 import { PrismaModule } from '@/prisma/prisma.module';
 import { RateLimitInterceptor } from '@/interceptors/rate-limit.interceptor';
@@ -97,6 +98,8 @@ export class AppModule {
       .apply(JsonBodyMiddleware)
       .forRoutes('*')
       .apply(ApiLoggerMiddleware)
-      .forRoutes('*');
+      .forRoutes('*')
+      .apply(ResponseTimeMiddleware)
+      .forRoutes('*')
   }
 }

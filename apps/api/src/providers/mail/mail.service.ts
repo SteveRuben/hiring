@@ -6,8 +6,8 @@ import { promises as fs } from 'fs';
 import * as nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 import SESTransport from 'nodemailer/lib/ses-transport';
-import PQueue from 'p-queue';
-import pRetry from 'p-retry';
+/* import PQueue from 'p-queue';
+import pRetry from 'p-retry'; */
 import { join } from 'path';
 import { MailOptions } from './mail.interface';
 import { Configuration } from '@/config/configuration.interface';
@@ -17,7 +17,7 @@ export class MailService {
   private readonly logger = new Logger(MailService.name);
   private transport: Mail;
   private config: Configuration['email'];
-  private queue = new PQueue({ concurrency: 1 });
+  /* private queue = new PQueue({ concurrency: 1 }); */
 
   //private templateCache = new NodeCache({ stdTTL: 60 * 5 }); // 5 minutes
   //TODO: Read file and update process
@@ -41,7 +41,7 @@ export class MailService {
   }
 
   send(options: Mail.Options & MailOptions) {
-    this.queue
+   /*  this.queue
       .add(() =>
         pRetry(
           () =>
@@ -63,7 +63,12 @@ export class MailService {
         ),
       )
       .then(() => {})
-      .catch(() => {});
+      .catch(() => {}); */
+      this.sendMail({
+        ...options,
+        from:
+          options.from ?? `"${this.config.name}" <${this.config.from}>`,
+      });
   }
 
   private async sendMail(options: Mail.Options & MailOptions) {
