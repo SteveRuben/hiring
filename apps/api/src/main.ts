@@ -11,6 +11,7 @@ async function bootstrap() {
   const logger = new Logger('EntryPoint');
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'debug', 'log', 'verbose'],
+    cors:true
   });
   app.useGlobalPipes(new ValidationPipe());
   app.use(helmet());
@@ -31,9 +32,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  /* app.use(responseTime());  */
-
-  const PORT = process.env.PORT ?? 80;
+  const PORT = process.env.PORT ?? 5000;
 
   await app.listen(PORT);
   logger.log(`Server running on http://localhost:${PORT}`);
