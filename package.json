@@ -21,5 +21,9 @@
     "npm": ">=10.7.0",
     "node": ">=22.2.0"
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@1.22.22",
+  "dependencies": {
+    "@nestjs/event-emitter": "^3.0.0",
+    "uuid": "^11.0.5"
+  }
 }
