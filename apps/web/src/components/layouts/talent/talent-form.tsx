@@ -1,24 +1,24 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Button } from "@prep-ai/ui/components/ui/button";
-import { Input } from "@prep-ai/ui/components/ui/input";
-import { Textarea } from "@prep-ai/ui/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@prep-ai/ui/components/ui/card";
-import { Label } from "@prep-ai/ui/components/ui/label";
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@prep-ai/ui/components/ui/select";
+} from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 import { useReferenceData } from "@/hooks/seReferenceData";
 import { useTranslation } from "@/components/i18n";

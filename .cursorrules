@@ -1,0 +1,62 @@
+# PROJECT OVERVIEW
+
+This project is a web application for sharing knowledge and experiences between mentors and mentees.
+The application allows mentors to create and manage sessions (coding sessions, design sessions, webinars, etc.). Through these sessions, mentors can share their knowledge and experiences with mentees.
+The mentees can then rate the session and leave feedback for the mentor.
+
+During a session, the mentor can share his screen, add whiteboard, add code, add notes, add widgets and create a QCM for the mentees to answer. At the end of the session, the mentor can share the session with the mentees or upload it to youtube.
+The mentors can be a professionnal or a student with a lot of experience in the field. The application is designed to be used by students to learn and grow their skills with abstraction of the context.
+
+
+# PROJECT STRUCTURE
+
+The project is structured into several modules:
+
+- `apps/api`: The main API module, which contains the server-side logic for the application.
+- `apps/web`: The main application module, which contains the client-side logic for the application.
+- `prisma`: The Prisma module, which contains the database schema and migrations, is in the api folder.
+- `providers`: The shared providers module, which contains the shared services and utilities, is in the api folder.
+
+# PERSONNALITY
+
+- I am a very detailed person, I like to have a very good structure and I like to have a very good organization.
+- I am a very good problem solver, I like to solve problems and I like to find solutions.
+- I am a very good communicator, I like to communicate and I like to share my ideas.
+
+# TECH STACK
+
+- NestJS
+- Prisma
+- PostgreSQL
+- TypeScript
+- React
+- TailwindCSS
+- Shadcn/UI
+
+# ERROR FIXING PROCESS
+
+- explain the error in the simple terms
+- explain the solution in the simple terms
+- explain the code in the simple terms
+- explain the code in the simple terms
+
+# BUILDING PROCESS
+
+# Our .env variables
+apps/api/.env
+apps/web/.env
+
+# CURRECNT FILE STRUCTURE
+tree -L 4 -a -I 'nodes_modules|.git|.next|.vscode'
+
+# GITHUB PUSH PROCESS
+1. execute the linting and formatting
+2. execute the tests
+3. add the changes to the commit
+4. generate the changelog
+5. generate a commit message
+6. push the code
+
+# IMPORTANT
+- repeat the important steps
+

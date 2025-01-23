@@ -1,10 +1,11 @@
 "use client";
 
-import { Card, CardContent } from "@prep-ai/ui/components/ui/card";
-import { Badge } from "@prep-ai/ui/components/ui/badge";
-import { Button } from "@prep-ai/ui/components/ui/button";
+
 import { Star } from "lucide-react";
 import { useTranslation } from "@/components/i18n";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export const ExpertsList = () => {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ export const ExpertsList = () => {
 
   return (
     <section id="experts" className="bg-slate-50 py-24">
-      <div className="container mx-auto px-4">
+      {/* <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold mb-4">{t("experts.title")}</h2>
           <p className="text-lg text-slate-600">{t("experts.subtitle")}</p>
@@ -64,15 +65,15 @@ export const ExpertsList = () => {
                       </Badge>
                     ))}
                   </div>
-                  {/* <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full">
                     {t("experts.viewProfile")}
-                  </Button> */}
+                  </Button>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };

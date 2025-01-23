@@ -1,8 +1,8 @@
 import { useState, KeyboardEvent } from "react";
 import { X, Plus } from "lucide-react";
-import { Label } from "@prep-ai/ui/components/ui/label";
-import { Badge } from "@prep-ai/ui/components/ui/badge";
-import { Input } from "@prep-ai/ui/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 
 interface SkillInputProps {
   value: string[];

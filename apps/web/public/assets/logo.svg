@@ -1,0 +1,19 @@
+<svg
+    width="120"
+    height="40"
+    viewBox="0 0 120 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-auto w-auto"
+    >
+    <path
+        d="M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10Z"
+        fill="currentColor"
+    />
+    <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M30 10H90V30H30V10ZM35 15H85V25H35V15Z"
+        fill="currentColor"
+    />
+</svg>
