@@ -18,6 +18,7 @@ export const translations = {
       subtitle:
         "Connect with experienced developers for personalized 1-on-1 sessions, code reviews, and career guidance",
       findExpert: "Find an Expert",
+      getStarted: "Get Started",
       viewDemo: "View Demo",
       stats: {
         experts: "Expert Mentors",
