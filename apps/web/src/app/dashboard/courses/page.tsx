@@ -1,40 +1,21 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Book, Eye, FileText, MoreVertical, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Search,
-  Plus,
-  FileText,
-  Book,
-  MoreVertical,
-  Pencil,
-  Eye,
-  Trash2,
-} from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Types for content items
 interface ContentItem {
@@ -60,7 +41,7 @@ export default function CoursesPage() {
       status: 'published',
       type: 'course',
       lastModified: '2024-01-15',
-      thumbnail: '/course-1.jpg'
+      thumbnail: '/course-1.jpg',
     },
     {
       id: '2',
@@ -68,21 +49,23 @@ export default function CoursesPage() {
       description: 'Deep dive into TypeScript advanced features and best practices',
       status: 'draft',
       type: 'article',
-      lastModified: '2024-01-20'
+      lastModified: '2024-01-20',
     },
     // Add more items as needed
   ];
 
   // Filter items based on search and active tab
-  const filteredItems = contentItems.filter(item => {
-    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         item.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTab = activeTab === 'all' || 
-                      (activeTab === 'courses' && item.type === 'course') ||
-                      (activeTab === 'articles' && item.type === 'article') ||
-                      (activeTab === 'drafts' && item.status === 'draft') ||
-                      (activeTab === 'published' && item.status === 'published');
-    
+  const filteredItems = contentItems.filter((item) => {
+    const matchesSearch =
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesTab =
+      activeTab === 'all' ||
+      (activeTab === 'courses' && item.type === 'course') ||
+      (activeTab === 'articles' && item.type === 'article') ||
+      (activeTab === 'drafts' && item.status === 'draft') ||
+      (activeTab === 'published' && item.status === 'published');
+
     return matchesSearch && matchesTab;
   });
 
@@ -91,7 +74,7 @@ export default function CoursesPage() {
       {/* Header Section */}
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Content Management</h1>
-        
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button>
@@ -100,11 +83,15 @@ export default function CoursesPage() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={() => window.location.href = '/dashboard/courses/editor/new'}>
+            <DropdownMenuItem
+              onSelect={() => (window.location.href = '/dashboard/courses/editor/new')}
+            >
               <Book className="w-4 h-4 mr-2" />
               New Course
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => window.location.href = '/dashboard/articles/editor/new'}>
+            <DropdownMenuItem
+              onSelect={() => (window.location.href = '/dashboard/articles/editor/new')}
+            >
               <FileText className="w-4 h-4 mr-2" />
               New Article
             </DropdownMenuItem>
@@ -154,9 +141,7 @@ export default function CoursesPage() {
                   <div className="flex items-start justify-between">
                     <div>
                       <CardTitle>{item.title}</CardTitle>
-                      <CardDescription className="mt-1.5">
-                        {item.description}
-                      </CardDescription>
+                      <CardDescription className="mt-1.5">{item.description}</CardDescription>
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -185,15 +170,14 @@ export default function CoursesPage() {
                 <CardContent>
                   <div className="flex justify-between text-sm text-gray-500">
                     <div className="flex items-center">
-                      {item.type === 'course' ? 
-                        <Book className="w-4 h-4 mr-1" /> : 
+                      {item.type === 'course' ? (
+                        <Book className="w-4 h-4 mr-1" />
+                      ) : (
                         <FileText className="w-4 h-4 mr-1" />
-                      }
+                      )}
                       {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
                     </div>
-                    <div>
-                      Last modified: {item.lastModified}
-                    </div>
+                    <div>Last modified: {item.lastModified}</div>
                   </div>
                   <div className="mt-2">
                     <Badge variant={item.status === 'published' ? 'default' : 'secondary'}>

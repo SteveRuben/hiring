@@ -1,5 +1,5 @@
-"use client";
-import { ExpertsList, Features, Hero } from "@/components/home";
+'use client';
+import { ExpertsList, Features, Hero } from '@/components/home';
 
 export default function Home() {
   return (

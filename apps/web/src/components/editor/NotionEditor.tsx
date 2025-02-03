@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import React, { useState } from 'react';
 import {
   Bold,
-  Italic,
-  Underline,
+  CheckSquare,
+  Code,
   Heading1,
   Heading2,
+  Image as ImageIcon,
+  Italic,
+  Link,
   List,
   ListOrdered,
-  Image as ImageIcon,
-  Code,
-  Quote,
-  Type,
-  Table,
-  CheckSquare,
   Plus,
-  Link,
+  Quote,
+  Table,
+  Type,
+  Underline,
 } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
+} from '@/components/ui/dropdown-menu';
 
 const NotionEditor = () => {
   const [showSlashMenu, setShowSlashMenu] = useState(false);
@@ -41,7 +41,7 @@ const NotionEditor = () => {
         const rect = range.getBoundingClientRect();
         setSlashMenuPosition({
           top: rect.bottom + window.scrollY,
-          left: rect.left + window.scrollX
+          left: rect.left + window.scrollX,
         });
         setShowSlashMenu(true);
       }
@@ -55,7 +55,7 @@ const NotionEditor = () => {
       const rect = range.getBoundingClientRect();
       setFloatingMenuPosition({
         top: rect.top - 40 + window.scrollY,
-        left: rect.left + (rect.width / 2) + window.scrollX
+        left: rect.left + rect.width / 2 + window.scrollX,
       });
       setShowFloatingMenu(true);
     } else {
@@ -74,18 +74,18 @@ const NotionEditor = () => {
     { icon: Table, label: 'Table', description: 'Add a table to your document' },
     { icon: Code, label: 'Code Block', description: 'Capture a code snippet' },
     { icon: Quote, label: 'Quote', description: 'Capture a quote' },
-    { icon: ImageIcon, label: 'Image', description: 'Upload or embed an image' }
+    { icon: ImageIcon, label: 'Image', description: 'Upload or embed an image' },
   ];
 
   return (
     <div className="min-h-screen bg-white p-8">
       {/* Menu flottant */}
       {showFloatingMenu && (
-        <div 
+        <div
           className="fixed bg-white shadow-lg rounded-lg border p-1 flex items-center gap-1 transform -translate-x-1/2"
-          style={{ 
-            top: `${floatingMenuPosition.top}px`, 
-            left: `${floatingMenuPosition.left}px` 
+          style={{
+            top: `${floatingMenuPosition.top}px`,
+            left: `${floatingMenuPosition.left}px`,
           }}
         >
           <Button variant="ghost" size="sm">
@@ -108,11 +108,11 @@ const NotionEditor = () => {
 
       {/* Menu slash */}
       {showSlashMenu && (
-        <div 
+        <div
           className="fixed bg-white shadow-lg rounded-lg border min-w-[300px]"
-          style={{ 
-            top: `${slashMenuPosition.top}px`, 
-            left: `${slashMenuPosition.left}px` 
+          style={{
+            top: `${slashMenuPosition.top}px`,
+            left: `${slashMenuPosition.left}px`,
           }}
         >
           <div className="p-2">

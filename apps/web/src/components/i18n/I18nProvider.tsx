@@ -77,18 +77,13 @@ export const useTranslation = () => {
   return context;
 };
  */
-"use client";
+'use client';
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  PropsWithChildren,
-} from "react";
-import { translations } from "./translations";
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
-type Language = "en" | "fr";
+import { translations } from './translations';
+
+type Language = 'en' | 'fr';
 
 type I18nContextType = {
   language: Language;
@@ -97,15 +92,15 @@ type I18nContextType = {
 };
 
 const defaultContext: I18nContextType = {
-  language: "en",
+  language: 'en',
   setLanguage: () => {},
   t: (key: string) => key,
 };
 
 export const I18nContext = createContext<I18nContextType>(defaultContext);
 
-const DEFAULT_LANGUAGE: Language = "en";
-const STORAGE_KEY = "prep-ai-language";
+const DEFAULT_LANGUAGE: Language = 'en';
+const STORAGE_KEY = 'prep-ai-language';
 
 export const I18nProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(DEFAULT_LANGUAGE);
@@ -114,7 +109,7 @@ export const I18nProvider: React.FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     setIsClient(true);
     const savedLanguage = window.localStorage.getItem(STORAGE_KEY) as Language;
-    if (savedLanguage && ["en", "fr"].includes(savedLanguage)) {
+    if (savedLanguage && ['en', 'fr'].includes(savedLanguage)) {
       setLanguageState(savedLanguage);
     }
   }, []);
@@ -128,7 +123,7 @@ export const I18nProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const t = (key: string): string => {
-    const keys = key.split(".");
+    const keys = key.split('.');
     let value: any = translations[language];
 
     for (const k of keys) {
@@ -145,15 +140,13 @@ export const I18nProvider: React.FC<PropsWithChildren> = ({ children }) => {
     t,
   };
 
-  return (
-    <I18nContext.Provider value={value}>{children}</I18nContext.Provider>
-  );
+  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 };
 
 export const useTranslation = () => {
   const context = useContext(I18nContext);
   if (!context) {
-    throw new Error("useTranslation must be used within an I18nProvider");
+    throw new Error('useTranslation must be used within an I18nProvider');
   }
   return context;
 };

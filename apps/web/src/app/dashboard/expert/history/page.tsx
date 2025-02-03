@@ -1,14 +1,9 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download } from 'lucide-react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function SessionHistory() {
   return (
@@ -33,9 +28,7 @@ export default function SessionHistory() {
           <Card>
             <CardHeader>
               <CardTitle>Past Sessions</CardTitle>
-              <CardDescription>
-                A detailed history of all your teaching sessions
-              </CardDescription>
+              <CardDescription>A detailed history of all your teaching sessions</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -78,9 +71,7 @@ export default function SessionHistory() {
           <Card>
             <CardHeader>
               <CardTitle>Exercise History</CardTitle>
-              <CardDescription>
-                Track student performance on assigned exercises
-              </CardDescription>
+              <CardDescription>Track student performance on assigned exercises</CardDescription>
             </CardHeader>
             <CardContent>
               <Table>

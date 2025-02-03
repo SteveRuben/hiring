@@ -1,24 +1,21 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useTranslation } from "@/components/i18n";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { loginSchema, type LoginInput } from '@/lib/validations/auth';
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
-import Image from "next/image";
+import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+import { useTranslation } from '@/components/i18n';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { type LoginInput, loginSchema } from '@/lib/validations/auth';
 
+export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
   const router = useRouter();
   const [error, setError] = useState('');
@@ -36,7 +33,7 @@ export function LoginForm({
         password: data.password,
         redirect: false,
       });
-      
+
       if (res?.error) {
         setError('Invalid credentials');
         return;
@@ -50,16 +47,14 @@ export function LoginForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className="overflow-hidden">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form  onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">{t('login.form.welcome')}</h1>
-                <p className="text-balance text-muted-foreground">
-                {t('login.form.loginMessage')}
-                </p>
+                <p className="text-balance text-muted-foreground">{t('login.form.loginMessage')}</p>
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">{t('auth.signin.email')}</Label>
@@ -77,9 +72,7 @@ export function LoginForm({
                   } focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors`}
                 />
                 {errors.email && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.email.message}
-                  </p>
+                  <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
                 )}
               </div>
               <div className="grid gap-2">
@@ -92,30 +85,30 @@ export function LoginForm({
                     {t('auth.forgotPassword.question')}
                   </a>
                 </div>
-                <Input 
-                    id="password" 
-                    type="password"
-                    {...register('password')}
-                    autoComplete="current-password"
-                    className={`w-full px-4 py-3 rounded-md border ${
-                        errors.password ? 'border-red-500' : 'border-gray-300'
-                      } focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors`}
-                    required />
+                <Input
+                  id="password"
+                  type="password"
+                  {...register('password')}
+                  autoComplete="current-password"
+                  className={`w-full px-4 py-3 rounded-md border ${
+                    errors.password ? 'border-red-500' : 'border-gray-300'
+                  } focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors`}
+                  required
+                />
                 {errors.password && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.password.message}
-                  </p>
-                )}    
+                  <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
+                )}
               </div>
-              <Button type="submit" 
-              disabled={isSubmitting}
-              className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
->
-              {t('auth.signin.submit')}
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {t('auth.signin.submit')}
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">
-                {t('auth.signin.continueWith')}
+                  {t('auth.signin.continueWith')}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-8">
@@ -139,7 +132,7 @@ export function LoginForm({
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
+                Don&apos;t have an account?{' '}
                 <a href="/register" className="underline underline-offset-4">
                   Sign up
                 </a>
@@ -158,9 +151,9 @@ export function LoginForm({
         </CardContent>
       </Card>
       <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </div>
     </div>
-  )
+  );
 }

@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { AlertCircle, CheckCircle } from "lucide-react";
+import { AlertCircle, CheckCircle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 
 interface CodeEditorProps {
   initialValue: string;
@@ -12,10 +13,10 @@ interface CodeEditorProps {
 }
 
 export function CodeEditor({
-  initialValue = "",
-  language = "javascript",
+  initialValue = '',
+  language = 'javascript',
   onChange,
-  height = "400px"
+  height = '400px',
 }: CodeEditorProps) {
   const [code, setCode] = useState(initialValue);
   const [errors, setErrors] = useState<any[]>([]);
@@ -26,11 +27,13 @@ export function CodeEditor({
       new Function(code);
       return [];
     } catch (error: any) {
-      return [{
-        line: error.lineNumber || 1,
-        message: error.message,
-        severity: 'error'
-      }];
+      return [
+        {
+          line: error.lineNumber || 1,
+          message: error.message,
+          severity: 'error',
+        },
+      ];
     }
   };
 
@@ -38,7 +41,7 @@ export function CodeEditor({
     // Vérification basique de la syntaxe Python
     const errors = [];
     const lines = code.split('\n');
-    
+
     // Vérification de l'indentation
     let expectedIndent = 0;
     for (let i = 0; i < lines.length; i++) {
@@ -48,7 +51,7 @@ export function CodeEditor({
         errors.push({
           line: i + 1,
           message: 'Unexpected indentation',
-          severity: 'error'
+          severity: 'error',
         });
       }
       if (line.trim().endsWith(':')) {
@@ -73,7 +76,7 @@ export function CodeEditor({
   const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newCode = e.target.value;
     setCode(newCode);
-    
+
     // Validation en temps réel
     const newErrors = validateCode(newCode);
     setErrors(newErrors);
@@ -92,24 +95,22 @@ export function CodeEditor({
           )}
         </div>
         {errors.length > 0 && (
-          <span className="text-sm text-red-500">
-            {errors.length} error(s) found
-          </span>
+          <span className="text-sm text-red-500">{errors.length} error(s) found</span>
         )}
       </div>
 
       <div className="relative rounded-lg border">
         {/* Numéros de ligne */}
-        <div 
+        <div
           className="absolute left-0 top-0 bottom-0 w-12 bg-gray-50 border-r 
                      flex flex-col items-center py-2 text-sm text-gray-400"
           style={{ height }}
         >
           {Array.from({ length: code.split('\n').length }).map((_, i) => (
-            <div 
+            <div
               key={i}
               className={`w-full text-center ${
-                errors.some(error => error.line === i + 1) ? 'bg-red-100' : ''
+                errors.some((error) => error.line === i + 1) ? 'bg-red-100' : ''
               }`}
             >
               {i + 1}
@@ -124,10 +125,10 @@ export function CodeEditor({
           className={`w-full font-mono text-sm p-2 pl-14 resize-none bg-transparent
                      focus:outline-none focus:ring-2 focus:ring-blue-500
                      ${errors.length > 0 ? 'border-red-300' : 'border-gray-300'}`}
-          style={{ 
+          style={{
             height,
             lineHeight: '1.5',
-            tabSize: 2
+            tabSize: 2,
           }}
           spellCheck="false"
           onKeyDown={(e) => {
@@ -149,10 +150,7 @@ export function CodeEditor({
       {errors.length > 0 && (
         <div className="mt-2 space-y-1">
           {errors.map((error, index) => (
-            <div 
-              key={index}
-              className="text-sm text-red-500 flex items-start gap-2"
-            >
+            <div key={index} className="text-sm text-red-500 flex items-start gap-2">
               <AlertCircle className="h-4 w-4 mt-0.5" />
               <span>
                 Line {error.line}: {error.message}

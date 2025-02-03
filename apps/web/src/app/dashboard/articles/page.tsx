@@ -1,31 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Eye, FileText, MoreVertical, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Search,
-  Plus,
-  FileText,
-  MoreVertical,
-  Pencil,
-  Eye,
-  Trash2,
-} from "lucide-react";
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 
 interface Article {
   id: string;
@@ -47,7 +34,7 @@ export default function ArticlesPage() {
       description: 'Learn how to build modern web applications with Next.js 13',
       status: 'published',
       lastModified: '2024-01-15',
-      author: 'John Doe'
+      author: 'John Doe',
     },
     {
       id: '2',
@@ -55,20 +42,21 @@ export default function ArticlesPage() {
       description: 'A deep dive into TypeScript generics and their practical applications',
       status: 'draft',
       lastModified: '2024-01-20',
-      author: 'Jane Smith'
+      author: 'Jane Smith',
     },
   ];
 
-  const filteredArticles = articles.filter(article =>
-    article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    article.description.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredArticles = articles.filter(
+    (article) =>
+      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Articles</h1>
-        <Button onClick={() => window.location.href = '/dashboard/articles/editor/new'}>
+        <Button onClick={() => (window.location.href = '/dashboard/articles/editor/new')}>
           <Plus className="w-4 h-4 mr-2" />
           New Article
         </Button>
@@ -93,9 +81,7 @@ export default function ArticlesPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <CardTitle>{article.title}</CardTitle>
-                  <CardDescription className="mt-1.5">
-                    {article.description}
-                  </CardDescription>
+                  <CardDescription className="mt-1.5">{article.description}</CardDescription>
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -104,7 +90,11 @@ export default function ArticlesPage() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => window.location.href = `/dashboard/articles/editor/${article.id}`}>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        (window.location.href = `/dashboard/articles/editor/${article.id}`)
+                      }
+                    >
                       <Pencil className="w-4 h-4 mr-2" />
                       Edit
                     </DropdownMenuItem>
@@ -127,16 +117,16 @@ export default function ArticlesPage() {
                   <FileText className="w-4 h-4 mr-1" />
                   By {article.author}
                 </div>
-                <div>
-                  Last modified: {article.lastModified}
-                </div>
+                <div>Last modified: {article.lastModified}</div>
               </div>
               <div className="mt-2">
-                <span className={`text-sm px-2.5 py-0.5 rounded-full ${
-                  article.status === 'published' 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-gray-100 text-gray-800'
-                }`}>
+                <span
+                  className={`text-sm px-2.5 py-0.5 rounded-full ${
+                    article.status === 'published'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-gray-100 text-gray-800'
+                  }`}
+                >
                   {article.status}
                 </span>
               </div>

@@ -1,33 +1,34 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useTranslation } from "@/components/i18n";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FormControl } from "@/components/ui/form";
-import Image from "next/image";
+import Image from 'next/image';
 
-export function RegisterForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+import { useTranslation } from '@/components/i18n';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { FormControl } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
+export function RegisterForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className="overflow-hidden">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">{t('auth.signup.title')}</h1>
-                <p className="text-balance text-muted-foreground">
-                {t('auth.signup.subtitle')}
-                </p>
+                <p className="text-balance text-muted-foreground">{t('auth.signup.subtitle')}</p>
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="firstName">{t('auth.signup.firstName')}</Label>
@@ -57,7 +58,7 @@ export function RegisterForm({
                 <div className="flex items-center">
                   <Label htmlFor="role">{t('auth.signup.rolePurpose')}</Label>
                 </div>
-                <Select >
+                <Select>
                   <SelectTrigger>
                     <SelectValue placeholder="Learn or Teach " />
                   </SelectTrigger>
@@ -68,11 +69,11 @@ export function RegisterForm({
                 </Select>
               </div>
               <Button type="submit" className="w-full">
-              {t('auth.signup.submit')}
+                {t('auth.signup.submit')}
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">
-                {t('auth.signin.continueWith')}
+                  {t('auth.signin.continueWith')}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-8">
@@ -96,7 +97,7 @@ export function RegisterForm({
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Already have an account?{" "}
+                Already have an account?{' '}
                 <a href="/login" className="underline underline-offset-4">
                   Sign in
                 </a>
@@ -115,9 +116,9 @@ export function RegisterForm({
         </CardContent>
       </Card>
       <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </div>
     </div>
-  )
+  );
 }

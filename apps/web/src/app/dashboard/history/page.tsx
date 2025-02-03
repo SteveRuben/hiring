@@ -1,16 +1,14 @@
 // apps/web/src/app/dashboard/history/page.tsx
-"use client"
+'use client';
 
-import { useState } from "react"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { SessionDetailsDialog } from "@/components/sessions/session-details-dialog";
-import { Badge } from "@/components/ui/badge"
+import { Calendar, Clock, Download, Search } from 'lucide-react';
+import { useState } from 'react';
+
+import { SessionDetailsDialog } from '@/components/sessions/session-details-dialog';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -18,59 +16,57 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Calendar, Clock, Download, Search } from "lucide-react"
+} from '@/components/ui/select';
 
 // Mock data for sessions
 const pastSessions = [
   {
     id: 1,
-    title: "React Advanced Patterns",
-    type: "CODE",
-    date: "2024-01-15",
-    duration: "60 min",
-    student: "John Doe",
+    title: 'React Advanced Patterns',
+    type: 'CODE',
+    date: '2024-01-15',
+    duration: '60 min',
+    student: 'John Doe',
     rating: 4.8,
-    status: "completed",
-    recording: true
+    status: 'completed',
+    recording: true,
   },
   {
     id: 2,
-    title: "UI/UX Workshop",
-    type: "DESIGN",
-    date: "2024-01-14",
-    duration: "90 min",
-    student: "Alice Smith",
+    title: 'UI/UX Workshop',
+    type: 'DESIGN',
+    date: '2024-01-14',
+    duration: '90 min',
+    student: 'Alice Smith',
     rating: 4.5,
-    status: "completed",
-    recording: false
+    status: 'completed',
+    recording: false,
   },
   {
     id: 3,
-    title: "TypeScript Fundamentals",
-    type: "CODE",
-    date: "2024-01-13",
-    duration: "45 min",
-    student: "Bob Wilson",
+    title: 'TypeScript Fundamentals',
+    type: 'CODE',
+    date: '2024-01-13',
+    duration: '45 min',
+    student: 'Bob Wilson',
     rating: 5.0,
-    status: "completed",
-    recording: true
+    status: 'completed',
+    recording: true,
   },
-]
+];
 
 export default function HistoryPage() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedType, setSelectedType] = useState("all")
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedType, setSelectedType] = useState('all');
   const [selectedSession, setSelectedSession] = useState<any | null>(null);
 
-  const filteredSessions = pastSessions.filter(session => {
-    const matchesSearch = session.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         session.student.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesType = selectedType === "all" || session.type === selectedType
-    return matchesSearch && matchesType
-  })
+  const filteredSessions = pastSessions.filter((session) => {
+    const matchesSearch =
+      session.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      session.student.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = selectedType === 'all' || session.type === selectedType;
+    return matchesSearch && matchesType;
+  });
 
   return (
     <div className="space-y-6">
@@ -86,8 +82,8 @@ export default function HistoryPage() {
       <div className="flex gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input 
-            placeholder="Search sessions..." 
+          <Input
+            placeholder="Search sessions..."
             className="pl-10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -111,8 +107,11 @@ export default function HistoryPage() {
       {/* Sessions List */}
       <div className="grid gap-4">
         {filteredSessions.map((session) => (
-          <Card key={session.id} className="cursor-pointer hover:shadow-md transition-shadow"
-            onClick={() => setSelectedSession(session)}>
+          <Card
+            key={session.id}
+            className="cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => setSelectedSession(session)}
+          >
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
@@ -129,9 +128,7 @@ export default function HistoryPage() {
                     <p className="font-medium">{session.student}</p>
                     <div className="flex items-center text-yellow-500">
                       {'★'.repeat(Math.floor(session.rating))}
-                      <span className="ml-1 text-sm text-muted-foreground">
-                        ({session.rating})
-                      </span>
+                      <span className="ml-1 text-sm text-muted-foreground">({session.rating})</span>
                     </div>
                   </div>
                   <Badge variant="outline">{session.type}</Badge>
@@ -162,10 +159,11 @@ export default function HistoryPage() {
           </div>
         )}
       </div>
-        <SessionDetailsDialog
+      <SessionDetailsDialog
         session={selectedSession}
         open={!!selectedSession}
-        onOpenChange={(open) => !open && setSelectedSession(null)}/>
+        onOpenChange={(open) => !open && setSelectedSession(null)}
+      />
     </div>
-  )
+  );
 }

@@ -1,23 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Clock, Code, Users, VideoIcon } from 'lucide-react';
+import { useState } from 'react';
+
+import { Badge } from '@/components/ui/badge';
+import { Calendar } from '@/components/ui/calendar';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Users, VideoIcon, Code } from "lucide-react";
+} from '@/components/ui/select';
 
 interface Session {
   id: string;
@@ -42,13 +37,13 @@ export default function CalendarPage() {
       startTime: new Date('2024-01-25T10:00:00'),
       endTime: new Date('2024-01-25T11:30:00'),
       participants: ['John Doe', 'Jane Smith'],
-      status: 'upcoming'
+      status: 'upcoming',
     },
     // Add more sessions...
   ];
 
   const getSessionsForDate = (date: Date) => {
-    return sessions.filter(session => {
+    return sessions.filter((session) => {
       const sessionDate = new Date(session.startTime);
       return sessionDate.toDateString() === date.toDateString();
     });
@@ -90,11 +85,11 @@ export default function CalendarPage() {
           <CardHeader>
             <CardTitle>Sessions</CardTitle>
             <CardDescription>
-              {date.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+              {date.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
               })}
             </CardDescription>
           </CardHeader>
@@ -113,7 +108,7 @@ export default function CalendarPage() {
                           <h3 className="font-semibold">{session.title}</h3>
                           <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
                             <Clock className="h-4 w-4" />
-                            {new Date(session.startTime).toLocaleTimeString()} - 
+                            {new Date(session.startTime).toLocaleTimeString()} -
                             {new Date(session.endTime).toLocaleTimeString()}
                           </div>
                           <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
@@ -123,8 +118,11 @@ export default function CalendarPage() {
                         </div>
                         <Badge
                           variant={
-                            session.status === 'upcoming' ? 'default' :
-                            session.status === 'completed' ? 'secondary' : 'destructive'
+                            session.status === 'upcoming'
+                              ? 'default'
+                              : session.status === 'completed'
+                                ? 'secondary'
+                                : 'destructive'
                           }
                         >
                           {session.status}

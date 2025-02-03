@@ -1,34 +1,34 @@
-"use client";
+'use client';
 
+import { Star } from 'lucide-react';
 
-import { Star } from "lucide-react";
-import { useTranslation } from "@/components/i18n";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { useTranslation } from '@/components/i18n';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
 export const ExpertsList = () => {
   const { t } = useTranslation();
 
   const experts = [
     {
-      name: "E. Wandji",
-      role: "Senior Frontend Developer",
-      specialties: ["React", "TypeScript", "UI/UX"],
+      name: 'E. Wandji',
+      role: 'Senior Frontend Developer',
+      specialties: ['React', 'TypeScript', 'UI/UX'],
       rating: 4.9,
       sessions: 156,
     },
     {
-      name: "P. Manga",
-      role: "Marketing Expert",
-      specialties: ["Marketing", "Branding", "Personna definition"],
+      name: 'P. Manga',
+      role: 'Marketing Expert',
+      specialties: ['Marketing', 'Branding', 'Personna definition'],
       rating: 4.8,
       sessions: 203,
     },
     {
-      name: "B. Ella",
-      role: "Product Owner Expert",
-      specialties: ["Design Thinking", "Scaling", "Attract customer"],
+      name: 'B. Ella',
+      role: 'Product Owner Expert',
+      specialties: ['Design Thinking', 'Scaling', 'Attract customer'],
       rating: 4.9,
       sessions: 178,
     },

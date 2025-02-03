@@ -1,37 +1,25 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { FileText, Mail, MoreVertical, Search, UserCheck, UserX } from 'lucide-react';
+import { useState } from 'react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Search,
-  MoreVertical,
-  Mail,
-  UserCheck,
-  UserX,
-  FileText,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/select';
 
 // Types pour les candidatures
 interface TalentApplication {
@@ -65,21 +53,22 @@ export default function TalentsDashboardPage() {
       skills: ['React', 'TypeScript', 'Next.js'],
       bio: 'Experienced frontend developer...',
       status: 'PENDING',
-      createdAt: '2024-01-15'
+      createdAt: '2024-01-15',
     },
     // Ajouter plus de talents...
   ];
 
   // Filtrer les talents
-  const filteredTalents = talents.filter(talent => {
-    const matchesSearch = 
+  const filteredTalents = talents.filter((talent) => {
+    const matchesSearch =
       talent.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       talent.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      talent.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    const matchesExpertise = expertiseFilter === 'all' || talent.primaryExpertise === expertiseFilter;
+      talent.skills.some((skill) => skill.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    const matchesExpertise =
+      expertiseFilter === 'all' || talent.primaryExpertise === expertiseFilter;
     const matchesStatus = statusFilter === 'all' || talent.status === statusFilter;
-    
+
     return matchesSearch && matchesExpertise && matchesStatus;
   });
 
@@ -89,7 +78,7 @@ export default function TalentsDashboardPage() {
       REVIEWING: 'bg-blue-100 text-blue-800',
       APPROVED: 'bg-green-100 text-green-800',
       REJECTED: 'bg-red-100 text-red-800',
-      HIRED: 'bg-purple-100 text-purple-800'
+      HIRED: 'bg-purple-100 text-purple-800',
     };
     return colors[status] || 'bg-gray-100 text-gray-800';
   };
@@ -99,9 +88,7 @@ export default function TalentsDashboardPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold">Talent Applications</h1>
-          <p className="text-muted-foreground mt-1">
-            Review and manage talent applications
-          </p>
+          <p className="text-muted-foreground mt-1">Review and manage talent applications</p>
         </div>
       </div>
 
@@ -116,7 +103,7 @@ export default function TalentsDashboardPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        
+
         <Select value={expertiseFilter} onValueChange={setExpertiseFilter}>
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Filter by expertise" />
@@ -158,7 +145,7 @@ export default function TalentsDashboardPage() {
                   </h3>
                   <p className="text-sm text-muted-foreground">{talent.email}</p>
                 </div>
-                
+
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon">
@@ -188,9 +175,7 @@ export default function TalentsDashboardPage() {
 
               <div className="mt-4 space-y-4">
                 <div>
-                  <Badge className={getStatusColor(talent.status)}>
-                    {talent.status}
-                  </Badge>
+                  <Badge className={getStatusColor(talent.status)}>{talent.status}</Badge>
                   <Badge variant="outline" className="ml-2">
                     {talent.experienceYears} years
                   </Badge>
@@ -207,9 +192,7 @@ export default function TalentsDashboardPage() {
                   ))}
                 </div>
 
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {talent.bio}
-                </p>
+                <p className="text-sm text-muted-foreground line-clamp-2">{talent.bio}</p>
 
                 <div className="flex justify-between items-center text-sm text-muted-foreground">
                   <span>Applied on: {new Date(talent.createdAt).toLocaleDateString()}</span>

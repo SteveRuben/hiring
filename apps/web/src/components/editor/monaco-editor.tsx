@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from 'react';
-import * as monaco from 'monaco-editor';
 import { loader } from '@monaco-editor/react';
 import { Editor } from '@monaco-editor/react';
-import { Card } from "@/components/ui/card";
+import * as monaco from 'monaco-editor';
+import { useEffect, useRef } from 'react';
+
+import { Card } from '@/components/ui/card';
 
 interface MonacoEditorProps {
   value: string;
   language: string;
   onChange: (value: string) => void;
   height?: string;
-  theme?: "vs-dark" | "light";
+  theme?: 'vs-dark' | 'light';
   readOnly?: boolean;
 }
 
@@ -19,9 +20,9 @@ export function MonacoEditor({
   value,
   language,
   onChange,
-  height = "400px",
-  theme = "vs-dark",
-  readOnly = false
+  height = '400px',
+  theme = 'vs-dark',
+  readOnly = false,
 }: MonacoEditorProps) {
   const editorRef = useRef<any>(null);
 
@@ -37,10 +38,10 @@ export function MonacoEditor({
       lineHeight: 21,
       padding: { top: 10, bottom: 10 },
       folding: true,
-      autoClosingBrackets: "always",
-      autoClosingQuotes: "always",
+      autoClosingBrackets: 'always',
+      autoClosingQuotes: 'always',
       formatOnPaste: true,
-      formatOnType: true
+      formatOnType: true,
     });
   };
 
@@ -52,7 +53,7 @@ export function MonacoEditor({
       rules: [],
       colors: {
         'editor.background': '#1a1a1a',
-      }
+      },
     });
 
     monaco.editor.defineTheme('prep-ai-light', {
@@ -61,7 +62,7 @@ export function MonacoEditor({
       rules: [],
       colors: {
         'editor.background': '#ffffff',
-      }
+      },
     });
   }, []);
 
@@ -77,31 +78,27 @@ export function MonacoEditor({
         options={{
           readOnly,
           automaticLayout: true,
-          wordWrap: "on",
+          wordWrap: 'on',
           scrollBeyondLastLine: false,
           minimap: {
-            enabled: true
+            enabled: true,
           },
           // Suggestions et autocomplétion
           suggestOnTriggerCharacters: true,
           quickSuggestions: true,
-          snippetSuggestions: "inline",
+          snippetSuggestions: 'inline',
           // Format du code
           formatOnPaste: true,
           formatOnType: true,
           // UI
-          lineNumbers: "on",
+          lineNumbers: 'on',
           glyphMargin: true,
           folding: true,
           // Personnalisation
           fontFamily: "'Fira Code', monospace",
-          fontSize: 14
+          fontSize: 14,
         }}
-        loading={
-          <div className="flex items-center justify-center h-full">
-            Loading editor...
-          </div>
-        }
+        loading={<div className="flex items-center justify-center h-full">Loading editor...</div>}
       />
     </Card>
   );

@@ -1,3 +1,4 @@
+/*eslint no-unused-vars: "error"*/
 export type Files = {
   fieldname: string;
   originalname: string;

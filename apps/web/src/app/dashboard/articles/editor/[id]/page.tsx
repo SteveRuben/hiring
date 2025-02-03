@@ -1,23 +1,22 @@
-"use client";
+'use client';
 
+import { Eye, MoreVertical, Plus, Save, Settings, Share2 } from 'lucide-react';
 import { use, useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
+import NotionEditor from '@/components/editor/NotionEditor';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Save, MoreVertical, Share2, Settings, Eye, Plus } from 'lucide-react';
-import NotionEditor from '@/components/editor/NotionEditor';
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 
-
-
-export default function ArticleEditorPage({ params }: {params: Promise<{ id: string }>}) {
+export default function ArticleEditorPage({ params }: { params: Promise<{ id: string }> }) {
   const [isPreview, setIsPreview] = useState(false);
   const [title, setTitle] = useState('');
-  const { id } = use(params) ;
+  const { id } = use(params);
   const isNewArticle = id === 'new';
 
   const handleSave = async () => {
@@ -42,13 +41,9 @@ export default function ArticleEditorPage({ params }: {params: Promise<{ id: str
 
           <div className="flex items-center gap-2">
             {/* Bouton Preview */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsPreview(!isPreview)}
-            >
+            <Button variant="ghost" size="sm" onClick={() => setIsPreview(!isPreview)}>
               <Eye className="h-4 w-4 mr-2" />
-              {isPreview ? "Edit" : "Preview"}
+              {isPreview ? 'Edit' : 'Preview'}
             </Button>
 
             {/* Bouton Share */}
@@ -75,12 +70,8 @@ export default function ArticleEditorPage({ params }: {params: Promise<{ id: str
                   <Settings className="h-4 w-4 mr-2" />
                   Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  Export PDF
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  Export Markdown
-                </DropdownMenuItem>
+                <DropdownMenuItem>Export PDF</DropdownMenuItem>
+                <DropdownMenuItem>Export Markdown</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

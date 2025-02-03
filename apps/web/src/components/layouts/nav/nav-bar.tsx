@@ -1,15 +1,16 @@
-"use client";
+'use client';
 
-import { Menu, Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Globe, Menu } from 'lucide-react';
+import Link from 'next/link';
+
+import { useTranslation } from '@/components/i18n';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useTranslation } from "@/components/i18n";
-import Link from "next/link";
+} from '@/components/ui/dropdown-menu';
 
 const Navbar = () => {
   const { t, language, setLanguage } = useTranslation();
@@ -23,7 +24,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-              {t("nav.home")}
+              {t('nav.home')}
             </span>
           </Link>
 
@@ -36,25 +37,25 @@ const Navbar = () => {
               href="#features"
               className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
             >
-              {t("nav.features")}
+              {t('nav.features')}
             </Link>
             <Link
               href="#experts"
               className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
             >
-              {t("nav.findExperts")}
+              {t('nav.findExperts')}
             </Link>
             <Link
               href="talent"
               className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
             >
-              {t("nav.talents")}
+              {t('nav.talents')}
             </Link>
             <Link href="/login">
-              <Button variant="ghost">{t("nav.signIn")}</Button>
+              <Button variant="ghost">{t('nav.signIn')}</Button>
             </Link>
-            <Button onClick={() => (window.location.href = "/register")}>
-              {t("nav.getStarted")}
+            <Button onClick={() => (window.location.href = '/register')}>
+              {t('nav.getStarted')}
             </Button>
 
             {/* Language Selector */}
@@ -65,14 +66,14 @@ const Navbar = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
-                  onSelect={() => setLanguage("en")}
-                  className={language === "en" ? "bg-slate-100" : ""}
+                  onSelect={() => setLanguage('en')}
+                  className={language === 'en' ? 'bg-slate-100' : ''}
                 >
                   English
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onSelect={() => setLanguage("fr")}
-                  className={language === "fr" ? "bg-slate-100" : ""}
+                  onSelect={() => setLanguage('fr')}
+                  className={language === 'fr' ? 'bg-slate-100' : ''}
                 >
                   Français
                 </DropdownMenuItem>

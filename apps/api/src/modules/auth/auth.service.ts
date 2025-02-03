@@ -7,36 +7,19 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { createDigest, createRandomBytes } from '@otplib/plugin-crypto';
+import { keyDecoder, keyEncoder } from '@otplib/plugin-thirty-two';
 import type { Prisma } from '@prisma/client';
 import { Email, MfaMethod, User } from '@prisma/client';
+import axios from 'axios';
 import { compare, hash } from 'bcrypt';
 import { createHash } from 'crypto';
-
 import anonymize from 'ip-anonymize';
 import { authenticator } from 'otplib';
-import { createRandomBytes, createDigest } from '@otplib/plugin-crypto';
-import { keyEncoder, keyDecoder } from '@otplib/plugin-thirty-two';
 import qrcode from 'qrcode';
 import randomColor from 'randomcolor';
 import UAParser from 'ua-parser-js';
 
-import { RegisterDto } from './auth.dto';
-import {
-  AccessTokenClaims,
-  MfaTokenPayload,
-  TokenResponse,
-  TotpTokenResponse,
-} from './auth.interface';
-
-import axios from 'axios';
-import { PrismaService } from '@/prisma/prisma.service';
-import { MailService } from '@/providers/mail/mail.service';
-import { PwnedService } from '@/providers/pwned/pwned.service';
-import { TokensService } from '@/providers/tokens/tokens.service';
-import { GeolocationService } from '@/providers/geolocation/geolocation.service';
-import { ApprovedSubnetsService } from '../approved-subnets/approved-subnets.service';
-import { TwilioService } from '@/providers/twilio/twilio.service';
-import { safeEmail } from '@/helpers/safe-email';
 import {
   COMPROMISED_PASSWORD,
   EMAIL_USER_CONFLICT,
@@ -54,6 +37,18 @@ import {
   UNVERIFIED_LOCATION,
   USER_NOT_FOUND,
 } from '@/errors/errors.constants';
+import { safeEmail } from '@/helpers/safe-email';
+import {
+  groupAdminScopes,
+  groupMemberScopes,
+  groupOwnerScopes,
+  userScopes,
+} from '@/helpers/scopes';
+import { Expose } from '@/prisma/prisma.interface';
+import { PrismaService } from '@/prisma/prisma.service';
+import { GeolocationService } from '@/providers/geolocation/geolocation.service';
+import { MailService } from '@/providers/mail/mail.service';
+import { PwnedService } from '@/providers/pwned/pwned.service';
 import {
   APPROVE_SUBNET_TOKEN,
   EMAIL_MFA_TOKEN,
@@ -63,13 +58,17 @@ import {
   MULTI_FACTOR_TOKEN,
   PASSWORD_RESET_TOKEN,
 } from '@/providers/tokens/tokens.constants';
-import { Expose } from '@/prisma/prisma.interface';
+import { TokensService } from '@/providers/tokens/tokens.service';
+import { TwilioService } from '@/providers/twilio/twilio.service';
+
+import { ApprovedSubnetsService } from '../approved-subnets/approved-subnets.service';
+import { RegisterDto } from './auth.dto';
 import {
-  groupAdminScopes,
-  groupMemberScopes,
-  groupOwnerScopes,
-  userScopes,
-} from '@/helpers/scopes';
+  AccessTokenClaims,
+  MfaTokenPayload,
+  TokenResponse,
+  TotpTokenResponse,
+} from './auth.interface';
 
 @Injectable()
 export class AuthService {
@@ -206,9 +205,8 @@ export class AuthService {
     if (this.configService.get<boolean>('gravatar.enabled')) {
       for await (const emailString of [email, emailSafe]) {
         const md5Email = createHash('md5').update(emailString).digest('hex');
-         try {
-         
-         /* const img = await  axios.get(
+        try {
+          /* const img = await  axios.get(
             `https://www.gravatar.com/avatar/${md5Email}?d=404`,
             { responseType: 'buffer' },
           );

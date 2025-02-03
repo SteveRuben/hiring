@@ -1,16 +1,17 @@
-import { cn } from "@/lib/utils"
-import Link from "next/link"
-import Image from "next/image"
+import Image from 'next/image';
+import Link from 'next/link';
+
+import { cn } from '@/lib/utils';
 
 interface LogoProps extends React.HTMLAttributes<HTMLDivElement> {
-  className?: string
-  link?: boolean
-  newTab?: boolean
+  className?: string;
+  link?: boolean;
+  newTab?: boolean;
 }
 
 export function Logo({ className, link = false, newTab = false, ...props }: LogoProps) {
   const logoContent = (
-    <div className={cn("relative", className)} {...props}>
+    <div className={cn('relative', className)} {...props}>
       <Image
         src="/assets/logo.svg"
         alt="Logo"
@@ -20,24 +21,26 @@ export function Logo({ className, link = false, newTab = false, ...props }: Logo
         priority
       />
     </div>
-  )
+  );
 
   if (link) {
     return (
-      <Link 
-        href="/" 
-        {...(newTab ? {
-          target: "_blank",
-          rel: "noopener noreferrer"
-        } : {})}
+      <Link
+        href="/"
+        {...(newTab
+          ? {
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            }
+          : {})}
         className="hover:opacity-90 transition-opacity"
       >
         {logoContent}
       </Link>
-    )
+    );
   }
 
-  return logoContent
+  return logoContent;
 }
 
 // Usage du composant :

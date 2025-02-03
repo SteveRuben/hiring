@@ -1,35 +1,35 @@
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { use } from "react";
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
+import { use } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 /* export default function AuthError({
   searchParams,
 }: {
   searchParams?: { error?: string };
 }) { */
-  interface ErrorPageProps {
-    searchParams?: {
-      error?: string;
-    };
-  }
-  
-  export default function ErrorPage({ params }: {params: Promise<{ error: string }>}) {
-    const { error } = use(params) || "default";
-  
-  
+interface ErrorPageProps {
+  searchParams?: {
+    error?: string;
+  };
+}
+
+export default function ErrorPage({ params }: { params: Promise<{ error: string }> }) {
+  const { error } = use(params) || 'default';
+
   const errorMessages: Record<string, string> = {
-    Signin: "Tentative de connexion échouée.",
-    OAuthSignin: "Tentative de connexion avec le provider échouée.",
-    OAuthCallback: "Erreur lors de la connexion avec le provider.",
-    OAuthCreateAccount: "Impossible de créer un compte avec le provider.",
-    EmailCreateAccount: "Impossible de créer un compte avec cet email.",
-    Callback: "Erreur lors de la connexion.",
-    OAuthAccountNotLinked: "Cet email est déjà associé à un autre compte.",
-    EmailSignin: "Vérifiez votre email pour le lien de connexion.",
-    CredentialsSignin: "Email ou mot de passe incorrect.",
-    SessionRequired: "Veuillez vous connecter pour accéder à cette page.",
+    Signin: 'Tentative de connexion échouée.',
+    OAuthSignin: 'Tentative de connexion avec le provider échouée.',
+    OAuthCallback: 'Erreur lors de la connexion avec le provider.',
+    OAuthCreateAccount: 'Impossible de créer un compte avec le provider.',
+    EmailCreateAccount: 'Impossible de créer un compte avec cet email.',
+    Callback: 'Erreur lors de la connexion.',
+    OAuthAccountNotLinked: 'Cet email est déjà associé à un autre compte.',
+    EmailSignin: 'Vérifiez votre email pour le lien de connexion.',
+    CredentialsSignin: 'Email ou mot de passe incorrect.',
+    SessionRequired: 'Veuillez vous connecter pour accéder à cette page.',
     default: "Une erreur inattendue s'est produite.",
   };
 

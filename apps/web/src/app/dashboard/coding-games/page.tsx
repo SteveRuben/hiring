@@ -1,40 +1,35 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+  ArrowUpRight,
+  Clock,
+  Code2,
+  MoreVertical,
+  Plus,
+  Search,
+  Star,
+  Trophy,
+  Users,
+} from 'lucide-react';
+import { useState } from 'react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Search,
-  Plus,
-  Code2,
-  MoreVertical,
-  Star,
-  Users,
-  Trophy,
-  Clock,
-  ArrowUpRight
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/select';
 
 interface CodingChallenge {
   id: string;
@@ -66,7 +61,7 @@ export default function CodingGamesPage() {
       attempts: 1200,
       successRate: 78,
       estimatedTime: '30 mins',
-      points: 100
+      points: 100,
     },
     {
       id: '2',
@@ -78,7 +73,7 @@ export default function CodingGamesPage() {
       attempts: 800,
       successRate: 65,
       estimatedTime: '45 mins',
-      points: 200
+      points: 200,
     },
     {
       id: '3',
@@ -90,26 +85,32 @@ export default function CodingGamesPage() {
       attempts: 500,
       successRate: 45,
       estimatedTime: '60 mins',
-      points: 300
-    }
+      points: 300,
+    },
   ];
 
   // Filter challenges based on search and filters
-  const filteredChallenges = challenges.filter(challenge => {
-    const matchesSearch = challenge.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         challenge.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesDifficulty = difficultyFilter === 'all' || challenge.difficulty === difficultyFilter;
+  const filteredChallenges = challenges.filter((challenge) => {
+    const matchesSearch =
+      challenge.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      challenge.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesDifficulty =
+      difficultyFilter === 'all' || challenge.difficulty === difficultyFilter;
     const matchesCategory = categoryFilter === 'all' || challenge.category === categoryFilter;
-    
+
     return matchesSearch && matchesDifficulty && matchesCategory;
   });
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'beginner': return 'bg-green-100 text-green-800';
-      case 'intermediate': return 'bg-yellow-100 text-yellow-800';
-      case 'advanced': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'beginner':
+        return 'bg-green-100 text-green-800';
+      case 'intermediate':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'advanced':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -123,7 +124,7 @@ export default function CodingGamesPage() {
           </p>
         </div>
 
-        <Button onClick={() => window.location.href = '/dashboard/coding-games/create'}>
+        <Button onClick={() => (window.location.href = '/dashboard/coding-games/create')}>
           <Plus className="w-4 h-4 mr-2" />
           Create Challenge
         </Button>
@@ -140,7 +141,7 @@ export default function CodingGamesPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        
+
         <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Difficulty" />
@@ -177,9 +178,7 @@ export default function CodingGamesPage() {
                     <Code2 className="h-5 w-5 text-blue-500" />
                     {challenge.title}
                   </CardTitle>
-                  <CardDescription className="mt-1.5">
-                    {challenge.description}
-                  </CardDescription>
+                  <CardDescription className="mt-1.5">{challenge.description}</CardDescription>
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -227,9 +226,9 @@ export default function CodingGamesPage() {
                 </div>
 
                 {/* Start Button */}
-                <Button 
-                  className="w-full mt-4" 
-                  onClick={() => window.location.href = `/dashboard/coding-games/${challenge.id}`}
+                <Button
+                  className="w-full mt-4"
+                  onClick={() => (window.location.href = `/dashboard/coding-games/${challenge.id}`)}
                 >
                   Start Challenge
                   <ArrowUpRight className="ml-2 h-4 w-4" />

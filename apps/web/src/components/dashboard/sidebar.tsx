@@ -1,8 +1,10 @@
-import { LucideIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { Button } from "../ui/button";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { LucideIcon } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { cn } from '@/lib/utils';
+
+import { Button } from '../ui/button';
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -12,7 +14,7 @@ interface SidebarProps {
       title: string;
       href: string;
       icon: LucideIcon;
-      variant: "default" | "ghost";
+      variant: 'default' | 'ghost';
       label?: string;
     }[];
   }[];
@@ -33,22 +35,16 @@ export function Sidebar({ sections = [], isCollapsed }: SidebarProps) {
           {section.items.map((item) => (
             <Button
               key={item.href}
-              variant={pathname === item.href ? "default" : "ghost"}
-              size={isCollapsed ? "icon" : "default"}
-              className={cn(
-                "justify-start",
-                pathname === item.href && "bg-muted"
-              )}
+              variant={pathname === item.href ? 'default' : 'ghost'}
+              size={isCollapsed ? 'icon' : 'default'}
+              className={cn('justify-start', pathname === item.href && 'bg-muted')}
               asChild
             >
               <Link href={item.href}>
-                <item.icon className={cn(
-                  "h-4 w-4",
-                  item.variant === "default" && "text-background"
-                )} />
-                {!isCollapsed && (
-                  <span className="ml-2">{item.title}</span>
-                )}
+                <item.icon
+                  className={cn('h-4 w-4', item.variant === 'default' && 'text-background')}
+                />
+                {!isCollapsed && <span className="ml-2">{item.title}</span>}
               </Link>
             </Button>
           ))}

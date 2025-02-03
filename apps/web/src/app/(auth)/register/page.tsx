@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { RegisterForm } from "@/components/auth";
+import { RegisterForm } from '@/components/auth';
 
 export default function RegisterPage() {
   return (
@@ -9,5 +9,5 @@ export default function RegisterPage() {
         <RegisterForm />
       </div>
     </div>
-  )
+  );
 }

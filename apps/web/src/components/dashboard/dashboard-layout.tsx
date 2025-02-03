@@ -1,26 +1,28 @@
 // components/layouts/dashboard-layout.tsx
 'use client';
 
-import { useState } from "react";
-import { MainNav } from "@/components/layouts/nav/main-nav";
-import { UserNav } from "@/components/layouts/nav/user-nav";
-import { 
-  BarChart, 
-  Calendar, 
-  LayoutDashboard, 
-  Library,
-  Users2,
+import {
+  BarChart,
+  Calendar,
+  ChevronLeft,
+  GraduationCap,
   History,
-  Settings,
-  GraduationCap, 
+  LayoutDashboard,
+  Library,
   Menu,
-  ChevronLeft
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Button } from "../ui/button";
-import { Sidebar } from "./sidebar";
-import { Search } from "./search";
+  Settings,
+  Users2,
+} from 'lucide-react';
+import { useState } from 'react';
+
+import { MainNav } from '@/components/layouts/nav/main-nav';
+import { UserNav } from '@/components/layouts/nav/user-nav';
+import { cn } from '@/lib/utils';
+
+import { Button } from '../ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
+import { Search } from './search';
+import { Sidebar } from './sidebar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -31,54 +33,54 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const sidebarSections = [
     {
-      title: "Overview",
+      title: 'Overview',
       items: [
         {
-          title: "Dashboard",
-          href: "/dashboard",
+          title: 'Dashboard',
+          href: '/dashboard',
           icon: LayoutDashboard,
-          variant: "default" as const,
-          label: ""
+          variant: 'default' as const,
+          label: '',
         },
         {
-          title: "Calendar",
-          href: "/dashboard/calendar",
+          title: 'Calendar',
+          href: '/dashboard/calendar',
           icon: Calendar,
-          variant: "ghost" as const,
-          label: ""
+          variant: 'ghost' as const,
+          label: '',
         },
         {
-          title: "Past Sessions",
-          href: "/dashboard/history",
+          title: 'Past Sessions',
+          href: '/dashboard/history',
           icon: History,
-          variant: "ghost" as const,
-          label: "3"
+          variant: 'ghost' as const,
+          label: '3',
         },
       ],
     },
     {
-      title: "Analytics",
+      title: 'Analytics',
       items: [
         {
-          title: "Performance",
-          href: "/dashboard/performance",
+          title: 'Performance',
+          href: '/dashboard/performance',
           icon: BarChart,
-          variant: "ghost" as const,
-          label: ""
+          variant: 'ghost' as const,
+          label: '',
         },
         {
-          title: "Students",
-          href: "/dashboard/students",
+          title: 'Students',
+          href: '/dashboard/students',
           icon: Users2,
-          variant: "ghost" as const,
-          label: "12"
+          variant: 'ghost' as const,
+          label: '12',
         },
         {
-          title: "Resources",
-          href: "/dashboard/resources",
+          title: 'Resources',
+          href: '/dashboard/resources',
           icon: Library,
-          variant: "ghost" as const,
-          label: ""
+          variant: 'ghost' as const,
+          label: '',
         },
       ],
     },
@@ -99,11 +101,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </Sheet>
 
       {/* Desktop Sidebar */}
-      <div className={cn(
-        "hidden lg:flex",
-        isSidebarOpen ? "w-72" : "w-16",
-        "flex-col fixed inset-y-0 z-50 bg-background border-r"
-      )}>
+      <div
+        className={cn(
+          'hidden lg:flex',
+          isSidebarOpen ? 'w-72' : 'w-16',
+          'flex-col fixed inset-y-0 z-50 bg-background border-r'
+        )}
+      >
         <div className="flex h-16 items-center px-4 gap-x-4">
           <GraduationCap className="h-6 w-6" />
           {isSidebarOpen && <span className="font-semibold">Prep AI</span>}
@@ -113,23 +117,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             className="ml-auto"
             onClick={() => setSidebarOpen(!isSidebarOpen)}
           >
-            <ChevronLeft className={cn(
-              "h-4 w-4 transition-all",
-              !isSidebarOpen && "rotate-180"
-            )} />
+            <ChevronLeft className={cn('h-4 w-4 transition-all', !isSidebarOpen && 'rotate-180')} />
           </Button>
         </div>
-        <Sidebar 
-          sections={sidebarSections} 
-          isCollapsed={!isSidebarOpen} 
-        />
+        <Sidebar sections={sidebarSections} isCollapsed={!isSidebarOpen} />
       </div>
 
       {/* Main Content */}
-      <div className={cn(
-        "flex-1",
-        isSidebarOpen ? "lg:pl-72" : "lg:pl-16"
-      )}>
+      <div className={cn('flex-1', isSidebarOpen ? 'lg:pl-72' : 'lg:pl-16')}>
         <header className="sticky top-0 z-40 border-b bg-background">
           <div className="container flex h-16 items-center justify-between px-4">
             <div className="flex items-center gap-x-4">
@@ -141,9 +136,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             </div>
           </div>
         </header>
-        <main className="container p-4 md:p-8">
-          {children}
-        </main>
+        <main className="container p-4 md:p-8">{children}</main>
       </div>
     </div>
   );

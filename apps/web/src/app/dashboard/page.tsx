@@ -1,105 +1,106 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { 
-  PlusCircle, 
-  Layout, 
-  Coffee, 
-  Calendar, 
-  Users, 
-  Presentation, 
-  UserPlus,
-  Clock,
-  Users2,
-  PartyPopper,
-  Lightbulb,
-  UserCheck,
-  Code,
+import {
   BookOpen,
-  Newspaper,
+  Calendar,
+  Clock,
+  Code,
+  Coffee,
+  FileCode,
   GraduationCap,
+  Layout,
+  Lightbulb,
+  Newspaper,
+  PartyPopper,
+  PlusCircle,
+  Presentation,
   Terminal,
-  FileCode
-} from "lucide-react";
-import Link from "next/link";
+  UserCheck,
+  UserPlus,
+  Users,
+  Users2,
+} from 'lucide-react';
+import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function DashboardPage() {
   const contentTypes = {
     learning: [
       {
-        value: "codingGame",
-        title: "Coding Game",
-        description: "Créez des défis de programmation interactifs.",
-        icon: Code
+        value: 'codingGame',
+        title: 'Coding Game',
+        description: 'Créez des défis de programmation interactifs.',
+        icon: Code,
       },
       {
-        value: "article",
-        title: "Article Technique",
-        description: "Partagez vos connaissances à travers des articles détaillés.",
-        icon: Newspaper
+        value: 'article',
+        title: 'Article Technique',
+        description: 'Partagez vos connaissances à travers des articles détaillés.',
+        icon: Newspaper,
       },
       {
-        value: "tutorial",
-        title: "Tutoriel Code",
-        description: "Créez des tutoriels pas à pas pour apprendre à coder.",
-        icon: Terminal
+        value: 'tutorial',
+        title: 'Tutoriel Code',
+        description: 'Créez des tutoriels pas à pas pour apprendre à coder.',
+        icon: Terminal,
       },
     ],
     meetings: [
       {
-        value: "blank",
-        title: "Session personnalisée",
-        description: "Une salle vide pour vos besoins personnalisés.",
-        icon: Layout
+        value: 'blank',
+        title: 'Session personnalisée',
+        description: 'Une salle vide pour vos besoins personnalisés.',
+        icon: Layout,
       },
       {
-        value: "daily",
-        title: "Daily Stand-Up",
-        description: "Identifiez et résolvez les obstacles quotidiens.",
-        icon: Clock
+        value: 'daily',
+        title: 'Daily Stand-Up',
+        description: 'Identifiez et résolvez les obstacles quotidiens.',
+        icon: Clock,
       },
       {
-        value: "weekly",
-        title: "Weekly Sync-Up",
+        value: 'weekly',
+        title: 'Weekly Sync-Up',
         description: "Suivez la progression de l'équipe.",
-        icon: Calendar
+        icon: Calendar,
       },
       {
-        value: "allHands",
-        title: "All-Hands Meeting",
-        description: "Gardez tout le monde aligné sur les objectifs.",
-        icon: Presentation
+        value: 'allHands',
+        title: 'All-Hands Meeting',
+        description: 'Gardez tout le monde aligné sur les objectifs.',
+        icon: Presentation,
       },
       {
-        value: "oneOnOne",
-        title: "One-on-One",
-        description: "Construisez une relation dans un espace confortable.",
-        icon: Users
+        value: 'oneOnOne',
+        title: 'One-on-One',
+        description: 'Construisez une relation dans un espace confortable.',
+        icon: Users,
       },
       {
-        value: "retrospective",
+        value: 'retrospective',
         title: "Rétrospective d'équipe",
-        description: "Évaluez les objectifs et réfléchissez aux obstacles.",
-        icon: Users2
+        description: 'Évaluez les objectifs et réfléchissez aux obstacles.',
+        icon: Users2,
       },
       {
-        value: "happyHour",
-        title: "Happy Hour",
+        value: 'happyHour',
+        title: 'Happy Hour',
         description: "Développez la confiance et les liens avec l'équipe.",
-        icon: PartyPopper
+        icon: PartyPopper,
       },
       {
-        value: "brainstorm",
-        title: "Brainstorm",
-        description: "Générez des idées en groupe pour résoudre des problèmes.",
-        icon: Lightbulb
+        value: 'brainstorm',
+        title: 'Brainstorm',
+        description: 'Générez des idées en groupe pour résoudre des problèmes.',
+        icon: Lightbulb,
       },
       {
-        value: "interview",
-        title: "Entretien à distance",
-        description: "Trouvez les meilleurs talents pour votre équipe.",
-        icon: UserCheck
+        value: 'interview',
+        title: 'Entretien à distance',
+        description: 'Trouvez les meilleurs talents pour votre équipe.',
+        icon: UserCheck,
       },
-    ]
+    ],
   };
 
   const renderSection = (title: string, items: typeof contentTypes.learning) => (
@@ -118,9 +119,7 @@ export default function DashboardPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    {type.description}
-                  </p>
+                  <p className="text-muted-foreground">{type.description}</p>
                 </CardContent>
               </Link>
             </Card>
@@ -143,7 +142,7 @@ export default function DashboardPage() {
       </div>
 
       {renderSection("Contenu d'apprentissage", contentTypes.learning)}
-      {renderSection("Types de réunions", contentTypes.meetings)}
+      {renderSection('Types de réunions', contentTypes.meetings)}
     </div>
   );
 }

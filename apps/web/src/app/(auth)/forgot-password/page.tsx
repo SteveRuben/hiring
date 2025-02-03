@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { ForgotPasswordForm } from "@/components/auth";
+import { ForgotPasswordForm } from '@/components/auth';
 
 export default function ForgotPasswordPage() {
   return (
@@ -9,5 +9,5 @@ export default function ForgotPasswordPage() {
         <ForgotPasswordForm />
       </div>
     </div>
-  )
+  );
 }

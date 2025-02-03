@@ -1,21 +1,23 @@
-'use client'
+'use client';
 
-import { FC } from 'react'
+import { useRouter } from 'next/navigation';
+import { FC } from 'react';
+
 import { ErrorCodes } from '@/constants/error-codes';
-import { useRouter } from 'next/navigation'
-import { GenericErrorPage } from './generic-error-page'
+
+import { GenericErrorPage } from './generic-error-page';
 
 interface ErrorPageProps {
-  type: ErrorCodes
-  errorMessage?: string
+  type: ErrorCodes;
+  errorMessage?: string;
 }
 
 export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleHomeClick = () => {
-    router.push('/')
-  }
+    router.push('/');
+  };
 
   const getErrorContent = () => {
     switch (type) {
@@ -27,7 +29,7 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
           body: 'The link you tried to access has expired. Please request a new link.',
           imgSrc: '/images/link-broken.png',
           imgAltText: 'Link expired illustration',
-        }
+        };
       case ErrorCodes.INVALID_LINK:
         return {
           buttonText: 'Take me home',
@@ -36,7 +38,7 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
           body: 'The link you tried to access is invalid. Please check the link and try again.',
           imgSrc: '/images/link-broken.png',
           imgAltText: 'Invalid link illustration',
-        }
+        };
       case ErrorCodes.PAGE_NOT_FOUND:
         return {
           buttonText: 'Take me home',
@@ -45,7 +47,7 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
           body: 'The page you are looking for does not exist.',
           imgSrc: '/images/404.png',
           imgAltText: '404 illustration',
-        }
+        };
       case ErrorCodes.ROOM_NOT_FOUND:
         return {
           buttonText: 'Take me home',
@@ -54,7 +56,7 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
           body: 'The room you are looking for does not exist.',
           imgSrc: '/images/room-not-found.png',
           imgAltText: 'Room not found illustration',
-        }
+        };
       default:
         return {
           buttonText: 'Return home',
@@ -63,9 +65,9 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
           body: 'An unexpected error occurred. Please try again later.',
           imgSrc: '/images/unexpected.png',
           imgAltText: 'Unexpected error illustration',
-        }
+        };
     }
-  }
+  };
 
   return (
     <GenericErrorPage
@@ -73,5 +75,5 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
       errorMessage={errorMessage}
       onClick={handleHomeClick}
     />
-  )
-}
+  );
+};

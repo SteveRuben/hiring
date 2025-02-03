@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import cryptoRandomString from 'crypto-random-string';
 import {
   decode,
   DecodeOptions,
@@ -9,8 +10,8 @@ import {
   VerifyOptions,
 } from 'jsonwebtoken';
 import { v4 } from 'uuid';
+
 import { INVALID_TOKEN } from '../../errors/errors.constants';
-import cryptoRandomString from 'crypto-random-string';
 
 @Injectable()
 export class TokensService {
@@ -96,18 +97,18 @@ export class TokensService {
         'alphanumeric',
       ].includes(charactersOrType)
     )
-    return "error";
-     return cryptoRandomString({
-        length,
-        type: charactersOrType as
-          | 'hex'
-          | 'base64'
-          | 'url-safe'
-          | 'numeric'
-          | 'distinguishable'
-          | 'ascii-printable'
-          | 'alphanumeric',
-      });
-    return cryptoRandomString({ length, characters: charactersOrType });
+      return 'error';
+    return cryptoRandomString({
+      length,
+      type: charactersOrType as
+        | 'hex'
+        | 'base64'
+        | 'url-safe'
+        | 'numeric'
+        | 'distinguishable'
+        | 'ascii-printable'
+        | 'alphanumeric',
+    });
+    // return cryptoRandomString({ length, characters: charactersOrType });
   }
 }

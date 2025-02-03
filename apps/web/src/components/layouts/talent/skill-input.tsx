@@ -1,8 +1,9 @@
-import { useState, KeyboardEvent } from "react";
-import { X, Plus } from "lucide-react";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import { Plus, X } from 'lucide-react';
+import { KeyboardEvent, useState } from 'react';
+
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface SkillInputProps {
   value: string[];
@@ -22,17 +23,17 @@ const SkillInput = ({
   onChange,
   suggestions = [],
   loading = false,
-  label = "Skills",
-  tooltip = "Press Enter or comma to add a skill",
+  label = 'Skills',
+  tooltip = 'Press Enter or comma to add a skill',
 }: SkillInputProps) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   const handleAddSkill = (skill: string) => {
     const trimmedSkill = skill.trim();
     if (trimmedSkill && !value.includes(trimmedSkill)) {
       onChange([...value, trimmedSkill]);
-      setInputValue("");
+      setInputValue('');
       setShowSuggestions(false);
     }
   };
@@ -42,10 +43,10 @@ const SkillInput = ({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === ",") {
+    if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
       handleAddSkill(inputValue);
-    } else if (e.key === "Backspace" && !inputValue && value.length > 0) {
+    } else if (e.key === 'Backspace' && !inputValue && value.length > 0) {
       // @ts-expect-error(if empty or null or undefined)
       handleRemoveSkill(value[value.length - 1]);
     }
@@ -55,7 +56,7 @@ const SkillInput = ({
     .filter(
       (suggestion) =>
         suggestion.name.toLowerCase().includes(inputValue.toLowerCase()) &&
-        !value.includes(suggestion.name),
+        !value.includes(suggestion.name)
     )
     .slice(0, 5);
 
@@ -64,11 +65,7 @@ const SkillInput = ({
       {label && <Label>{label}</Label>}
       <div className="flex flex-wrap gap-2 p-2 min-h-[100px] border rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
         {value.map((skill) => (
-          <Badge
-            key={skill}
-            variant="secondary"
-            className="h-6 px-2 flex items-center gap-1"
-          >
+          <Badge key={skill} variant="secondary" className="h-6 px-2 flex items-center gap-1">
             {skill}
             <button
               type="button"
@@ -95,32 +92,27 @@ const SkillInput = ({
             className="border-0 shadow-none focus-visible:ring-0"
           />
 
-          {showSuggestions &&
-            inputValue &&
-            filteredSuggestions.length > 0 &&
-            !loading && (
-              <div className="absolute left-0 right-0 top-full mt-1 bg-popover border rounded-md shadow-lg z-10">
-                {filteredSuggestions.map((suggestion) => (
-                  <button
-                    key={suggestion.id}
-                    type="button"
-                    onClick={() => handleAddSkill(suggestion.name)}
-                    className="w-full text-left px-3 py-2 hover:bg-accent flex items-center gap-2"
-                  >
-                    <Plus className="h-3 w-3" />
-                    <span>{suggestion.name}</span>
-                    <span className="ml-auto text-sm text-muted-foreground">
-                      Used {suggestion.usageCount} times
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
+          {showSuggestions && inputValue && filteredSuggestions.length > 0 && !loading && (
+            <div className="absolute left-0 right-0 top-full mt-1 bg-popover border rounded-md shadow-lg z-10">
+              {filteredSuggestions.map((suggestion) => (
+                <button
+                  key={suggestion.id}
+                  type="button"
+                  onClick={() => handleAddSkill(suggestion.name)}
+                  className="w-full text-left px-3 py-2 hover:bg-accent flex items-center gap-2"
+                >
+                  <Plus className="h-3 w-3" />
+                  <span>{suggestion.name}</span>
+                  <span className="ml-auto text-sm text-muted-foreground">
+                    Used {suggestion.usageCount} times
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-      {tooltip && (
-        <p className="text-sm text-muted-foreground mt-1"> {tooltip} </p>
-      )}
+      {tooltip && <p className="text-sm text-muted-foreground mt-1"> {tooltip} </p>}
     </div>
   );
 };

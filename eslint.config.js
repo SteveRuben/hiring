@@ -40,6 +40,8 @@ export default [
       'prettier/prettier': ['error', {}, { usePrettierrc: true }],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
+      'no-unused-vars': 'off',
+      'no-useless-escape':'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',

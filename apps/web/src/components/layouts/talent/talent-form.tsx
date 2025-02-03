@@ -1,42 +1,37 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import { Loader2 } from 'lucide-react';
+import { useRef, useState } from 'react';
+
+import { useTranslation } from '@/components/i18n';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Loader2 } from "lucide-react";
-import { useReferenceData } from "@/hooks/seReferenceData";
-import { useTranslation } from "@/components/i18n";
-import SkillInput from "./skill-input";
-import { TalentFormData, useTalentSubmission } from "@/hooks/useTalentApplication";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { useReferenceData } from '@/hooks/seReferenceData';
+import { TalentFormData, useTalentSubmission } from '@/hooks/useTalentApplication';
+
+import SkillInput from './skill-input';
 
 const TalentForm = () => {
- 
   const { t } = useTranslation();
   const [skills, setSkills] = useState<string[]>([]);
   const [resume, setResume] = useState<File | null>(null);
   const [formData, setFormData] = useState<TalentFormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    experience: "",
-    expertise: "",
-    bio: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    experience: '',
+    expertise: '',
+    bio: '',
     skills: [],
   });
 
@@ -44,9 +39,7 @@ const TalentForm = () => {
   const { data, isLoading, error } = useReferenceData();
   const { mutate: submitApplication, isPending } = useTalentSubmission();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -62,18 +55,18 @@ const TalentForm = () => {
 
   const resetForm = () => {
     setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      experience: "",
-      expertise: "",
-      bio: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      experience: '',
+      expertise: '',
+      bio: '',
       skills: [],
     });
     setSkills([]);
     setResume(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      fileInputRef.current.value = '';
     }
   };
 
@@ -90,7 +83,7 @@ const TalentForm = () => {
     });
 
     if (resume) {
-      formDataToSend.append("resume", resume);
+      formDataToSend.append('resume', resume);
     }
 
     submitApplication(formDataToSend, {
@@ -108,21 +101,17 @@ const TalentForm = () => {
       <div className="max-w-4xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl">{t("talent.formTitle")}</CardTitle>
-            <CardDescription>{t("talent.formDescription")}</CardDescription>
+            <CardTitle className="text-3xl">{t('talent.formTitle')}</CardTitle>
+            <CardDescription>{t('talent.formDescription')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold">
-                  {t("talent.formPersoInfo")}
-                </h3>
+                <h3 className="text-xl font-semibold">{t('talent.formPersoInfo')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName">
-                      {t("talent.formFirstName")}
-                    </Label>
+                    <Label htmlFor="firstName">{t('talent.formFirstName')}</Label>
                     <Input
                       id="firstName"
                       name="firstName"
@@ -133,7 +122,7 @@ const TalentForm = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName">{t("talent.formLastName")}</Label>
+                    <Label htmlFor="lastName">{t('talent.formLastName')}</Label>
                     <Input
                       id="lastName"
                       name="lastName"
@@ -145,7 +134,7 @@ const TalentForm = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">{t("talent.formEmail")}</Label>
+                  <Label htmlFor="email">{t('talent.formEmail')}</Label>
                   <Input
                     id="email"
                     name="email"
@@ -160,13 +149,9 @@ const TalentForm = () => {
 
               {/* Professional Information */}
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold">
-                  {t("talent.formProfessinalInfo")}
-                </h3>
+                <h3 className="text-xl font-semibold">{t('talent.formProfessinalInfo')}</h3>
                 <div className="space-y-2">
-                  <Label htmlFor="experience">
-                    {t("talent.formExperienceYear")}
-                  </Label>
+                  <Label htmlFor="experience">{t('talent.formExperienceYear')}</Label>
                   <Select
                     value={formData.experience}
                     name="experience"
@@ -175,13 +160,12 @@ const TalentForm = () => {
                     }
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder={t("talent.selectExperience")} />
+                      <SelectValue placeholder={t('talent.selectExperience')} />
                     </SelectTrigger>
                     <SelectContent>
                       {data?.experienceLevels.map((level) => (
                         <SelectItem key={level.id} value={level.id}>
-                          {t(level.label)} ({level.range.min}-
-                          {level.range.max ?? "∞"} {t("years")})
+                          {t(level.label)} ({level.range.min}-{level.range.max ?? '∞'} {t('years')})
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -189,9 +173,7 @@ const TalentForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="expertise">
-                    {t("talent.formPrimaryExpertise")}
-                  </Label>
+                  <Label htmlFor="expertise">{t('talent.formPrimaryExpertise')}</Label>
                   <Select
                     name="expertise"
                     value={formData.expertise}
@@ -200,7 +182,7 @@ const TalentForm = () => {
                     }
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder={t("talent.selectExpertise")} />
+                      <SelectValue placeholder={t('talent.selectExpertise')} />
                     </SelectTrigger>
                     <SelectContent>
                       {data?.expertiseAreas.map((area) => (
@@ -217,27 +199,25 @@ const TalentForm = () => {
                   onChange={setSkills}
                   suggestions={data?.skills}
                   loading
-                  label={t("talent.formSkills")}
-                  tooltip={t("talent.skilltooltips")}
+                  label={t('talent.formSkills')}
+                  tooltip={t('talent.skilltooltips')}
                 />
 
                 <div className="space-y-2">
-                  <Label htmlFor="bio">{t("talent.formBio")}</Label>
+                  <Label htmlFor="bio">{t('talent.formBio')}</Label>
                   <Textarea
                     id="bio"
                     name="bio"
                     value={formData.bio}
                     onChange={handleChange}
-                    placeholder={t("talent.formBioPlaceholder")}
+                    placeholder={t('talent.formBioPlaceholder')}
                     className="h-32"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="resume">
-                    {t("talent.formProfessionnalResume")}
-                  </Label>
+                  <Label htmlFor="resume">{t('talent.formProfessionnalResume')}</Label>
                   <Input
                     id="resume"
                     name="resume"
@@ -258,10 +238,10 @@ const TalentForm = () => {
                   {isPending ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      <span>{t("talent.formSubmitting")}</span>
+                      <span>{t('talent.formSubmitting')}</span>
                     </>
                   ) : (
-                    t("talent.formSubmit")
+                    t('talent.formSubmit')
                   )}
                 </Button>
               </div>

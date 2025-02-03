@@ -1,32 +1,22 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { AlertCircle, Play, Plus, Save, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+
+import { MonacoEditor } from '@/components/editor';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { Save, Plus, Trash2, Play, AlertCircle } from "lucide-react";
-import { Label } from "@/components/ui/label";
-import { MonacoEditor } from "@/components/editor";
+} from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Textarea } from '@/components/ui/textarea';
 
 interface TestCase {
   id: string;
@@ -36,44 +26,40 @@ interface TestCase {
 }
 
 export default function ChallengeEditorPage() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [difficulty, setDifficulty] = useState("beginner");
-  const [category, setCategory] = useState("");
-  const [language, setLanguage] = useState("javascript");
-  const [timeLimit, setTimeLimit] = useState("30");
-  const [points, setPoints] = useState("100");
-  const [starterCode, setStarterCode] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [difficulty, setDifficulty] = useState('beginner');
+  const [category, setCategory] = useState('');
+  const [language, setLanguage] = useState('javascript');
+  const [timeLimit, setTimeLimit] = useState('30');
+  const [points, setPoints] = useState('100');
+  const [starterCode, setStarterCode] = useState('');
   const [testCases, setTestCases] = useState<TestCase[]>([]);
-  const [solution, setSolution] = useState("");
+  const [solution, setSolution] = useState('');
 
   const addTestCase = () => {
     const newTestCase: TestCase = {
       id: Date.now().toString(),
-      input: "",
-      expectedOutput: "",
+      input: '',
+      expectedOutput: '',
       isHidden: false,
     };
     setTestCases([...testCases, newTestCase]);
   };
 
   const removeTestCase = (id: string) => {
-    setTestCases(testCases.filter(test => test.id !== id));
+    setTestCases(testCases.filter((test) => test.id !== id));
   };
 
   const updateTestCase = (id: string, field: keyof TestCase, value: string | boolean) => {
-    setTestCases(testCases.map(test => 
-      test.id === id ? { ...test, [field]: value } : test
-    ));
+    setTestCases(testCases.map((test) => (test.id === id ? { ...test, [field]: value } : test)));
   };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">
-          {title || "New Coding Challenge"}
-        </h1>
-        <Button onClick={() => console.log("Save challenge")}>
+        <h1 className="text-3xl font-bold">{title || 'New Coding Challenge'}</h1>
+        <Button onClick={() => console.log('Save challenge')}>
           <Save className="w-4 h-4 mr-2" />
           Save Challenge
         </Button>
@@ -211,16 +197,16 @@ export default function ChallengeEditorPage() {
               </div>
             </CardHeader>
             <CardContent>
-            <TabsContent value="starter-code" className="border-none p-0">
-              <div className="space-y-4 mt-4">
-                <MonacoEditor
-                  value={starterCode}
-                  language={language.toLowerCase()}
-                  onChange={setStarterCode}
-                  height="400px"
-                />
-              </div>
-            </TabsContent>
+              <TabsContent value="starter-code" className="border-none p-0">
+                <div className="space-y-4 mt-4">
+                  <MonacoEditor
+                    value={starterCode}
+                    language={language.toLowerCase()}
+                    onChange={setStarterCode}
+                    height="400px"
+                  />
+                </div>
+              </TabsContent>
 
               <TabsContent value="test-cases">
                 <div className="space-y-4">
@@ -234,7 +220,9 @@ export default function ChallengeEditorPage() {
                                 <Label>Input</Label>
                                 <Textarea
                                   value={testCase.input}
-                                  onChange={(e) => updateTestCase(testCase.id, "input", e.target.value)}
+                                  onChange={(e) =>
+                                    updateTestCase(testCase.id, 'input', e.target.value)
+                                  }
                                   placeholder="Test case input..."
                                 />
                               </div>
@@ -242,7 +230,9 @@ export default function ChallengeEditorPage() {
                                 <Label>Expected Output</Label>
                                 <Textarea
                                   value={testCase.expectedOutput}
-                                  onChange={(e) => updateTestCase(testCase.id, "expectedOutput", e.target.value)}
+                                  onChange={(e) =>
+                                    updateTestCase(testCase.id, 'expectedOutput', e.target.value)
+                                  }
                                   placeholder="Expected output..."
                                 />
                               </div>
@@ -251,7 +241,9 @@ export default function ChallengeEditorPage() {
                               <input
                                 type="checkbox"
                                 checked={testCase.isHidden}
-                                onChange={(e) => updateTestCase(testCase.id, "isHidden", e.target.checked)}
+                                onChange={(e) =>
+                                  updateTestCase(testCase.id, 'isHidden', e.target.checked)
+                                }
                                 id={`hidden-${testCase.id}`}
                               />
                               <Label htmlFor={`hidden-${testCase.id}`}>Hidden test case</Label>

@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
     // Configure YouTube upload
     const youtube = google.youtube('v3');
-    
+
     await oauth2Client.setCredentials({
       access_token: process.env.YOUTUBE_ACCESS_TOKEN,
       refresh_token: process.env.YOUTUBE_REFRESH_TOKEN,
@@ -44,9 +44,6 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error('YouTube upload error:', error);
-    return NextResponse.json(
-      { error: 'Failed to upload to YouTube' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to upload to YouTube' }, { status: 500 });
   }
 }

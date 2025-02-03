@@ -1,7 +1,7 @@
 // hooks/useReferenceData.ts
-import { api } from "@/lib/api";
-import { useQueries } from "@tanstack/react-query";
+import { useQueries } from '@tanstack/react-query';
 
+import { api } from '@/lib/api';
 
 export interface ReferenceData {
   expertiseAreas: Array<{
@@ -60,16 +60,19 @@ export function useReferenceData() {
   });
 
   // Vérifier si toutes les requêtes sont terminées
-  const isLoading = results.some(result => result.isLoading);
+  const isLoading = results.some((result) => result.isLoading);
   // Récupérer la première erreur s'il y en a une
-  const error = results.find(result => result.error)?.error as Error | null;
-  
+  const error = results.find((result) => result.error)?.error as Error | null;
+
   // Combiner les données si tout est chargé
-  const data: ReferenceData | null = !isLoading && !error ? {
-    expertiseAreas: results[0].data,
-    experienceLevels: results[1].data,
-    skills: results[2].data,
-  } : null;
+  const data: ReferenceData | null =
+    !isLoading && !error
+      ? {
+          expertiseAreas: results[0].data,
+          experienceLevels: results[1].data,
+          skills: results[2].data,
+        }
+      : null;
 
   return { data, isLoading, error };
 }

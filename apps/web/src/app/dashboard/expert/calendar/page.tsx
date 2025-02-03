@@ -1,14 +1,8 @@
-import { Calendar } from "@/components/ui/calendar"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Calendar } from '@/components/ui/calendar';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function ExpertCalendarPage() {
-  const [date, setDate] = useState<Date | undefined>(new Date())
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -36,7 +30,10 @@ export default function ExpertCalendarPage() {
           <div className="space-y-4">
             {/* Liste des sessions */}
             {[1, 2, 3].map((session) => (
-              <div key={session} className="flex items-center justify-between p-4 border rounded-lg">
+              <div
+                key={session}
+                className="flex items-center justify-between p-4 border rounded-lg"
+              >
                 <div>
                   <h3 className="font-medium">React Advanced Patterns</h3>
                   <p className="text-sm text-muted-foreground">2:00 PM - 3:00 PM</p>

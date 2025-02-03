@@ -1,26 +1,17 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useTranslation } from "@/components/i18n";
+import { useTranslation } from '@/components/i18n';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
-
-export function ForgotPasswordForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-
+export function ForgotPasswordForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
-  
+
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form
-        noValidate={true}
-        className="mb-4"
-      
-      >
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
+      <form noValidate={true} className="mb-4">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center text-center">
             <h1 className="text-2xl font-bold">{t('auth.forgotPassword.title')}</h1>
@@ -43,9 +34,9 @@ export function ForgotPasswordForm({
         </div>
       </form>
       <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </div>
     </div>
-  )
+  );
 }
