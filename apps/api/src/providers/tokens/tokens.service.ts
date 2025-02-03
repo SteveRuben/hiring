@@ -26,7 +26,7 @@ export class TokensService {
    */
   signJwt(
     subject: string,
-    payload: number | string | object | Buffer,
+    payload: number | string | object | Buffer, // eslint-disable-line
     expiresIn?: string,
     options?: SignOptions,
   ) {

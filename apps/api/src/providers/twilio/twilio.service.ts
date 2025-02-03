@@ -73,7 +73,7 @@ export class TwilioService implements VideoProvider {
 
     token.identity = `${accountId}#!${userUuid}`;
     const videoGrant = new VideoGrant({
-      room: `${process.env.NODE_ENV}_${roomId}`,
+      room: `${process.env.NODE_ENV}_${roomId}`, // eslint-disable-line
     });
     token.addGrant(videoGrant);
 
