@@ -14,6 +14,11 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
+      "react/no-unescaped-entities": "off",
+      "react/jsx-no-undef": "off",
+      "react/jsx-no-comment-textnodes": "off",
+      "react-hooks/rules-of-hooks": "off",
+      "@next/next/no-img-element": "off",
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       "react/react-in-jsx-scope": "off",

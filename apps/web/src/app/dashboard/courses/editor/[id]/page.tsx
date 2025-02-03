@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,12 +17,14 @@ interface Props {
   params: {
     id: string;
   };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default function CourseEditorPage({ params }: Props) {
+export default function CourseEditorPage({ params }: {params: Promise<{ id: string }>}) {
   const [isPreview, setIsPreview] = useState(false);
   const [title, setTitle] = useState('');
-  const isNewCourse = params.id === 'new';
+  const { id } = use(params);
+  const isNewCourse = id === 'new';
 
   const handleSave = async () => {
     // Logique de sauvegarde

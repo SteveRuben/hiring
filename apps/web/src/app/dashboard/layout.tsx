@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+
 import {
   Search,
   Menu,
@@ -151,7 +153,7 @@ const studentMenuItems = [
                           </Button>
 
                           <a href="/dashboard" className="flex items-center gap-2">
-                            <img src="/logo.svg" alt="Prep AI" className="h-8" />
+                            <Image src="/logo.svg" alt="Prep AI" className="h-8" />
                           </a>
 
                           <div className="flex-1 ml-4">

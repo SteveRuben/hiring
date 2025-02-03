@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 // Types for content items
 interface ContentItem {
@@ -140,7 +141,7 @@ export default function CoursesPage() {
               <Card key={item.id}>
                 {item.thumbnail && (
                   <div className="aspect-video w-full overflow-hidden rounded-t-lg">
-                    <img
+                    <Image
                       src={item.thumbnail}
                       alt={item.title}
                       className="w-full h-full object-cover"

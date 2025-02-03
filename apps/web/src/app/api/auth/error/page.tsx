@@ -2,13 +2,22 @@ import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { use } from "react";
 
-export default function AuthError({
+/* export default function AuthError({
   searchParams,
 }: {
   searchParams?: { error?: string };
-}) {
-  const error = searchParams?.error || "default";
+}) { */
+  interface ErrorPageProps {
+    searchParams?: {
+      error?: string;
+    };
+  }
+  
+  export default function ErrorPage({ params }: {params: Promise<{ error: string }>}) {
+    const { error } = use(params) || "default";
+  
   
   const errorMessages: Record<string, string> = {
     Signin: "Tentative de connexion échouée.",
