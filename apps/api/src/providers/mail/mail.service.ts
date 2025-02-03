@@ -72,7 +72,6 @@ export class MailService {
                 `Mail to ${options.to} failed, retrying (${error.retriesLeft} attempts left)`,
                 error.name,
               );
-              console.log(error);
             },
           },
         ),
