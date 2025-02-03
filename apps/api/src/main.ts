@@ -11,7 +11,7 @@ async function bootstrap() {
   
  
   const server = new CustomServer({
-    port: 3000,
+    port: parseInt(process.env.PORT)  || 5000,
     sslConfig: process.env.NODE_ENV === 'production' ? {
       privateKeyPath: process.env.SSL_PRIVATE_KEY_PATH,
       certificatePath: process.env.SSL_CERTIFICATE_PATH

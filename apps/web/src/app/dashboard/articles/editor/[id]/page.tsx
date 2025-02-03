@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,16 +12,13 @@ import {
 import { Save, MoreVertical, Share2, Settings, Eye, Plus } from 'lucide-react';
 import NotionEditor from '@/components/editor/NotionEditor';
 
-interface Props {
-  params: {
-    id: string;
-  };
-}
 
-export default function ArticleEditorPage({ params }: Props) {
+
+export default function ArticleEditorPage({ params }: {params: Promise<{ id: string }>}) {
   const [isPreview, setIsPreview] = useState(false);
   const [title, setTitle] = useState('');
-  const isNewArticle = params.id === 'new';
+  const { id } = use(params) ;
+  const isNewArticle = id === 'new';
 
   const handleSave = async () => {
     // Logique de sauvegarde

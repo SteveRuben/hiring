@@ -144,6 +144,8 @@ export default function CoursesPage() {
                     <Image
                       src={item.thumbnail}
                       alt={item.title}
+                      width={0}
+                      height={0}
                       className="w-full h-full object-cover"
                     />
                   </div>
