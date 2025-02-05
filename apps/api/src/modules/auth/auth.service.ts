@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  Logger,
   NotFoundException,
   UnauthorizedException,
   UnprocessableEntityException,
@@ -70,10 +71,11 @@ import {
   TotpTokenResponse,
 } from './auth.interface';
 
+
 @Injectable()
 export class AuthService {
   authenticator: typeof authenticator;
-
+  private logger = new Logger(AuthService.name);
   constructor(
     private prisma: PrismaService,
     private email: MailService,
@@ -206,21 +208,24 @@ export class AuthService {
       for await (const emailString of [email, emailSafe]) {
         const md5Email = createHash('md5').update(emailString).digest('hex');
         try {
-          /* const img = await  axios.get(
+           const img = await  axios.get(
             `https://www.gravatar.com/avatar/${md5Email}?d=404`,
-            { responseType: 'buffer' },
+            { responseType: 'arraybuffer' },
           );
-          if (img.body.byteLength > 1)
-            data.profilePictureUrl = `https://www.gravatar.com/avatar/${md5Email}?d=mp`; */
+          if (img.data.byteLength > 1)
+            data.profilePictureUrl = `https://www.gravatar.com/avatar/${md5Email}?d=mp`; 
         } catch (error) {}
       }
     }
 
     let id: number | undefined = undefined;
     while (!id) {
+      let tmp = await this.tokensService.generateRandomInt(6, '0123456789');
+      this.logger.warn(tmp);
       id = Number(
-        `10${await this.tokensService.generateRandomString(6, 'numeric')}`,
+        `10${tmp}`,
       );
+      this.logger.warn(id);
       const users = await this.prisma.user.findMany({ where: { id }, take: 1 });
       if (users.length) id = undefined;
     }

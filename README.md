@@ -213,3 +213,6 @@ Run `nps` in the terminal to see list of all available commands.
 # balaSpace.com
 https://cmdn.io/
 # https://kwanso.com/
+
+
+# kindly reminder concerning geo-ip

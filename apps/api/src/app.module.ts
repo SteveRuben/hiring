@@ -44,6 +44,7 @@ import { TasksModule } from '@/providers/tasks/tasks.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { WebsocketModule } from '@/modules/websocket/websocket.module';
 import serverConfig from './config/server.config';
 
 @Module({
@@ -84,6 +85,7 @@ import serverConfig from './config/server.config';
     TemplatesModule,
     TalentModule,
     WallpapersModule,
+    WebsocketModule,
     /*   CloudinaryModule,
     FirebaseModule,
     GitHubModule,
