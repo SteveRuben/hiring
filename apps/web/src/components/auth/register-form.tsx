@@ -48,6 +48,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
         email: formData.email,
         password: formData.password,
         name: formData.name,
+        checkLocationOnLogin: true,
       };
 
       // Appel du service d'inscription
@@ -57,7 +58,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
       console.log('Utilisateur inscrit :', registeredUser);
 
       // Redirection ou action après inscription
-      router.push('/confirmation-inscription');
+      router.push('/login');
     } catch (error: any) {
       // Gestion des erreurs
       console.error("Erreur d'inscription :", error);
