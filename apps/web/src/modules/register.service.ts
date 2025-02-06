@@ -17,10 +17,16 @@ export interface User {
 }
 
 class RegisterService {
-  private apiUrl = process.env.Api_URL;
-  
+  private apiUrl: string;
 
- 
+  constructor() {
+    // Vérification que la variable d'environnement existe
+    if (!process.env.NEXT_PUBLIC_API_URL) {
+      throw new Error('NEXT_PUBLIC_API_URL must be defined in .env.local');
+    }
+
+    this.apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  }
   async register(data: RegisterDto): Promise<User> {
     try {
       // Récupération de l'adresse IP
@@ -28,10 +34,10 @@ class RegisterService {
       const { ip } = await ipResponse.json();
 
       // Envoi des données à l'API avec l'IP
-      const response = await axios.post<User>(`${this.apiUrl}/v1/auth/register`, data, {
+      const response = await axios.post<User>(`${this.apiUrl}/auth/register`, data, {
         headers: {
-          'X-Forwarded-For': ip
-        }
+          'X-Forwarded-For': ip,
+        },
       });
 
       return response.data;
@@ -41,7 +47,7 @@ class RegisterService {
         if (error.response?.status === 409) {
           throw new Error('Un utilisateur avec cet email existe déjà');
         }
-        throw new Error(error.response?.data?.message || 'Erreur lors de l\'enregistrement');
+        throw new Error(error.response?.data?.message || "Erreur lors de l'enregistrement");
       }
       throw error;
     }
