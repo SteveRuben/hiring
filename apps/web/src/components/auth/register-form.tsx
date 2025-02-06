@@ -1,6 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import { useTranslation } from '@/components/i18n';
 import { Button } from '@/components/ui/button';
@@ -17,10 +19,7 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { registerService } from '../../modules/register.service';
-
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
@@ -30,20 +29,20 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
     password: '',
     name: '',
   });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
+    console.log('Champ modifié:', name, 'Nouvelle valeur:', value); // Pour débugger
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
     }));
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-   
 
     try {
-    
-
       // Préparation des données pour l'API
       const registrationData = {
         email: formData.email,
@@ -53,17 +52,16 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
 
       // Appel du service d'inscription
       const registeredUser = await registerService.register(registrationData);
-      
+
       // Gestion après inscription réussie
       console.log('Utilisateur inscrit :', registeredUser);
-      
+
       // Redirection ou action après inscription
       router.push('/confirmation-inscription');
-
     } catch (error: any) {
       // Gestion des erreurs
-      console.error('Erreur d\'inscription :', error);
-    } 
+      console.error("Erreur d'inscription :", error);
+    }
   };
 
   return (
@@ -80,9 +78,10 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
                 <Label htmlFor="firstName">{t('auth.signup.firstName')}</Label>
                 <Input
                   id="firstName"
+                  name="name"
                   type="text"
-                  onChange={handleChange}
                   value={formData.name}
+                  onChange={handleChange}
                   placeholder={t('auth.signup.NamePlaceholder')}
                   required
                 />
@@ -91,6 +90,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
                 <Label htmlFor="email">{t('auth.signup.email')}</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   onChange={handleChange}
                   value={formData.email}
@@ -102,7 +102,14 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
                 <div className="flex items-center">
                   <Label htmlFor="password">{t('auth.signin.password')}</Label>
                 </div>
-                <Input id="password" type="password"  onChange={handleChange} value={formData.password} required />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  onChange={handleChange}
+                  value={formData.password}
+                  required
+                />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
