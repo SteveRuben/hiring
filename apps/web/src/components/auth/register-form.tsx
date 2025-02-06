@@ -18,8 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-
-import { registerService } from '../../modules/register.service';
+import { registerService } from '@/modules/register.service';
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
@@ -53,9 +52,6 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
 
       // Appel du service d'inscription
       const registeredUser = await registerService.register(registrationData);
-
-      // Gestion après inscription réussie
-      console.log('Utilisateur inscrit :', registeredUser);
 
       // Redirection ou action après inscription
       router.push('/login');

@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { type LoginInput, loginSchema } from '@/lib/validations/auth';
+import loginService from '@/modules/login.service';
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
@@ -28,16 +29,13 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
   });
   const onSubmit = async (data: LoginInput) => {
     try {
-      const res = await signIn('credentials', {
+      console.log(data.email, data.password);
+      const res = await loginService.register({
         email: data.email,
         password: data.password,
-        redirect: false,
       });
 
-      if (res?.error) {
-        setError('Invalid credentials');
-        return;
-      }
+      console.log('Authentification', res);
 
       router.push('/dashboard');
       router.refresh();
