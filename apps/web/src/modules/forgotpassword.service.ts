@@ -5,8 +5,16 @@ interface PasswordResetResponse {
 }
 
 class ForgetpasswordService {
-  private apiUrl = process.env.NEXTAUTH_URL;
+  private apiUrl: string;
 
+  constructor() {
+    // Vérification que la variable d'environnement existe
+    if (!process.env.NEXT_PUBLIC_API_URL) {
+      throw new Error('NEXT_PUBLIC_API_URL must be defined in .env.local');
+    }
+
+    this.apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  }
   async requestReset(email: string): Promise<PasswordResetResponse> {
     try {
       // Obtention de l'URL d'origine pour le lien de réinitialisation
