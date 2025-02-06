@@ -151,7 +151,7 @@ export default function DashboardLayout({
                   </Button>
 
                   <a href="/dashboard" className="flex items-center gap-2">
-                    <Image src="/logo.svg" alt="Prep AI" className="h-8" />
+                    <Image src="/logo.svg" alt="Prep AI" className="h-8" width={0} height={0} />
                   </a>
 
                   <div className="flex-1 ml-4">
