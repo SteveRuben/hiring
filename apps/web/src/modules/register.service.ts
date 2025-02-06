@@ -5,7 +5,7 @@ export interface RegisterDto {
   email: string;
   password: string;
   name: string;
-  origin?: string;
+  checkLocationOnLogin: boolean;
   ignorePwnedPassword?: boolean;
 }
 
@@ -29,16 +29,12 @@ class RegisterService {
   }
   async register(data: RegisterDto): Promise<User> {
     try {
-      // Récupération de l'adresse IP
-      const ipResponse = await fetch('https://api.ipify.org?format=json');
-      const { ip } = await ipResponse.json();
+      // // Récupération de l'adresse IP
+      // const ipResponse = await fetch('https://api.ipify.org?format=json');
+      // const { ip } = await ipResponse.json();
 
       // Envoi des données à l'API avec l'IP
-      const response = await axios.post<User>(`${this.apiUrl}/auth/register`, data, {
-        headers: {
-          'X-Forwarded-For': ip,
-        },
-      });
+      const response = await axios.post<User>(`${this.apiUrl}/auth/register`, data);
 
       return response.data;
     } catch (error: any) {
