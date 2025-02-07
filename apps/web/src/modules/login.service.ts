@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '@/lib/api/api';
 
 export type MfaMethod = 'NONE' | 'SMS' | 'TOTP' | 'EMAIL';
 
@@ -19,16 +19,6 @@ export interface TotpTokenResponse {
   multiFactorRequired: true;
 }
 class LoginService {
-  private apiUrl: string;
-
-  constructor() {
-    // Vérification que la variable d'environnement existe
-    if (!process.env.NEXT_PUBLIC_API_URL) {
-      throw new Error('NEXT_PUBLIC_API_URL must be defined in .env.local');
-    }
-
-    this.apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  }
   async register(data: Login): Promise<TokenResponse | TotpTokenResponse> {
     try {
       // // Récupération de l'adresse IP
@@ -36,17 +26,12 @@ class LoginService {
       // const { ip } = await ipResponse.json();
 
       // Envoi des données à l'API avec l'IP
-      const response = await axios.post<TokenResponse | TotpTokenResponse>(
-        `${this.apiUrl}/auth/login`,
-        data
-      );
+      const response = await api.post<TokenResponse | TotpTokenResponse>('/auth/login', data);
 
       return response.data;
     } catch (error: any) {
       // Gestion des erreurs
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || 'Erreur lors du Log In');
-      }
+      console.error('Erreur lors de la connexion', error);
       throw error;
     }
   }
