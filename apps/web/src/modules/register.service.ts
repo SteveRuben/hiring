@@ -19,12 +19,16 @@ export interface User {
 class RegisterService {
   async register(data: RegisterDto): Promise<User> {
     try {
-      // // Récupération de l'adresse IP
-      // const ipResponse = await fetch('https://api.ipify.org?format=json');
-      // const { ip } = await ipResponse.json();
-
+      // Récupération de l'adresse IP
+      const ipResponse = await fetch('https://api.ipify.org?format=json');
+      const { ipAddress } = await ipResponse.json();
+      console.log('ipAdress est ', ipAddress);
       // Envoi des données à l'API avec l'IP
-      const response = await api.post<User>('/auth/register', data);
+      const response = await api.post<User>('/auth/register', data, {
+        headers: {
+          'X-Forwarded-For': ipAddress,
+        },
+      });
 
       return response.data;
     } catch (error: any) {
