@@ -38,4 +38,7 @@ export enum ErrorCodes {
   // display only error codes
   INVITE_EXPIRED = 'INVITE_EXPIRED',
   NOT_LOGGED_IN = 'NOT_LOGGED_IN',
+  AUTH_ERROR = 'AUTH_ERROR',
+  NETWORK_ERROR = 'NETWORK_ERROR',
+  UNEXPECTED_ERROR = 'UNEXPECTED_ERROR',
 }

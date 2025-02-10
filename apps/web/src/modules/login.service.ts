@@ -1,3 +1,5 @@
+import { ErrorPage } from '@/components/error-page/error-page';
+import { ErrorCodes } from '@/constants/error-codes';
 import { api } from '@/lib/api/api';
 
 export type MfaMethod = 'NONE' | 'SMS' | 'TOTP' | 'EMAIL';
@@ -19,18 +21,14 @@ export interface TotpTokenResponse {
   multiFactorRequired: true;
 }
 class LoginService {
-  async register(data: Login): Promise<TokenResponse | TotpTokenResponse> {
+  async login(data: Login): Promise<TokenResponse | TotpTokenResponse> {
     try {
-      // // Récupération de l'adresse IP
-      // const ipResponse = await fetch('https://api.ipify.org?format=json');
-      // const { ip } = await ipResponse.json();
-
-      // Envoi des données à l'API avec l'IP
       const response = await api.post<TokenResponse | TotpTokenResponse>('/auth/login', data);
 
       return response.data;
     } catch (error: any) {
       // Gestion des erreurs
+
       console.error('Erreur lors de la connexion', error);
       throw error;
     }
