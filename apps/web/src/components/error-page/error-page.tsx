@@ -18,6 +18,12 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
   const handleHomeClick = () => {
     router.push('/');
   };
+  const handleLoginClick = () => {
+    router.push('/login');
+  };
+  const handleRegisterClick = () => {
+    router.push('/register');
+  };
 
   const getErrorContent = () => {
     switch (type) {
@@ -58,7 +64,15 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
           imgSrc: '/images/auth-error.png',
           imgAltText: "Erreur d'authentification",
         };
-
+      case ErrorCodes.REGISTER_ERROR:
+        return {
+          buttonText: 'Réessayer',
+          quoteText: "Erreur lors de l'enregistrement",
+          title: "Echec d'enregistrement",
+          body: 'Impossible de vous enregistrer, verifier les donnees fournies.',
+          imgSrc: '/images/network-error.png',
+          imgAltText: "Erreur d'enregistrement",
+        };
       case ErrorCodes.NETWORK_ERROR:
         return {
           buttonText: 'Réessayer',
@@ -85,7 +99,13 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
     <GenericErrorPage
       {...getErrorContent()}
       errorMessage={errorMessage}
-      onClick={handleHomeClick}
+      onClick={
+        ErrorCodes.AUTH_ERROR
+          ? handleLoginClick
+          : ErrorCodes.REGISTER_ERROR
+            ? handleRegisterClick
+            : handleHomeClick
+      }
     />
   );
 };

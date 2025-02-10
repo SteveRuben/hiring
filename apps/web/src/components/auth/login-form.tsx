@@ -22,7 +22,6 @@ import { ErrorPage } from '../error-page/error-page';
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
   const router = useRouter();
-  const [error, setError] = useState('');
   const {
     register,
     handleSubmit,
@@ -43,9 +42,9 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
       router.push('/dashboard');
       router.refresh();
     } catch (err: any) {
-      setError(err.message);
       //window.location.href = '/error/NETWORK_ERROR'
-      //router.push(`/error?message=${encodeURIComponent(err.message)}`);
+      const errorMessage = encodeURIComponent(err.message); // Encode pour éviter les problèmes d'URL
+      router.push(`/error?message=${errorMessage}`);
     }
   };
 

@@ -58,6 +58,9 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
     } catch (error: any) {
       // Gestion des erreurs
       console.error("Erreur d'inscription :", error);
+
+      const errorMessage = encodeURIComponent(error.message); // Encode pour éviter les problèmes d'URL
+      router.push(`/error?message=${errorMessage}`);
     }
   };
 
