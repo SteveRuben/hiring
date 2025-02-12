@@ -1,274 +1,3 @@
-// "use client"
-
-// import { useState, useEffect } from "react"
-// import { motion } from "framer-motion"
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import { Button } from "@/components/ui/button"
-// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-// import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-// import { Loader2, Smartphone, Laptop, TabletSmartphone } from "lucide-react"
-// import { useToast } from "@/hooks/use-toast"
-// import md5 from "md5"
-
-// export default function AccountPage() {
-//   const { toast } = useToast()
-//   const [personalInfo, setPersonalInfo] = useState({
-//     fullName: "",
-//     nickname: "",
-//     email: "",
-//     pronouns: "",
-//   })
-
-//   const [location, setLocation] = useState({
-//     country: "",
-//     timezone: "",
-//   })
-
-//   const [avatarEmail, setAvatarEmail] = useState("")
-//   const [avatarUrl, setAvatarUrl] = useState("")
-//   const [isLoading, setIsLoading] = useState(false)
-
-//   useEffect(() => {
-//     if (avatarEmail) {
-//       const hash = md5(avatarEmail.trim().toLowerCase())
-//       setAvatarUrl(`https://www.gravatar.com/avatar/${hash}?s=200&d=mp`)
-//     }
-//   }, [avatarEmail])
-
-//   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value })
-//   }
-
-//   const handleLocationChange = (name: string, value: string) => {
-//     setLocation({ ...location, [name]: value })
-//   }
-
-//   const handleSave = async () => {
-//     setIsLoading(true)
-//     // Simuler une requête API
-//     await new Promise((resolve) => setTimeout(resolve, 1000))
-//     setIsLoading(false)
-//     toast({
-//       title: "Modifications enregistrées",
-//       description: "Vos paramètres ont été mis à jour avec succès.",
-//     })
-
-//   }
-
-//   return (
-//     <motion.div
-//       initial={{ opacity: 0, y: 20 }}
-//       animate={{ opacity: 1, y: 0 }}
-//       transition={{ duration: 0.5 }}
-//       className="max-w-4xl mx-auto"
-//     >
-//       <h1 className="text-3xl font-bold mb-6">Paramètres du compte</h1>
-//       <Tabs defaultValue="personal" className="space-y-4">
-//         <TabsList>
-//           <TabsTrigger value="personal">Informations personnelles</TabsTrigger>
-//           <TabsTrigger value="location">Localisation</TabsTrigger>
-//           <TabsTrigger value="security">Sécurité</TabsTrigger>
-//           <TabsTrigger value="avatar">Avatar</TabsTrigger>
-//         </TabsList>
-//         <TabsContent value="personal">
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Informations personnelles</CardTitle>
-//               <CardDescription>Mettez à jour vos informations personnelles ici.</CardDescription>
-//             </CardHeader>
-//             <CardContent className="space-y-4">
-//               <div className="space-y-2">
-//                 <Label htmlFor="fullName">Nom complet</Label>
-//                 <Input
-//                   id="fullName"
-//                   name="fullName"
-//                   value={personalInfo.fullName}
-//                   onChange={handlePersonalInfoChange}
-//                 />
-//               </div>
-//               <div className="space-y-2">
-//                 <Label htmlFor="nickname">Surnom</Label>
-//                 <Input
-//                   id="nickname"
-//                   name="nickname"
-//                   value={personalInfo.nickname}
-//                   onChange={handlePersonalInfoChange}
-//                 />
-//               </div>
-//               <div className="space-y-2">
-//                 <Label htmlFor="email">Email</Label>
-//                 <Input
-//                   id="email"
-//                   name="email"
-//                   type="email"
-//                   value={personalInfo.email}
-//                   onChange={handlePersonalInfoChange}
-//                 />
-//               </div>
-//               <div className="space-y-2">
-//                 <Label htmlFor="pronouns">Pronoms</Label>
-//                 <Select onValueChange={(value) => setPersonalInfo({ ...personalInfo, pronouns: value })}>
-//                   <SelectTrigger>
-//                     <SelectValue placeholder="Sélectionnez vos pronoms" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     <SelectItem value="he/him">Il/Lui</SelectItem>
-//                     <SelectItem value="she/her">Elle/Elle</SelectItem>
-//                     <SelectItem value="they/them">Iel/Ellui</SelectItem>
-//                     <SelectItem value="other">Autre</SelectItem>
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-//               <Button onClick={handleSave} disabled={isLoading}>
-//                 {isLoading ? (
-//                   <>
-//                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-//                     Enregistrement...
-//                   </>
-//                 ) : (
-//                   "Sauvegarder les changements"
-//                 )}
-//               </Button>
-//             </CardContent>
-//           </Card>
-//         </TabsContent>
-//         <TabsContent value="location">
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Localisation</CardTitle>
-//               <CardDescription>Configurez votre pays et fuseau horaire.</CardDescription>
-//             </CardHeader>
-//             <CardContent className="space-y-4">
-//               <div className="space-y-2">
-//                 <Label htmlFor="country">Pays</Label>
-//                 <Select onValueChange={(value) => handleLocationChange("country", value)}>
-//                   <SelectTrigger>
-//                     <SelectValue placeholder="Sélectionnez votre pays" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     <SelectItem value="fr">France</SelectItem>
-//                     <SelectItem value="ca">Canada</SelectItem>
-//                     <SelectItem value="be">Belgique</SelectItem>
-//                     <SelectItem value="ch">Suisse</SelectItem>
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-//               <div className="space-y-2">
-//                 <Label htmlFor="timezone">Fuseau horaire</Label>
-//                 <Select onValueChange={(value) => handleLocationChange("timezone", value)}>
-//                   <SelectTrigger>
-//                     <SelectValue placeholder="Sélectionnez votre fuseau horaire" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     <SelectItem value="europe/paris">Europe/Paris</SelectItem>
-//                     <SelectItem value="america/montreal">America/Montreal</SelectItem>
-//                     <SelectItem value="europe/brussels">Europe/Brussels</SelectItem>
-//                     <SelectItem value="europe/zurich">Europe/Zurich</SelectItem>
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-//               <Button onClick={handleSave} disabled={isLoading}>
-//                 {isLoading ? (
-//                   <>
-//                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-//                     Enregistrement...
-//                   </>
-//                 ) : (
-//                   "Sauvegarder les changements"
-//                 )}
-//               </Button>
-//             </CardContent>
-//           </Card>
-//         </TabsContent>
-//         <TabsContent value="security">
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Sécurité</CardTitle>
-//               <CardDescription>Gérez vos paramètres de sécurité ici.</CardDescription>
-//             </CardHeader>
-//             <CardContent className="space-y-4">
-//               <div className="space-y-2">
-//                 <Label htmlFor="currentPassword">Mot de passe actuel</Label>
-//                 <Input id="currentPassword" type="password" />
-//               </div>
-//               <div className="space-y-2">
-//                 <Label htmlFor="newPassword">Nouveau mot de passe</Label>
-//                 <Input id="newPassword" type="password" />
-//               </div>
-//               <div className="space-y-2">
-//                 <Label htmlFor="confirmPassword">Confirmer le nouveau mot de passe</Label>
-//                 <Input id="confirmPassword" type="password" />
-//               </div>
-
-//               <Button onClick={handleSave} disabled={isLoading}>
-//                 {isLoading ? (
-//                   <>
-//                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-//                     Enregistrement...
-//                   </>
-//                 ) : (
-//                   "Mettre à jour les paramètres de sécurité"
-//                 )}
-//               </Button>
-
-//             </CardContent>
-//           </Card>
-//         </TabsContent>
-//         <TabsContent value="avatar">
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Avatar</CardTitle>
-//               <CardDescription>Gérez votre avatar via Gravatar.</CardDescription>
-//             </CardHeader>
-//             <CardContent className="space-y-4">
-//               <div className="flex items-center space-x-4">
-//                 <Avatar className="h-24 w-24">
-//                   <AvatarImage src={avatarUrl} />
-//                   <AvatarFallback>Avatar</AvatarFallback>
-//                 </Avatar>
-//                 <div className="space-y-2">
-//                   <Label htmlFor="avatarEmail">Email Gravatar</Label>
-//                   <Input
-//                     id="avatarEmail"
-//                     type="email"
-//                     placeholder="votre@email.com"
-//                     value={avatarEmail}
-//                     onChange={(e) => setAvatarEmail(e.target.value)}
-//                   />
-//                 </div>
-//               </div>
-//               <Button
-//                 onClick={() => {
-//                   setIsLoading(true)
-//                   setAvatarUrl(`https://www.gravatar.com/avatar/${md5(avatarEmail.trim().toLowerCase())}?s=200&d=mp`)
-//                   setTimeout(() => {
-//                     setIsLoading(false)
-
-//                   }, 1000)
-//                 }}
-//                 disabled={isLoading}
-//               >
-//                 {isLoading ? (
-//                   <>
-//                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-//                     Mise à jour...
-//                   </>
-//                 ) : (
-//                   "Mettre à jour l'avatar"
-//                 )}
-//               </Button>
-//             </CardContent>
-//           </Card>
-//         </TabsContent>
-
-//       </Tabs>
-//     </motion.div>
-//   )
-// }
-
 'use client';
 
 import { motion } from 'framer-motion';
@@ -291,6 +20,7 @@ import {
 } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
+import { useUpdateUser } from '@/hooks/user';
 
 // Types
 interface PersonalInfoForm {
@@ -352,6 +82,7 @@ const AvatarPreview = ({ email }: { email: string }) => {
 export default function AccountPage() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const updateUser = useUpdateUser(3); //on devrait remplacer par l'identifiant de l'utilisateur a modifier
 
   // Initialisation des formulaires
   const personalForm = useForm<PersonalInfoForm>({
@@ -424,10 +155,26 @@ export default function AccountPage() {
 
     setIsLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await updateUser.mutateAsync({
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      });
+
       toast({
-        title: 'Modifications enregistrées',
-        description: 'Vos paramètres de sécurité ont été mis à jour.',
+        title: 'Succès',
+        description: 'Votre mot de passe a été mis à jour avec succès.',
+      });
+
+      securityForm.reset();
+    } catch (error) {
+      let message = 'Une erreur est survenue lors de la mise à jour du mot de passe.';
+      if (error instanceof Error) {
+        message = error.message;
+      }
+      toast({
+        title: 'Erreur',
+        description: message,
+        variant: 'destructive',
       });
       securityForm.reset();
     } finally {
