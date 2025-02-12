@@ -2,11 +2,11 @@ import { api } from '@/lib/api/api';
 import { PasswordUpdateInput, UserUpdateInput } from '@/types/user';
 
 export class UpdateUserPassword {
-  private baseUrl = '/users';
+  private userId = 2;
 
   async updateUser(id: number, data: UserUpdateInput & PasswordUpdateInput) {
     try {
-      const response = await api.patch(`/users/${this.baseUrl}/api-keys/${id}`, data);
+      const response = await api.patch(`/users/${this.userId}/api-keys/${id}`, data);
       return response.data;
     } catch (error: any) {
       if (error.response?.status === 404) {
