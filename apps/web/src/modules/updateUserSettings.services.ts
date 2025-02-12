@@ -1,10 +1,10 @@
 import { api } from '@/lib/api/api';
-import { PasswordUpdateInput, UserUpdateInput } from '@/types/user';
+import { PasswordUpdateInput } from '@/types/user';
 
 export class UpdateUserPassword {
   private userId = 2;
 
-  async updateUser(id: number, data: UserUpdateInput & PasswordUpdateInput) {
+  async updateUser(id: number, data: PasswordUpdateInput) {
     try {
       const response = await api.patch(`/users/${this.userId}/api-keys/${id}`, data);
       return response.data;

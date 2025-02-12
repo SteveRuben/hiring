@@ -1,7 +1,6 @@
 export interface PasswordUpdateInput {
   currentPassword?: string;
   newPassword?: string;
-  ignorePwnedPassword?: boolean;
 }
 
 export interface UserUpdateInput {
