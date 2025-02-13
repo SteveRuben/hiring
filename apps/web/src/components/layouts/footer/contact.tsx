@@ -3,14 +3,18 @@
 import { useState } from 'react';
 import { useFormState } from 'react-dom';
 
+import { useTranslation } from '@/components/i18n';
 // import { submitContact } from "../actions/contact"
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { ContactFormData, useContactSubmission } from '@/hooks/contact';
 
 export function ContactForm() {
-  const [formData, setFormData] = useState({
+  const { mutate: submitApplication, isPending } = useContactSubmission();
+  const { t } = useTranslation();
+  const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     message: '',
@@ -46,13 +50,20 @@ export function ContactForm() {
     e.preventDefault();
     console.log(formData);
     if (!validateForm()) return;
-    // setIsPending(true)
-    // await formAction(formData)
-    // setIsPending(false)
+    const formDataToSend = new FormData();
+    Object.entries(formData).forEach(([Key, value]) => {
+      formDataToSend.append(Key, value);
+    });
+
+    submitApplication(formDataToSend, {
+      onSuccess: () => {
+        console.log('contact envoyer avec succès.');
+      },
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto" method="post">
       <div>
         <Label htmlFor="name">
           Nom <span className="text-red-600">*</span>
@@ -92,7 +103,7 @@ export function ContactForm() {
           onChange={handleChange}
         />
       </div>
-      <Button type="submit" className="bg-violet-950">
+      <Button type="submit" className="bg-violet-950" disabled={isPending}>
         Envoyer
       </Button>
     </form>

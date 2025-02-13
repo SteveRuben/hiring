@@ -45,6 +45,7 @@ import { TasksModule } from '@/providers/tasks/tasks.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import serverConfig from './config/server.config';
+import { ContactModule } from './modules/contact/contact.module';
 
 @Module({
   imports: [
@@ -84,6 +85,7 @@ import serverConfig from './config/server.config';
     TemplatesModule,
     TalentModule,
     WallpapersModule,
+    ContactModule,
     /*   CloudinaryModule,
     FirebaseModule,
     GitHubModule,
