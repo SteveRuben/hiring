@@ -80,6 +80,16 @@ export default function DashboardLayout({
       ],
     },
     {
+      title: 'Manage Team',
+      items: [
+        { name: 'Products', icon: BookOpen, href: '/dashboard/courses' },
+        { name: 'Members', icon: Newspaper, href: '/dashboard/team-members' },
+        { name: 'Billing', icon: LucideGamepad2, href: '/dashboard/coding-games' },
+        { name: 'Developer', icon: ScrollText, href: '/dashboard/quizzes' },
+        { name: 'Team settings', icon: FileEdit, href: '/dashboard/drafts' },
+      ],
+    },
+    {
       title: 'Recruitment',
       items: [
         { name: 'Talents', icon: Users, href: '/dashboard/talents' },
@@ -151,12 +161,7 @@ export default function DashboardLayout({
                   </Button>
 
                   <a href="/dashboard" className="flex items-center gap-2">
-                    <Image 
-                      src="/logo.svg" 
-                      alt="Prep AI" 
-                      width={0}
-                      height={0}
-                      className="h-8" />
+                    <Image src="/logo.svg" alt="Prep AI" width={0} height={0} className="h-8" />
                   </a>
 
                   <div className="flex-1 ml-4">
