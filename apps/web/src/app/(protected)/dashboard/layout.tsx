@@ -82,6 +82,16 @@ export default function DashboardLayout({
       ],
     },
     {
+      title: 'Manage Team',
+      items: [
+        { name: 'Products', icon: BookOpen, href: '/dashboard/courses' },
+        { name: 'Members', icon: Newspaper, href: '/dashboard/team-members' },
+        { name: 'Billing', icon: LucideGamepad2, href: '/dashboard/coding-games' },
+        { name: 'Developer', icon: ScrollText, href: '/dashboard/quizzes' },
+        { name: 'Team settings', icon: FileEdit, href: '/dashboard/drafts' },
+      ],
+    },
+    {
       title: 'Recruitment',
       items: [
         { name: 'Talents', icon: Users, href: '/dashboard/talents' },
