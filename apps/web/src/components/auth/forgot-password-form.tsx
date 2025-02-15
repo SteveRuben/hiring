@@ -1,17 +1,42 @@
 'use client';
 
+import { useState } from 'react';
+
 import { useTranslation } from '@/components/i18n';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 
+import { ForgotpasswordService } from '../../modules/forgotpassword.service';
+
 export function ForgotPasswordForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
+  const [email, setEmail] = useState({
+    email: '',
+  });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setEmail((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const isReset = await ForgotpasswordService.requestReset(email.email);
+      console.log('Password oublie:', isReset);
+    } catch (error: any) {
+      // Gestion des erreurs
+      console.error('Erreur :', error);
+    }
+  };
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <form noValidate={true} className="mb-4">
+      <form onSubmit={handleSubmit} noValidate={true} className="mb-4">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center text-center">
             <h1 className="text-2xl font-bold">{t('auth.forgotPassword.title')}</h1>
@@ -24,6 +49,9 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
             <Input
               id="email"
               type="email"
+              name="email"
+              onChange={handleChange}
+              value={email.email}
               placeholder={t('auth.signup.emailPlaceholder')}
               required
             />

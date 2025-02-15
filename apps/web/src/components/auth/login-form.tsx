@@ -12,13 +12,16 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { ErrorCodes } from '@/constants/error-codes';
 import { cn } from '@/lib/utils';
 import { type LoginInput, loginSchema } from '@/lib/validations/auth';
+import loginService from '@/modules/login.service';
+
+import { ErrorPage } from '../error-page/error-page';
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
   const router = useRouter();
-  const [error, setError] = useState('');
   const {
     register,
     handleSubmit,
@@ -28,21 +31,20 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
   });
   const onSubmit = async (data: LoginInput) => {
     try {
-      const res = await signIn('credentials', {
+      console.log(data.email, data.password);
+      const res = await loginService.login({
         email: data.email,
         password: data.password,
-        redirect: false,
       });
 
-      if (res?.error) {
-        setError('Invalid credentials');
-        return;
-      }
+      console.log('Authentification', res);
 
       router.push('/dashboard');
       router.refresh();
-    } catch (error) {
-      setError('Something went wrong');
+    } catch (err: any) {
+      //window.location.href = '/error/NETWORK_ERROR'
+      const errorMessage = encodeURIComponent(err.message); // Encode pour éviter les problèmes d'URL
+      router.push(`/error?message=${errorMessage}`);
     }
   };
 

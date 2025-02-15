@@ -1,6 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import { useTranslation } from '@/components/i18n';
 import { Button } from '@/components/ui/button';
@@ -16,15 +18,57 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
+import { registerService } from '@/modules/register.service';
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    name: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    console.log('Champ modifié:', name, 'Nouvelle valeur:', value); // Pour débugger
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      // Préparation des données pour l'API
+      const registrationData = {
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+        checkLocationOnLogin: true,
+      };
+
+      // Appel du service d'inscription
+      const registeredUser = await registerService.register(registrationData);
+
+      // Redirection ou action après inscription
+      router.push('/login');
+    } catch (error: any) {
+      // Gestion des erreurs
+      console.error("Erreur d'inscription :", error);
+
+      const errorMessage = encodeURIComponent(error.message); // Encode pour éviter les problèmes d'URL
+      router.push(`/error?message=${errorMessage}`);
+    }
+  };
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className="overflow-hidden">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">{t('auth.signup.title')}</h1>
@@ -34,7 +78,10 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
                 <Label htmlFor="firstName">{t('auth.signup.firstName')}</Label>
                 <Input
                   id="firstName"
+                  name="name"
                   type="text"
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder={t('auth.signup.NamePlaceholder')}
                   required
                 />
@@ -43,7 +90,10 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
                 <Label htmlFor="email">{t('auth.signup.email')}</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
+                  onChange={handleChange}
+                  value={formData.email}
                   placeholder={t('auth.signup.emailPlaceholder')}
                   required
                 />
@@ -52,7 +102,14 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
                 <div className="flex items-center">
                   <Label htmlFor="password">{t('auth.signin.password')}</Label>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  onChange={handleChange}
+                  value={formData.password}
+                  required
+                />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">

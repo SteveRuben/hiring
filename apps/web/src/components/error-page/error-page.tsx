@@ -18,6 +18,12 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
   const handleHomeClick = () => {
     router.push('/');
   };
+  const handleLoginClick = () => {
+    router.push('/login');
+  };
+  const handleRegisterClick = () => {
+    router.push('/register');
+  };
 
   const getErrorContent = () => {
     switch (type) {
@@ -39,15 +45,7 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
           imgSrc: '/images/link-broken.png',
           imgAltText: 'Invalid link illustration',
         };
-      case ErrorCodes.PAGE_NOT_FOUND:
-        return {
-          buttonText: 'Take me home',
-          quoteText: 'Page not found',
-          title: '404 - Page Not Found',
-          body: 'The page you are looking for does not exist.',
-          imgSrc: '/images/404.png',
-          imgAltText: '404 illustration',
-        };
+
       case ErrorCodes.ROOM_NOT_FOUND:
         return {
           buttonText: 'Take me home',
@@ -57,6 +55,34 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
           imgSrc: '/images/room-not-found.png',
           imgAltText: 'Room not found illustration',
         };
+      case ErrorCodes.AUTH_ERROR:
+        return {
+          buttonText: 'Réessayer',
+          quoteText: "Erreur d'authentification",
+          title: 'Échec de la connexion',
+          body: 'Impossible de vous connecter. Veuillez vérifier vos identifiants.',
+          imgSrc: '/images/auth-error.png',
+          imgAltText: "Erreur d'authentification",
+        };
+      case ErrorCodes.REGISTER_ERROR:
+        return {
+          buttonText: 'Réessayer',
+          quoteText: "Erreur lors de l'enregistrement",
+          title: "Echec d'enregistrement",
+          body: 'Impossible de vous enregistrer, verifier les donnees fournies.',
+          imgSrc: '/images/network-error.png',
+          imgAltText: "Erreur d'enregistrement",
+        };
+      case ErrorCodes.NETWORK_ERROR:
+        return {
+          buttonText: 'Réessayer',
+          quoteText: 'Erreur réseau',
+          title: 'Problème de connexion',
+          body: 'Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet.',
+          imgSrc: '/images/network-error.png',
+          imgAltText: 'Erreur réseau',
+        };
+
       default:
         return {
           buttonText: 'Return home',
@@ -73,7 +99,13 @@ export const ErrorPage: FC<ErrorPageProps> = ({ type, errorMessage }) => {
     <GenericErrorPage
       {...getErrorContent()}
       errorMessage={errorMessage}
-      onClick={handleHomeClick}
+      onClick={
+        ErrorCodes.AUTH_ERROR
+          ? handleLoginClick
+          : ErrorCodes.REGISTER_ERROR
+            ? handleRegisterClick
+            : handleHomeClick
+      }
     />
   );
 };
