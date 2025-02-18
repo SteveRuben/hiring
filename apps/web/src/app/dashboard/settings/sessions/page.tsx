@@ -9,7 +9,7 @@ export default function SessionsPage() {
       <CardHeader>
         <CardTitle>Active Sessions</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 h-auto">
         <div className="space-y-4">
           <div className="flex items-center justify-between rounded-lg border p-4">
             <div className="flex items-center gap-3">

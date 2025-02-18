@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -8,10 +11,12 @@ interface SettingsLayoutProps {
 }
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
+  const pathname = usePathname();
+
   const navigation = [
-    { name: 'Settings', href: '/settings' },
-    { name: 'Teams', href: '/teams' },
-    { name: 'Developer', href: '/developer' },
+    { name: 'Settings', href: '/dashboard/settings' },
+    { name: 'Teams', href: '/dashboard/teams' },
+    { name: 'Developer', href: '/dashboard/developer' },
   ];
 
   const sidebarNavigation = [
@@ -23,44 +28,52 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   ];
 
   return (
-    <div className="min-h-screen">
-      <header className="bg-[#1a0b2e] text-white">
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium hover:text-gray-200"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </nav>
-      </header>
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-12 gap-8 py-8">
-          <aside className="col-span-12 sm:col-span-3">
-            <nav className="space-y-1">
-              {sidebarNavigation.map((item) => (
+    <>
+      <div className="h-screen overflow-hidden block">
+        <header className="top-20 w-full h-24  max-w-7xl bg-[#190341] z-0 text-white">
+          <nav className="  mr-24 ml-4  px-16 sm:px-32 lg:px-8">
+            <div className="flex h-16 items-center justify-start space-x-8">
+              {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={cn(
-                    'block rounded-lg px-3 py-2 text-sm font-medium',
-                    'hover:bg-gray-100'
-                  )}
+                  className={`text-sm font-bold hover:text-gray-200 ${
+                    pathname === item.href ? 'font-extrabold' : 'font-normal'
+                  }`}
                 >
                   {item.name}
                 </Link>
               ))}
-            </nav>
-          </aside>
-          <main className="col-span-12 sm:col-span-9">{children}</main>
+            </div>
+          </nav>
+        </header>
+
+        <div className="h pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0">
+          <div className="grid grid-cols-9 gap-8 py-0">
+            <aside className="col-span-12 sm:col-span-3 mt-8">
+              <nav className="space-y-1">
+                {sidebarNavigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`${cn(
+                      `block rounded-lg px-3 py-2 text-xl font-medium  ${
+                        pathname === item.href ? 'font-bold' : 'font-normal'
+                      }`,
+                      'hover:bg-gray-100'
+                    )} `}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
+            </aside>
+            <div className="w-[800px] h-[800px] ">
+              <main className="">{children}</main>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
