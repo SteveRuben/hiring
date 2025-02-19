@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 
+import ApiKeyManagementPage from '@/components/team-settings/ApiKey';
+import BillingDetails from '@/components/team-settings/BillingDetils';
 import TeamPage from '@/components/team-settings/TeamPage';
 import { cn } from '@/lib/utils';
 
@@ -43,7 +45,7 @@ const SETTINGS_NAV: readonly MainNavItem[] = [
     id: 'billing',
     label: 'Billing',
     subNavs: [
-      { id: 'billing details', label: 'Billing details', component: <div>Contenu plans</div> },
+      { id: 'billing details', label: 'Billing details', component: <BillingDetails /> },
       { id: 'subscription', label: 'Subscription', component: <div>Contenu historique</div> },
       { id: 'payment methods', label: 'Payment methods', component: <div>Contenu historique</div> },
       { id: 'invoices', label: 'Invoices', component: <div>Contenu historique</div> },
@@ -58,7 +60,7 @@ const SETTINGS_NAV: readonly MainNavItem[] = [
     id: 'Developper',
     label: 'Developper',
     subNavs: [
-      { id: 'API Keys', label: 'API Keys', component: <SettingsPage /> },
+      { id: 'API Keys', label: 'API Keys', component: <ApiKeyManagementPage /> },
       { id: 'Webhooks', label: 'Webhooks', component: <div>Contenu sécurité</div> },
       { id: 'Logs', label: 'Logs', component: <div>Contenu sécurité</div> },
     ],
