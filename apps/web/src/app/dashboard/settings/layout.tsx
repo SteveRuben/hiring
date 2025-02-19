@@ -15,7 +15,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
 
   const navigation = [
     { name: 'Settings', href: '/dashboard/settings' },
-    { name: 'Teams', href: '/dashboard/teams' },
+    { name: 'Teams', href: '/dashboard/team-settings' },
     { name: 'Developer', href: '/dashboard/developer' },
   ];
 
