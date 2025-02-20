@@ -10,6 +10,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@blocknote/core": "^0.23.6",
+    "@blocknote/mantine": "^0.23.6",
+    "@blocknote/react": "^0.23.6",
     "@hookform/resolvers": "^3.10.0",
     "@monaco-editor/react": "^4.6.0",
     "@radix-ui/react-accordion": "^1.2.2",
