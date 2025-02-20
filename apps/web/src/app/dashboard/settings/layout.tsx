@@ -113,6 +113,12 @@ interface SettingsLayoutProps {
 }
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
+<<<<<<< HEAD
+=======
+  const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
+>>>>>>> 9673626 (fix(teamSetting page): update responsivity of members, billing , apikeys and layout)
   const navigation = [
     { name: 'Settings', href: '/settings' },
     { name: 'Teams', href: '/teams' },
@@ -128,6 +134,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
   ];
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen">
       <header className="bg-[#1a0b2e] text-white">
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -157,13 +164,86 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
                     'block rounded-lg px-3 py-2 text-sm font-medium',
                     'hover:bg-gray-100'
                   )}
+=======
+    <div className="min-h-screen flex flex-col">
+      <header className="w-full bg-[#190341] text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <div className="hidden md:flex space-x-8">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-sm font-medium hover:text-gray-200 transition-colors ${
+                    pathname === item.href ? 'font-bold' : 'font-normal'
+                  }`}
+>>>>>>> 9673626 (fix(teamSetting page): update responsivity of members, billing , apikeys and layout)
+                >
+                  {item.name}
+                </Link>
+              ))}
+<<<<<<< HEAD
+            </nav>
+          </aside>
+          <main className="col-span-12 sm:col-span-9">{children}</main>
+=======
+            </div>
+
+            <button
+              className="md:hidden p-2 rounded-md text-white hover:bg-[#2a0966]"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+          </div>
+
+          {/* Mobile navigation */}
+          {mobileMenuOpen && (
+            <div className="md:hidden py-2 pb-4 text-white">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`block px-4 py-2 text-base text-white font-medium hover:bg-[#2a0966] ${
+                    pathname === item.href ? 'font-bold' : 'font-normal'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </header>
+
+      <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="flex flex-col md:flex-row md:gap-8 pt-8">
+          {/* Sidebar navigation */}
+          <aside className="w-full md:w-64 flex-shrink-0 mb-8 md:mb-0">
+            <nav className="space-y-1 mb-6 md:sticky md:top-20">
+              {sidebarNavigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    'block rounded-lg px-3 py-2 text-base md:text-lg font-medium transition-colors',
+                    pathname === item.href
+                      ? 'bg-gray-50 font-bold'
+                      : 'font-normal hover:bg-gray-100'
+                  )}
                 >
                   {item.name}
                 </Link>
               ))}
             </nav>
           </aside>
-          <main className="col-span-12 sm:col-span-9">{children}</main>
+
+          {/* Main content */}
+          <main className="flex-1 w-full max-w-full overflow-hidden">
+            <div className="w-full">{children}</div>
+          </main>
+>>>>>>> 9673626 (fix(teamSetting page): update responsivity of members, billing , apikeys and layout)
         </div>
       </div>
     </div>

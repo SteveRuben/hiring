@@ -64,6 +64,7 @@ const AvatarPreview = ({ email }: { email: string }) => {
   }, [email]);
 
   return (
+<<<<<<< HEAD
     <div className="relative group">
       <Avatar className="h-24 w-24 md:h-32 md:w-32 transition-transform group-hover:scale-105">
         <AvatarImage src={avatarUrl} alt="Avatar preview" />
@@ -495,5 +496,97 @@ export default function AccountPage() {
         </TabsContent>
       </Tabs>
     </motion.div>
+=======
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Account settings</CardTitle>
+        <Button variant="ghost" size="icon" className="flex-shrink-0">
+          <RefreshCw className="h-4 w-4" />
+        </Button>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+            <Image
+              src="/images/image.png"
+              alt="Profile"
+              width={64}
+              height={64}
+              className="rounded-full"
+            />
+            <div>
+              <p className="text-sm text-muted-foreground">Gravatar</p>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Full name</label>
+            <Input defaultValue="Anand Chowdhary" className="w-full" />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Nickname</label>
+            <Input defaultValue="Anand" className="w-full" />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Username</label>
+            <Input defaultValue="anand" className="w-full" />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Gender</label>
+            <Select defaultValue="prefer-not">
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select gender" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="prefer-not">Prefer not to say (them/their)</SelectItem>
+                <SelectItem value="male">Male (he/him)</SelectItem>
+                <SelectItem value="female">Female (she/her)</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Country</label>
+              <Select>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select country" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="us">United States</SelectItem>
+                  <SelectItem value="uk">United Kingdom</SelectItem>
+                  <SelectItem value="ca">Canada</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Timezone</label>
+              <Select>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select timezone" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="utc">UTC</SelectItem>
+                  <SelectItem value="est">EST</SelectItem>
+                  <SelectItem value="pst">PST</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-4 flex flex-col sm:flex-row gap-2 sm:gap-4 sm:justify-end">
+          <Button variant="outline" className="w-full sm:w-auto">
+            Cancel
+          </Button>
+          <Button className="w-full sm:w-auto">Save Changes</Button>
+        </div>
+      </CardContent>
+    </Card>
+>>>>>>> 9673626 (fix(teamSetting page): update responsivity of members, billing , apikeys and layout)
   );
 }
