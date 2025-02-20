@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { I18nProvider } from '@/components/i18n';
@@ -53,6 +54,7 @@ export default function DashboardLayout({
 }: DashboardLayoutProps) {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const pathname = usePathname();
+  const router = useRouter();
 
   // Menus communs
   const commonMenuItems = [
@@ -120,10 +122,6 @@ export default function DashboardLayout({
   const menuItems = [
     ...commonMenuItems,
     ...(userRole === 'expert' ? expertMenuItems : studentMenuItems),
-    {
-      title: 'Settings',
-      items: [{ name: 'Settings', icon: Settings, href: '/dashboard/settings' }],
-    },
   ];
 
   return (
@@ -168,7 +166,11 @@ export default function DashboardLayout({
 
                   <div className="flex items-center gap-4">
                     <img src="/avatar.png" alt="User" className="h-8 w-8 rounded-full" />
-                    <Button variant="ghost" size="sm">
+                    <Button
+                      onClick={() => router.push('/dashboard/settings')}
+                      variant="ghost"
+                      size="sm"
+                    >
                       <span className="mr-2">John Doe</span>
                       <span className="text-xs text-muted-foreground">({userRole})</span>
                       <ChevronDown className="h-4 w-4 ml-2" />

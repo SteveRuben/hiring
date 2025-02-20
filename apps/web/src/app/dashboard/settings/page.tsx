@@ -17,13 +17,13 @@ export default function SettingsPage() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Account settings</CardTitle>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="flex-shrink-0">
           <RefreshCw className="h-4 w-4" />
         </Button>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
             <Image
               src="/images/image.png"
               alt="Profile"
@@ -38,23 +38,23 @@ export default function SettingsPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Full name</label>
-            <Input defaultValue="Anand Chowdhary" />
+            <Input defaultValue="Anand Chowdhary" className="w-full" />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Nickname</label>
-            <Input defaultValue="Anand" />
+            <Input defaultValue="Anand" className="w-full" />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Username</label>
-            <Input defaultValue="anand" />
+            <Input defaultValue="anand" className="w-full" />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Gender</label>
             <Select defaultValue="prefer-not">
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>
               <SelectContent>
@@ -66,11 +66,11 @@ export default function SettingsPage() {
             </Select>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">Country</label>
               <Select>
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent>
@@ -83,7 +83,7 @@ export default function SettingsPage() {
             <div className="space-y-2">
               <label className="text-sm font-medium">Timezone</label>
               <Select>
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select timezone" />
                 </SelectTrigger>
                 <SelectContent>
@@ -94,6 +94,13 @@ export default function SettingsPage() {
               </Select>
             </div>
           </div>
+        </div>
+
+        <div className="pt-4 flex flex-col sm:flex-row gap-2 sm:gap-4 sm:justify-end">
+          <Button variant="outline" className="w-full sm:w-auto">
+            Cancel
+          </Button>
+          <Button className="w-full sm:w-auto">Save Changes</Button>
         </div>
       </CardContent>
     </Card>
