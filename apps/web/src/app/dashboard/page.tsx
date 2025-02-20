@@ -112,7 +112,6 @@ export default function DashboardPage() {
           return (
             <Card key={type.value} className="hover:bg-accent/50 transition-colors cursor-pointer">
               <Link href={`/dashboard/tutoriel-code`}>
-              
                 <CardHeader>
                   <div className="flex items-center space-x-4">
                     <Icon className="h-6 w-6 text-primary" />
