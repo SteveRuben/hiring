@@ -31,7 +31,7 @@ type MainNavItem = {
 const SETTINGS_NAV: readonly MainNavItem[] = [
   {
     id: 'Products',
-    label: 'Profil',
+    label: 'Products',
     subNavs: [
       { id: 'personal', label: 'Informations personnelles', component: <SettingsPage /> },
       { id: 'security', label: 'Sécurité', component: <div>Contenu sécurité</div> },
