@@ -1,15 +1,15 @@
 'use client';
 import React from 'react';
 
-import Editor from '@/components/tutoriel/editor';
+import NotionLikeEditor from '@/components/tutoriel/NotionLikeEditor';
 
 const TutorialCodePage: React.FC = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm">
-        <h1 className="mb-4 text-4xl font-bold">Éditeur de style Notion</h1>
-        <div className="h-[600px] w-full border border-gray-200 rounded-lg shadow-lg">
-          <Editor />
+    <main className="flex">
+      <div className="z-10 w-full font-mono text-sm">
+        <h1 className="mb-4 text-4xl font-bold">Nouveau tutoriel</h1>
+        <div className="w-full ">
+          <NotionLikeEditor />
         </div>
       </div>
     </main>
