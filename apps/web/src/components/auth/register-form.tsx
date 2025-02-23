@@ -13,7 +13,7 @@ export default function Register() {
   const register = async (data: Record<string, string>) => {
     await api<User['auth']>({
       method: 'POST',
-      url: '/auth/register',
+      url: '/auth/register',  
       body: {
         ...data,
         origin: window.location.origin,
