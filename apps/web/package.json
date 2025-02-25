@@ -36,7 +36,7 @@
     "flagg": "^1.1.2",
     "googleapis": "^144.0.0",
     "howler": "^2.2.4",
-    "jwt-decode": "^3.1.2",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",
     "monaco-editor": "^0.52.2",
     "next": "15.1.3",
