@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'HiringSolution',
-  description: "Découvrez une nouvelle façon d'acheter avec les enchères inversées",
+  description: 'Découvrez une nouvelle façon de faire des recrutement',
 };
 
 export default function RootLayout({
