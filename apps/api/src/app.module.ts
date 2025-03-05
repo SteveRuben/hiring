@@ -46,6 +46,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { WebsocketModule } from '@/modules/websocket/websocket.module';
 import serverConfig from './config/server.config';
+import { ContactModule } from './modules/contact/contact.module';
 
 @Module({
   imports: [
@@ -85,6 +86,7 @@ import serverConfig from './config/server.config';
     TemplatesModule,
     TalentModule,
     WallpapersModule,
+    ContactModule,
     WebsocketModule,
     /*   CloudinaryModule,
     FirebaseModule,

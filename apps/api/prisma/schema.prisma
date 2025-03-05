@@ -11,6 +11,15 @@ datasource db {
   directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
+model Contact {
+  id        Int      @id @default(autoincrement()) @unique
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+
 model User {
   checkLocationOnLogin Boolean              @default(false)
   countryCode          String               @default("us")
