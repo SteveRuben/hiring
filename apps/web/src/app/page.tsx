@@ -233,7 +233,7 @@ export default function LandingPage() {
             className="hidden md:flex gap-4"
           >
             <Button variant="outline" size="sm" className="transition-transform hover:scale-105">
-              Se connecter
+              <Link href={'/connexion'}>Se connecter</Link>
             </Button>
             <Button
               size="sm"
