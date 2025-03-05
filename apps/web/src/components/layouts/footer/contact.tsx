@@ -1,10 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useFormState } from 'react-dom';
-
 import { useTranslation } from '@/components/i18n';
-// import { submitContact } from "../actions/contact"
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
