@@ -7,7 +7,7 @@ import type React from 'react';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Hodysse - Enchères inversées',
+  title: 'HiringSolution',
   description: "Découvrez une nouvelle façon d'acheter avec les enchères inversées",
 };
 
