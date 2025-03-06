@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { render } from '@prep-ai/mustache-markdown';
 import { SES } from 'aws-sdk';
 import { promises as fs } from 'fs';
 import * as nodemailer from 'nodemailer';
@@ -13,6 +12,7 @@ import { join } from 'path';
 import { Configuration } from '@/config/configuration.interface';
 
 import { MailOptions } from './mail.interface';
+import { render } from './render';
 
 type Func<T> = (val: T) => any;
 
