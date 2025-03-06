@@ -30,6 +30,7 @@ import {
   User,
   X,
 } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -208,10 +209,12 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="mt-4 flex items-center space-x-2">
-                <Button variant="outline" size="sm" className="w-full justify-start">
-                  <Settings className="mr-2 h-4 w-4" />
-                  Paramètres
-                </Button>
+                <Link href="/parametres">
+                  <Button variant="outline" size="sm" className="w-full justify-start">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Paramètres
+                  </Button>
+                </Link>
                 <Button variant="ghost" size="icon">
                   <LogOut className="h-4 w-4" />
                 </Button>
@@ -275,10 +278,12 @@ export default function DashboardPage() {
                   <User className="mr-2 h-4 w-4" />
                   <span>Profil</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Paramètres</span>
-                </DropdownMenuItem>
+                <Link href="/parametres">
+                  <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Paramètres</span>
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <LogOut className="mr-2 h-4 w-4" />
