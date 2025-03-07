@@ -20,6 +20,8 @@ import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
 
+import { activeSessions } from '../mock/mock-param';
+
 export default function SecuritySettings() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -102,30 +104,6 @@ export default function SecuritySettings() {
       setIsLoadingLogout(false);
     }
   };
-
-  const activeSessions = [
-    {
-      device: 'Chrome sur Windows',
-      location: 'Paris, France',
-      ip: '192.168.1.1',
-      lastActive: "Aujourd'hui à 14:30",
-      current: true,
-    },
-    {
-      device: 'Firefox sur MacOS',
-      location: 'Lyon, France',
-      ip: '192.168.1.2',
-      lastActive: 'Hier à 18:45',
-      current: false,
-    },
-    {
-      device: 'Application mobile (iOS)',
-      location: 'Marseille, France',
-      ip: '192.168.1.3',
-      lastActive: 'Il y a 3 jours',
-      current: false,
-    },
-  ];
 
   return (
     <motion.div

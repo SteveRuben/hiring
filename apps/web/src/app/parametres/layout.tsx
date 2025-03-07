@@ -11,6 +11,7 @@ import {
   Settings,
   Shield,
   User,
+  Users,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -35,6 +36,12 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       href: '/parametres',
       icon: <User className="h-5 w-5" />,
       description: 'Gérez vos informations personnelles',
+    },
+    {
+      title: 'Équipe',
+      href: '/parametres/equipe',
+      icon: <Users className="h-5 w-5" />,
+      description: 'Gérez les membres de votre équipe',
     },
     {
       title: 'Localisation',
