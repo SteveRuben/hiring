@@ -56,6 +56,12 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       description: 'Gérez votre mot de passe et sessions',
     },
     {
+      title: 'Authentification à deux facteurs',
+      href: '/parametres/securite/2fa',
+      icon: <Shield className="h-5 w-5" />,
+      description: 'Sécurisez votre compte avec la 2FA',
+    },
+    {
       title: 'Avatar',
       href: '/parametres/avatar',
       icon: <Image className="h-5 w-5" />,
