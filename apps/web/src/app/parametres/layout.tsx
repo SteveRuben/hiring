@@ -6,6 +6,7 @@ import {
   ChevronLeft,
   Globe,
   Image,
+  Key,
   Lock,
   LogOut,
   Settings,
@@ -60,6 +61,12 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       href: '/parametres/securite/2fa',
       icon: <Shield className="h-5 w-5" />,
       description: 'Sécurisez votre compte avec la 2FA',
+    },
+    {
+      title: 'Clés API',
+      href: '/parametres/api-keys',
+      icon: <Key className="h-5 w-5" />,
+      description: 'Gérez vos clés API',
     },
     {
       title: 'Avatar',
