@@ -9,6 +9,7 @@ import {
   Key,
   Lock,
   LogOut,
+  Receipt,
   Settings,
   Shield,
   User,
@@ -67,6 +68,12 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       href: '/parametres/api-keys',
       icon: <Key className="h-5 w-5" />,
       description: 'Gérez vos clés API',
+    },
+    {
+      title: 'Facturation',
+      href: '/parametres/facturation',
+      icon: <Receipt className="h-5 w-5" />,
+      description: 'Gérez vos informations de facturation',
     },
     {
       title: 'Avatar',
