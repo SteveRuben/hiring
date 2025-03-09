@@ -162,7 +162,7 @@ export default function DashboardPage() {
           >
             <div className="p-4 border-b flex items-center space-x-2">
               <Shield className="h-6 w-6 text-primary" />
-              <span className="font-bold text-xl">RecrutPro</span>
+              <span className="font-bold text-xl">Hiring Solution</span>
             </div>
 
             <div className="flex-1 py-2 overflow-auto">
