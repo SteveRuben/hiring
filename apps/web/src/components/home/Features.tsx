@@ -1,6 +1,6 @@
 'use client';
 
-import { BookOpen, Code, Video } from 'lucide-react';
+import { BookOpen, Code, File, Link, Shield, Video } from 'lucide-react';
 
 import { useTranslation } from '@/components/i18n';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,6 +15,11 @@ export const Features = () => {
       description: t('features.live.description'),
     },
     {
+      icon: <File className="h-8 w-8 text-blue-500" />,
+      title: t('features.cv.title'),
+      description: t('features.cv.description'),
+    },
+    {
       icon: <Video className="h-8 w-8 text-green-500" />,
       title: t('features.video.title'),
       description: t('features.video.description'),
@@ -23,6 +28,16 @@ export const Features = () => {
       icon: <BookOpen className="h-8 w-8 text-purple-500" />,
       title: t('features.learning.title'),
       description: t('features.learning.description'),
+    },
+    {
+      icon: <Link className="h-8 w-8 text-yellow-500" />,
+      title: t('features.hrms.title'),
+      description: t('features.hrms.description'),
+    },
+    {
+      icon: <Shield className="h-8 w-8 text-red-500" />,
+      title: t('features.security.title'),
+      description: t('features.security.description'),
     },
   ];
 

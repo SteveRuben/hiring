@@ -40,16 +40,10 @@ const Navbar = () => {
               {t('nav.features')}
             </Link>
             <Link
-              href="#experts"
+              href="/pricing"
               className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
             >
-              {t('nav.findExperts')}
-            </Link>
-            <Link
-              href="talent"
-              className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
-            >
-              {t('nav.talents')}
+              {t('nav.pricing')}
             </Link>
             <Link href="/login">
               <Button variant="ghost">{t('nav.signIn')}</Button>

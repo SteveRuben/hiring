@@ -13,14 +13,14 @@ export const translations = {
     // Hero section
     hero: {
       beta: 'Now in Beta - Join Today',
-      title: 'Learn from Expert Developers in Real-Time',
+      title: 'Hiring talents the simple way',
       subtitle:
         'Connect with experienced developers for personalized 1-on-1 sessions, code reviews, and career guidance',
       findExpert: 'Find an Expert',
       getStarted: 'Get Started',
       viewDemo: 'View Demo',
       stats: {
-        experts: 'Expert Mentors',
+        experts: 'Users',
         sessions: 'Sessions Completed',
         rating: 'Average Rating',
       },
@@ -37,9 +37,21 @@ export const translations = {
         title: 'Video Consultations',
         description: 'Face-to-face mentoring sessions with screen sharing capabilities',
       },
+      cv: {
+        title: 'Intelligent CV Analysis',
+        description: 'Analyse CV with the best AI tools',
+      },
       learning: {
         title: 'Custom Learning Paths',
         description: 'Personalized guidance based on your skill level and goals',
+      },
+      hrms: {
+        title: 'Intregrate easily with HRMS',
+        description: 'Works with your internal HR tools',
+      },
+      security: {
+        title: 'Secure and conforms ',
+        description: 'Secure and conforms to RGPD, HIPAA & Loi25',
       },
     },
     // Experts section
@@ -180,13 +192,14 @@ export const translations = {
     // Hero section
     hero: {
       beta: 'Maintenant en Bêta - Rejoignez-nous',
-      title: 'Apprenez avec des Développeurs Experts en Temps Réel',
+      title: 'Denichez des talents n\a jamais été si simple ',
+      getStarted: 'Commencez maintenant',
       subtitle:
         'Connectez-vous avec des développeurs expérimentés pour des sessions personnalisées, des revues de code et des conseils de carrière',
       findExpert: 'Trouver un Expert',
       viewDemo: 'Voir la Démo',
       stats: {
-        experts: 'Experts Mentors',
+        experts: 'Utilisateurs',
         sessions: 'Sessions Réalisées',
         rating: 'Note Moyenne',
       },
@@ -207,6 +220,18 @@ export const translations = {
       learning: {
         title: 'Parcours Personnalisés',
         description: 'Conseils personnalisés selon votre niveau et vos objectifs',
+      },
+      cv: {
+        title: 'Analyse intelligent de CV',
+        description: 'Analyse intelligent et sans bias de CV',
+      },
+      hrms: {
+        title: 'Integration facile avec HRMS',
+        description: "S'interface en un click avec votre SGRH",
+      },
+      security: {
+        title: 'Securité et conforme',
+        description: 'Protection des données utilisateurs assurés',
       },
     },
     // Experts section
