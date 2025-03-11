@@ -5,7 +5,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import type React from 'react';
 
 import { I18nProvider } from '@/components/i18n';
-import Navbar from '@/components/layouts/nav/nav-bar';
+import NavHeader from '@/components/layouts/nav/nav-header';
 import AppStateProvider from '@/lib/providers/app-state-provider';
 import { QueryProvider } from '@/lib/providers/query-provider';
 import { SoundEffectProvider } from '@/lib/providers/sound-effect-provider';
@@ -45,7 +45,7 @@ export default function RootLayout({
               }}
             >
               <I18nProvider>
-                <Navbar />
+                <NavHeader />
                 <div className="pt-16">{children}</div>
                 <ToastProvider />
               </I18nProvider>
