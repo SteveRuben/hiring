@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { api, loginWithTokenResponse } from '@/lib/api/user.api';
+import { useEffect, useState } from 'react';
+
 import Error from '@/components/result/error';
 import Success from '@/components/result/success';
+import { api, loginWithTokenResponse } from '@/lib/api/user.api';
 import type { User } from '@/model';
 
 type NotificationType = {
@@ -31,7 +32,7 @@ export default function Verify({ params }: VerifyProps) {
   const [error, setError] = useState('');
   const [password, setPassword] = useState('');
 
-  const type = params.type.join('/');
+  const type = params?.type.join('/');
   const token = searchParams.get('token');
 
   useEffect(() => {
@@ -95,19 +96,20 @@ export default function Verify({ params }: VerifyProps) {
       {error ? (
         <Error error={error} />
       ) : state === 'success' ? (
-        <Success title="All done!">
-          We were able to successfully verify your link.
-        </Success>
+        <Success title="All done!">We were able to successfully verify your link.</Success>
       ) : type === 'reset-password' ? (
         <div className="bg-white shadow sm:rounded-lg">
-          <form onSubmit={(e) => { e.preventDefault(); verify(); }} className={state}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              verify();
+            }}
+            className={state}
+          >
             <div className="px-4 py-5 sm:px-6 space-y-4">
               <fieldset className="space-y-4">
                 <div>
-                  <label 
-                    htmlFor="password" 
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                     New password
                   </label>
                   <input

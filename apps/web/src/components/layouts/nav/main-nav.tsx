@@ -80,7 +80,7 @@ const testsItems = [
 const userSettings = [
   {
     title: 'Profil',
-    href: '/profile',
+    href: '/dasboard/profile',
     description: 'Gérez vos informations personnelles et professionnelles.',
     icon: <Profil className="h-4 w-4 mr-2" />,
   },
@@ -92,7 +92,7 @@ const userSettings = [
   },
   {
     title: 'Aide',
-    href: '/help',
+    href: '/settings/help',
     description: "Centre d'aide et documentation.",
     icon: <HelpCircle className="h-4 w-4 mr-2" />,
   },
