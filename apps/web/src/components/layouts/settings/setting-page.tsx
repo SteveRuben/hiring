@@ -1,14 +1,24 @@
 'use client';
 
+import { Dialog } from '@radix-ui/react-dialog';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { motion } from 'framer-motion';
 import {
   AlertCircle,
+  Building,
   Check,
   ChevronRight,
   Copy,
+  CreditCard,
+  FileEdit,
   Globe,
+  Hash,
+  Info,
   Mail,
   Phone,
   Plus,
+  Receipt,
   Shield,
   Smartphone,
   Upload,
@@ -18,10 +28,28 @@ import {
 } from 'lucide-react';
 import React, { useState } from 'react';
 
+import { account, settings } from '@/app/api/setting/mock-billing';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Form } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { toast } from '@/components/ui/use-toast';
+
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState('profile');
   const [copied, setCopied] = useState(false);
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
+  const [isPrefixModalOpen, setIsPrefixModalOpen] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [teamMembers, setTeamMembers] = useState([
     {
       id: 1,
@@ -52,7 +80,15 @@ const SettingsPage = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-
+  const copyToClipboard = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    toast({
+      title: 'ID copié',
+      description: "L'identifiant a été copié dans le presse-papier.",
+    });
+    setTimeout(() => setCopiedId(null), 2000);
+  };
   const toggleTwoFactor = () => {
     setTwoFactorEnabled(!twoFactorEnabled);
   };
@@ -61,6 +97,7 @@ const SettingsPage = () => {
     { id: 'profile', label: 'Profil', icon: <User size={18} /> },
     { id: 'security', label: 'Sécurité', icon: <Shield size={18} /> },
     { id: 'team', label: 'Équipe', icon: <Users size={18} /> },
+    { id: 'billing', label: 'billing', icon: <Receipt size={18} /> },
     { id: 'webhooks', label: 'Webhooks', icon: <Webhook size={18} /> },
   ];
 
@@ -406,7 +443,211 @@ const SettingsPage = () => {
             </div>
           </div>
         )}
+        {activeTab === 'billing' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-6"
+          >
+            <div>
+              <h3 className="text-lg font-medium">Informations de facturation</h3>
+              <p className="text-sm text-muted-foreground">
+                Gérez vos informations de facturation et visualisez les détails de votre compte.
+              </p>
+            </div>
+            <Separator />
 
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Account Card */}
+              <Card className="md:col-span-1">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <CreditCard className="h-5 w-5 text-primary" />
+                    Compte
+                  </CardTitle>
+                  <CardDescription>Informations sur votre compte de facturation</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Statut</span>
+                      <Badge
+                        variant="outline"
+                        className="bg-green-100 text-green-800 hover:bg-green-100 capitalize"
+                      >
+                        Actif
+                      </Badge>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Solde actuel</span>
+                      <span className="font-medium">
+                        {account.balance.toFixed(2)} {account.currency}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Cycle de facturation</span>
+                      <span className="capitalize">Mensuel</span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Prochaine facturation</span>
+                      <span>
+                        {format(new Date(account.nextBillingDate), 'dd MMM yyyy', { locale: fr })}
+                      </span>
+                    </div>
+
+                    <Separator className="my-2" />
+
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">ID Client</span>
+                        <div className="flex items-center">
+                          <span className="font-mono text-xs mr-2">{account.customerId}</span>
+                          <Button variant="ghost" size="icon" className="h-6 w-6">
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">ID Compte</span>
+                        <div className="flex items-center">
+                          <span className="font-mono text-xs mr-2">{account.id}</span>
+                          <Button variant="ghost" size="icon" className="h-6 w-6">
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Billing Prefix */}
+                  <div className="pt-2">
+                    <div className="rounded-md border p-4">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-medium flex items-center">
+                            <Hash className="h-4 w-4 mr-1 text-muted-foreground" />
+                            Préfixe de facturation
+                          </h4>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            Utilisé pour les numéros de factures
+                          </p>
+                        </div>
+                        <Button variant="outline" size="sm">
+                          <FileEdit className="h-4 w-4 mr-2" />
+                          Modifier
+                        </Button>
+                      </div>
+                      <div className="mt-2 flex items-center">
+                        <span className="font-mono text-lg font-medium">
+                          {settings.billingPrefix}
+                        </span>
+                        <span className="text-muted-foreground ml-2">-0001</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Billing Information Form */}
+              <Card className="md:col-span-2">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Building className="h-5 w-5 text-primary" />
+                    Informations de facturation
+                  </CardTitle>
+                  <CardDescription>Ces informations apparaîtront sur vos factures.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="companyName">Nom de l'entreprise</Label>
+                      <Input
+                        id="companyName"
+                        name="companyName"
+                        value={settings.companyName}
+                        readOnly
+                        placeholder="Votre entreprise"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="billingEmail">Email de facturation</Label>
+                      <Input
+                        id="billingEmail"
+                        name="billingEmail"
+                        type="email"
+                        value={settings.billingEmail}
+                        readOnly
+                        placeholder="facturation@exemple.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="address">Adresse</Label>
+                    <Input
+                      id="address"
+                      name="address"
+                      value={settings.address}
+                      readOnly
+                      placeholder="Adresse"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="city">Ville</Label>
+                      <Input
+                        id="city"
+                        name="city"
+                        value={settings.city}
+                        readOnly
+                        placeholder="Ville"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="postalCode">Code postal</Label>
+                      <Input
+                        id="postalCode"
+                        name="postalCode"
+                        value={settings.postalCode}
+                        readOnly
+                        placeholder="Code postal"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="country">Pays</Label>
+                      <Input
+                        id="country"
+                        name="country"
+                        value={settings.country}
+                        readOnly
+                        placeholder="Pays"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="vatNumber">
+                      Numéro de TVA <span className="text-muted-foreground">(optionnel)</span>
+                    </Label>
+                    <Input
+                      id="vatNumber"
+                      name="vatNumber"
+                      value={settings.vatNumber}
+                      readOnly
+                      placeholder="FR12345678901"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </motion.div>
+        )}
         {activeTab === 'webhooks' && (
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center justify-between mb-8">
