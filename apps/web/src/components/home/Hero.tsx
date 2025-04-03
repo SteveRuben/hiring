@@ -1,5 +1,6 @@
 'use client';
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { useTranslation } from '@/components/i18n';
@@ -76,10 +77,12 @@ export const Hero = () => {
           </h1>
           <p className="text-xl text-slate-600 mb-8">{t('hero.subtitle')}</p>
           <div className="flex gap-4 justify-center">
-            <Button size="lg">
-              {t('hero.getStarted')}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            <Link href="/dashboard">
+              <Button size="lg">
+                {t('hero.getStarted')}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
             <Button size="lg" variant="outline">
               {t('hero.viewDemo')}
             </Button>

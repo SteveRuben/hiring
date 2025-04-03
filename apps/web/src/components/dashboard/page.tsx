@@ -56,7 +56,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function DashboardPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState('entretiens');
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
   const [hasNewAlert, setHasNewAlert] = useState(true);
@@ -162,7 +161,7 @@ export default function DashboardPage() {
           >
             <div className="p-4 border-b flex items-center space-x-2">
               <Shield className="h-6 w-6 text-primary" />
-              <span className="font-bold text-xl">RecrutPro</span>
+              <span className="font-bold text-xl">UseHiring</span>
             </div>
 
             <div className="flex-1 py-2 overflow-auto">
