@@ -8,6 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { Challenge } from '@prisma/client';
+
 import { Public } from '../../auth/public.decorator';
 import { ChallengeDto } from '../dto/challenge.dto';
 import { ChallengesService } from './challenges.service';
@@ -51,6 +52,6 @@ export class ChallengesController {
 
   @Patch(':id/publish')
   async publish(@Param('id') id: string): Promise<Challenge> {
-    return this.challengeService.deleteChallenge(Number(id));
+    return this.challengeService.publish(Number(id));
   }
 }

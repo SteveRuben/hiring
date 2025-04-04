@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export const api = axios.create({
   baseURL:
@@ -8,3 +8,4 @@ export const api = axios.create({
 });
 
 export default api;
+export const extractData = <T>(response: AxiosResponse<T>): T => response.data;
