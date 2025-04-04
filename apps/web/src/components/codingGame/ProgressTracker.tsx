@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Exercise } from '@/types';
 
+import { useTranslation } from '../i18n';
+
 interface ProgressTrackerProps {
   exercises: Exercise[];
   completedExercises: string[];
@@ -16,9 +18,21 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   currentExerciseId,
   onExerciseSelect,
 }) => {
+  const { t } = useTranslation();
+
+  const getDifficultyTranslation = (difficulty: string) => {
+    switch (difficulty) {
+      case 'easy':
+        return t('progressTracker.easy');
+      case 'medium':
+        return t('progressTracker.medium');
+      default:
+        return t('progressTracker.hard');
+    }
+  };
   return (
     <div className="p-4 border rounded-lg bg-gray-50">
-      <h3 className="text-lg font-semibold mb-3">Progression</h3>
+      <h3 className="text-lg font-semibold mb-3">{t('progressTracker.title')}</h3>
 
       <div className="space-y-2">
         {exercises.map((exercise) => {
@@ -41,12 +55,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
               <div>
                 <div className="font-medium">{exercise.title}</div>
                 <div className="text-sm text-gray-600">
-                  Difficulté:{' '}
-                  {exercise.difficulty === 'easy'
-                    ? 'Facile'
-                    : exercise.difficulty === 'medium'
-                      ? 'Moyen'
-                      : 'Difficile'}
+                  {t('progressTracker.difficulty')} {getDifficultyTranslation(exercise.difficulty)}
                 </div>
               </div>
             </button>
@@ -55,7 +64,8 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
       </div>
 
       <div className="mt-4 text-sm text-gray-600">
-        Progression: {completedExercises.length}/{exercises.length} exercices complétés
+        {t('progressTracker.progress')} {completedExercises.length}/{exercises.length}{' '}
+        {t('progressTracker.exercisesCompleted')}
       </div>
     </div>
   );

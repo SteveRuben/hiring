@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
+import { useTranslation } from '@/components/i18n';
 import { challenges } from '@/data/challenges';
 import { mockUserData } from '@/data/mockData';
 
@@ -11,6 +12,7 @@ const ChallengeInterface = dynamic(() => import('@/components/codingGame/Challen
   ssr: false,
 });
 export default function ChallengePage({ params }: { params: { id: string } }) {
+  const { t } = useTranslation();
   const challenge = challenges.find((c) => c.id === params.id)!;
   const handleProgressUpdate = (exerciseId: string, passed: boolean) => {
     console.log(`Exercice ${exerciseId} ${passed ? 'réussi' : 'échoué'}`);
@@ -26,12 +28,16 @@ export default function ChallengePage({ params }: { params: { id: string } }) {
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <Link href="/dashboard/challenges" className="text-gray-500 hover:text-gray-700">
-              ← Retour aux challenges
+              ← {t('challengePage.backToChallenges')}
             </Link>
           </div>
           <div className="flex items-center gap-4">
-            <div className="text-sm text-gray-700">Points: {challenge.points}</div>
-            <div className="text-sm text-gray-700">Difficulté: {challenge.difficulty}</div>
+            <div className="text-sm text-gray-700">
+              {t('challengePage.points')}: {challenge.points}
+            </div>
+            <div className="text-sm text-gray-700">
+              {t('challengePage.difficulty')}: {challenge.difficulty}
+            </div>
           </div>
         </div>
       </header>
@@ -41,7 +47,6 @@ export default function ChallengePage({ params }: { params: { id: string } }) {
         userId={mockUserData.userId}
         onProgressUpdate={handleProgressUpdate}
       />
-      {/* </main> */}
     </div>
   );
 }

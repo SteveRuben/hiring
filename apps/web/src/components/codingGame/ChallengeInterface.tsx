@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { mockUserProgress } from '@/data/mockData';
 import { Challenge, Exercise, TestResult } from '@/types';
 
+import { useTranslation } from '../i18n';
 import ProgressTracker from './ProgressTracker';
 import TestRunner from './TestRunner';
 
@@ -22,6 +23,7 @@ const ChallengeInterface: React.FC<ChallengeInterfaceProps> = ({
   userId,
   onProgressUpdate,
 }) => {
+  const { t } = useTranslation();
   const [currentExerciseId, setCurrentExerciseId] = useState<string>('');
   const [currentExercise, setCurrentExercise] = useState<Exercise | null>(null);
   const [code, setCode] = useState<string>('');
@@ -91,7 +93,7 @@ const ChallengeInterface: React.FC<ChallengeInterfaceProps> = ({
           <div className="mt-4">
             <div className="flex justify-between items-center mb-2">
               <label htmlFor="language-select" className="font-medium">
-                Langage:
+                {t('challenge.language')}
               </label>
               <select
                 id="language-select"

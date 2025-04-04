@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
 
+import { useTranslation } from '@/components/i18n';
 import { challenges } from '@/data/challenges';
 import { mockUserData } from '@/data/mockData';
 
@@ -13,6 +14,7 @@ const ChallengeInterface = dynamic(() => import('@/components/codingGame/Challen
   ssr: false,
 });
 export default function ChallengeTestPage({ params }: { params: { id: string } }) {
+  const { t } = useTranslation();
   // const [challenge, setChallenge] = useState<Challenge | null>(null);
   // const [loading, setLoading] = useState(true);
 
@@ -36,15 +38,15 @@ export default function ChallengeTestPage({ params }: { params: { id: string } }
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/dashboard/candidate/dashboard" className="text-gray-500 hover:text-gray-700">
-            Retour au tableau de bord
+            {t('challengeTest.backToDashboard')}
           </Link>
           <div className="flex items-center gap-4">
-            <div className="text-gray-700">Temps restant: 01:58:45</div>
+            <div className="text-gray-700">{t('challengeTest.timeRemaining')}: 01:58:45</div>
             <button
               className="px-4 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700"
-              onClick={() => alert('Test soumis avec succès!')}
+              onClick={() => alert(t('challengeTest.testSubmitted'))}
             >
-              Terminer le test
+              {t('challengeTest.finishTest')}
             </button>
           </div>
         </div>

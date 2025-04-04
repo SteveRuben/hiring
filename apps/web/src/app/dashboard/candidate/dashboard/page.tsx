@@ -1,8 +1,10 @@
 import Link from 'next/link';
 
+import { useTranslation } from '@/components/i18n';
 import { challenges } from '@/data/challenges';
 
 export default function CandidateDashboardPage() {
+  const { t } = useTranslation();
   const completedChallenges = [
     {
       id: 3,
@@ -18,28 +20,31 @@ export default function CandidateDashboardPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Main content */}
       <main className=" mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-2">Votre Tableau de bord </h1>
-        <p className="text-gray-500 mb-8">
-          Bienvenue sur votre espace candidat. Vous pouvez voir vos tests disponibles et passés ici.
-        </p>
+        <h1 className="text-2xl font-bold mb-2">{t('candidateDashboard.title')}</h1>
+        <p className="text-gray-500 mb-8">{t('candidateDashboard.welcome')}</p>
 
         {/* Available Challenges */}
         <div className="mb-10">
-          <h2 className="text-lg font-medium mb-4">Tests disponibles</h2>
+          <h2 className="text-lg font-medium mb-4">{t('candidateDashboard.availableTests')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {challenges.map((challenge) => (
               <div key={challenge.id} className="bg-white shadow rounded-lg overflow-hidden">
                 <div className="p-6">
                   <h3 className="text-lg font-medium">{challenge.title}</h3>
                   <div className="mt-1 text-sm text-gray-500">
-                    Date limite: {'date de fin'}
+                    {t('candidateDashboard.deadline')} {'date de fin'}
                   </div>{' '}
                   {/*la date de fin*/}
                   <p className="mt-3 text-sm text-gray-500">{challenge.description}</p>
                   <div className="mt-4 text-sm text-gray-500">
-                    <span>{50} minutes</span> {/* timeLimit */}
+                    <span>
+                      {50} {t('candidateDashboard.minutes')}
+                    </span>{' '}
+                    {/* timeLimit */}
                     <span className="mx-2">•</span>
-                    <span>{`${challenge.exercises}`} exercices</span>
+                    <span>
+                      {`${challenge.exercises}`} {t('candidateDashboard.exercises')}
+                    </span>
                   </div>
                 </div>
                 <div className="bg-gray-50 px-6 py-4">
@@ -49,14 +54,14 @@ export default function CandidateDashboardPage() {
                       href={`/dashboard/candidate/challenges/${challenge.id}`}
                       className="w-full block text-center py-2 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700"
                     >
-                      Commencer le test
+                      {t('candidateDashboard.startTest')}
                     </Link>
                   ) : (
                     <button
                       disabled
                       className="w-full py-2 px-4 rounded-md text-white bg-gray-400 cursor-not-allowed"
                     >
-                      Disponible le {'25 mai'} {/*la date de fin*/}
+                      {t('candidateDashboard.availableOn')} {'25 mai'} {/*la date de fin*/}
                     </button>
                   )}
                 </div>
@@ -67,19 +72,19 @@ export default function CandidateDashboardPage() {
 
         {/* Completed Challenges */}
         <div>
-          <h2 className="text-lg font-medium mb-4">Tests terminés</h2>
+          <h2 className="text-lg font-medium mb-4">{t('candidateDashboard.completedTests')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {completedChallenges.map((challenge) => (
               <div key={challenge.id} className="bg-white shadow rounded-lg overflow-hidden">
                 <div className="p-6">
                   <h3 className="text-lg font-medium">{challenge.title}</h3>
                   <div className="mt-1 text-sm text-gray-500">
-                    Complété le: {challenge.completedDate}
+                    {t('candidateDashboard.completedOn')} {challenge.completedDate}
                   </div>
                   <p className="mt-3 text-sm text-gray-500">{challenge.description}</p>
                   <div className="mt-4">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium">Score</span>
+                      <span className="text-sm font-medium">{t('candidateDashboard.score')}</span>
                       <span className="text-sm font-medium">{challenge.score}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
@@ -91,7 +96,9 @@ export default function CandidateDashboardPage() {
                   </div>
                   {challenge.feedback && (
                     <div className="mt-4 p-3 bg-blue-50 rounded-md">
-                      <h4 className="text-sm font-medium text-blue-800">Feedback</h4>
+                      <h4 className="text-sm font-medium text-blue-800">
+                        {t('candidateDashboard.feedback')}
+                      </h4>
                       <p className="mt-1 text-sm text-blue-700">{challenge.feedback}</p>
                     </div>
                   )}
@@ -101,7 +108,7 @@ export default function CandidateDashboardPage() {
                     href={`/dashboard/candidate/challenges/${challenge.id}/results`}
                     className="w-full block text-center py-2 px-4 rounded-md text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
                   >
-                    Voir les résultats détaillés
+                    {t('candidateDashboard.viewDetailedResults')}
                   </Link>
                 </div>
               </div>

@@ -14,30 +14,32 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+import { useTranslation } from '@/components/i18n';
 import { candidates } from '@/data/candidates';
 
 export default function CandidatesPage() {
+  const { t } = useTranslation();
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
             <CheckCircle className="h-3 w-3 mr-1" />
-            Actif
+            {t('active')}
           </span>
         );
       case 'pending':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
             <Clock className="h-3 w-3 mr-1" />
-            En attente
+            {t('pending')}
           </span>
         );
       case 'inactive':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
             <AlertCircle className="h-3 w-3 mr-1" />
-            Inactif
+            {t('inactive')}
           </span>
         );
       default:
@@ -52,14 +54,14 @@ export default function CandidatesPage() {
         <div className="flex gap-2">
           <button className="px-4 py-2 border rounded-md hover:bg-gray-50 flex items-center gap-2">
             <Upload className="h-4 w-4" />
-            Importer
+            {t('import')}
           </button>
           <Link
             href="/dashboard/admin/candidates/new"
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center gap-2"
           >
             <Plus className="h-4 w-4" />
-            Ajouter un candidat
+            {t('addCandidate')}
           </Link>
         </div>
       </div>
@@ -69,7 +71,7 @@ export default function CandidatesPage() {
         <div className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm font-medium text-gray-500">Total des candidats</p>
+              <p className="text-sm font-medium text-gray-500">{t('totalCandidates')}</p>
               <h3 className="text-3xl font-bold mt-1">{candidates.length}</h3>
             </div>
             <div className="p-2 bg-blue-100 rounded-md">
@@ -81,7 +83,7 @@ export default function CandidatesPage() {
         <div className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm font-medium text-gray-500">Candidats actifs</p>
+              <p className="text-sm font-medium text-gray-500">{t('activeCandidates')}</p>
               <h3 className="text-3xl font-bold mt-1">
                 {candidates.filter((c) => c.status === 'active').length}
               </h3>
@@ -95,7 +97,7 @@ export default function CandidatesPage() {
         <div className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm font-medium text-gray-500">Score moyen</p>
+              <p className="text-sm font-medium text-gray-500">{t('averageScore')}</p>
               <h3 className="text-3xl font-bold mt-1">
                 {Math.round(
                   candidates
@@ -120,20 +122,20 @@ export default function CandidatesPage() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
-              placeholder="Rechercher un candidat..."
+              placeholder={t('searchPlaceholder')}
               className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="flex gap-2">
             <select className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="">Tous les statuts</option>
-              <option value="active">Actifs</option>
-              <option value="pending">En attente</option>
-              <option value="inactive">Inactifs</option>
+              <option value="">{t('allStatuses')}</option>
+              <option value="active">{t('active')}</option>
+              <option value="pending">{t('pending')}</option>
+              <option value="inactive">{t('inactive')}</option>
             </select>
             <button className="px-4 py-2 border rounded-md hover:bg-gray-50 flex items-center gap-2">
               <Filter className="h-4 w-4" />
-              Filtrer
+              {t('filter')}
             </button>
           </div>
         </div>
@@ -142,32 +144,32 @@ export default function CandidatesPage() {
       {/* Candidates List */}
       <div className="bg-white rounded-lg border shadow-sm">
         <div className="p-6 border-b">
-          <h2 className="text-lg font-semibold">Liste des candidats</h2>
+          <h2 className="text-lg font-semibold">{t('candidatesList')}</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50 text-left">
               <tr>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Nom
+                  {t('name')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Email
+                  {t('email')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Statut
+                  {t('status')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Tests
+                  {t('tests')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Score moyen
+                  {t('averageScore')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Dernière activité
+                  {t('lastActivity')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                  {t('actions')}
                 </th>
               </tr>
             </thead>
@@ -221,17 +223,18 @@ export default function CandidatesPage() {
         </div>
         <div className="p-4 border-t flex items-center justify-between">
           <div className="text-sm text-gray-500">
-            Affichage de 1 à {candidates.length} sur {candidates.length} candidats
+            {t('showing')} {t('of')} {candidates.length} {t('to')} {candidates.length}{' '}
+            {t('candidates')}
           </div>
           <div className="flex gap-2">
             <button className="px-3 py-1 border rounded-md text-sm hover:bg-gray-50 text-gray-500">
-              Précédent
+              {t('previous')}
             </button>
             <button className="px-3 py-1 border rounded-md text-sm bg-blue-600 text-white">
               1
             </button>
             <button className="px-3 py-1 border rounded-md text-sm hover:bg-gray-50">
-              Suivant
+              {t('next')}
             </button>
           </div>
         </div>

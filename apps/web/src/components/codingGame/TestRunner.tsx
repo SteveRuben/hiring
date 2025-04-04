@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { TestCase, TestResult } from '@/types';
 import { runTests } from '@/utils/testUtils';
 
+import { useTranslation } from '../i18n';
+
 interface TestRunnerProps {
   code: string;
   testCases: TestCase[];
@@ -14,6 +16,7 @@ interface TestRunnerProps {
 }
 
 const TestRunner: React.FC<TestRunnerProps> = ({ code, testCases, language, onTestComplete }) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<TestResult[]>([]);
   const [lastCodeHash, setLastCodeHash] = useState<string>('');
@@ -61,7 +64,7 @@ const TestRunner: React.FC<TestRunnerProps> = ({ code, testCases, language, onTe
 
   return (
     <div className="mt-4 p-4 border rounded-lg bg-gray-50">
-      <h3 className="text-lg font-semibold mb-3">Tests</h3>
+      <h3 className="text-lg font-semibold mb-3">{t('testRunner.title')}</h3>
 
       <div className="flex justify-between items-center">
         <button
@@ -71,12 +74,12 @@ const TestRunner: React.FC<TestRunnerProps> = ({ code, testCases, language, onTe
             allPassed ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'
           } text-white rounded disabled:opacity-50 transition-colors`}
         >
-          {isLoading ? 'Exécution...' : 'Exécuter les tests'}
+          {isLoading ? t('testRunner.runningTests') : t('testRunner.runTests')}
         </button>
 
         {lastTestTime > 0 && (
           <span className="text-sm text-gray-500">
-            Dernière exécution: {new Date(lastTestTime).toLocaleTimeString()}
+            {t('testRunner.lastRun')} {new Date(lastTestTime).toLocaleTimeString()}
           </span>
         )}
       </div>
@@ -84,9 +87,9 @@ const TestRunner: React.FC<TestRunnerProps> = ({ code, testCases, language, onTe
       {results.length > 0 && (
         <div className="mt-4">
           <div className="flex justify-between items-center mb-2">
-            <h4 className="font-medium">Résultats:</h4>
+            <h4 className="font-medium">{t('testRunner.results')}</h4>
             <span className={`text-sm ${allPassed ? 'text-green-600 font-bold' : 'text-gray-600'}`}>
-              {passedCount}/{testCases.length} tests réussis
+              {passedCount}/{testCases.length} {t('testRunner.testsPassed')}
             </span>
           </div>
           <div className="space-y-2">
@@ -99,20 +102,20 @@ const TestRunner: React.FC<TestRunnerProps> = ({ code, testCases, language, onTe
               >
                 <div className="flex justify-between">
                   <span className="font-medium">{result.testCase.description}</span>
-                  <span>{result.passed ? '✅ Réussi' : '❌ Échoué'}</span>
+                  <span>{result.passed ? t('testRunner.passed') : t('testRunner.failed')}</span>
                 </div>
 
                 <div className="mt-2 text-sm">
                   <div>
-                    <strong>Entrée:</strong> {JSON.stringify(result.testCase.input)}
+                    <strong>{t('testRunner.input')}</strong> {JSON.stringify(result.testCase.input)}
                   </div>
                   <div>
-                    <strong>Sortie attendue:</strong>{' '}
+                    <strong>{t('testRunner.expectedOutput')}</strong>{' '}
                     {JSON.stringify(result.testCase.expectedOutput)}
                   </div>
                   {!result.passed && (
                     <div>
-                      <strong>Sortie actuelle:</strong>{' '}
+                      <strong>{t('testRunner.actualOutput')}</strong>{' '}
                       {result.error ? (
                         <span className="text-red-600">{result.error}</span>
                       ) : (
@@ -129,5 +132,4 @@ const TestRunner: React.FC<TestRunnerProps> = ({ code, testCases, language, onTe
     </div>
   );
 };
-
 export default TestRunner;

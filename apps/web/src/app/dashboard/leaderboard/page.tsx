@@ -1,24 +1,26 @@
 import Link from 'next/link';
 
+import { useTranslation } from '@/components/i18n';
 import { leaderboardData } from '@/data/leaderboard';
 
 export default function LeaderboardPage() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Classement Global</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('leaderboard.title')}</h1>
             <div className="flex items-center gap-4">
               <Link href="/challenges" className="text-blue-600 hover:text-blue-800">
-                Challenges
+                {t('leaderboard.challenges')}
               </Link>
               <Link href="/profile" className="text-blue-600 hover:text-blue-800">
-                Mon Profil
+                {t('leaderboard.myProfile')}
               </Link>
               <Link href="/" className="text-gray-600 hover:text-gray-800">
-                Déconnexion
+                {t('leaderboard.logout')}
               </Link>
             </div>
           </div>
@@ -36,7 +38,9 @@ export default function LeaderboardPage() {
             </div>
             <div className="bg-white rounded-lg shadow-sm p-4 text-center w-full">
               <div className="font-bold">{leaderboardData[1]!.username}</div>
-              <div className="text-sm text-gray-500">{leaderboardData[1]!.points} points</div>
+              <div className="text-sm text-gray-500">
+                {leaderboardData[1]!.points} {t('leaderboard.points')}
+              </div>
             </div>
             <div className="h-20 w-full bg-silver"></div>
           </div>
@@ -48,7 +52,9 @@ export default function LeaderboardPage() {
             </div>
             <div className="bg-white rounded-lg shadow-sm p-4 text-center w-full">
               <div className="font-bold">{leaderboardData[0]!.username}</div>
-              <div className="text-sm text-gray-500">{leaderboardData[0]!.points} points</div>
+              <div className="text-sm text-gray-500">
+                {leaderboardData[0]!.points} {t('leaderboard.points')}
+              </div>
             </div>
             <div className="h-32 w-full bg-gold"></div>
           </div>
@@ -60,7 +66,9 @@ export default function LeaderboardPage() {
             </div>
             <div className="bg-white rounded-lg shadow-sm p-4 text-center w-full">
               <div className="font-bold">{leaderboardData[2]!.username}</div>
-              <div className="text-sm text-gray-500">{leaderboardData[2]!.points} points</div>
+              <div className="text-sm text-gray-500">
+                {leaderboardData[2]!.points} {t('leaderboard.points')}
+              </div>
             </div>
             <div className="h-16 w-full bg-bronze"></div>
           </div>
@@ -75,25 +83,25 @@ export default function LeaderboardPage() {
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Rang
+                  {t('leaderboard.rank')}
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Utilisateur
+                  {t('leaderboard.user')}
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Points
+                  {t('leaderboard.points')}
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Challenges complétés
+                  {t('leaderboard.completedChallenges')}
                 </th>
               </tr>
             </thead>

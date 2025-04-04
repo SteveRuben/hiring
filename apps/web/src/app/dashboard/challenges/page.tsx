@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { useTranslation } from '@/components/i18n';
 import { challenges } from '@/data/challenges';
 
 const getDifficultyColor = (difficulty: string) => {
@@ -16,19 +17,36 @@ const getDifficultyColor = (difficulty: string) => {
 };
 
 export default function ChallengesPage() {
+  const { t } = useTranslation();
+  const getDifficultyTranslation = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Facile':
+      case 'Easy':
+        return t('challengesPage.easy');
+      case 'Intermédiaire':
+      case 'Medium':
+        return t('challengesPage.medium');
+      case 'Difficile':
+      case 'Hard':
+        return t('challengesPage.hard');
+      default:
+        return difficulty;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow">
         <div className=" mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Challenges de Programmation</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('challengesPage.title')}</h1>
             <div className="flex items-center gap-4">
               <Link href="/leaderboard" className="text-blue-600 hover:text-blue-800">
-                Classement
+                {t('challengesPage.ranking')}
               </Link>
               <Link href="/profile" className="text-blue-600 hover:text-blue-800">
-                Mon Profil
+                {t('challengesPage.myProfile')}
               </Link>
             </div>
           </div>
@@ -43,23 +61,25 @@ export default function ChallengesPage() {
             <div className="flex-1">
               <input
                 type="text"
-                placeholder="Rechercher un challenge..."
+                placeholder={t('challengesPage.searchPlaceholder')}
                 className="w-full px-4 py-2 border rounded-md"
               />
             </div>
             <div className="flex gap-2">
               <select className="px-4 py-2 border rounded-md">
-                <option value="">Toutes les difficultés</option>
-                <option value="Facile">Facile</option>
-                <option value="Intermédiaire">Intermédiaire</option>
-                <option value="Difficile">Difficile</option>
+                <option value="">{t('challengesPage.allDifficulties')}</option>
+                <option value="Facile">{t('challengesPage.easy')}</option>
+                <option value="Intermédiaire">{t('challengesPage.medium')}</option>
+                <option value="Difficile">{t('challengesPage.hard')}</option>
               </select>
               <select className="px-4 py-2 border rounded-md">
-                <option value="">Toutes les catégories</option>
-                <option value="Algorithmes">Algorithmes</option>
-                <option value="Structures de données">Structures de données</option>
-                <option value="Paradigmes">Paradigmes</option>
-                <option value="Web">Web</option>
+                <option value="">{t('challengesPage.allCategories')}</option>
+                <option value="Algorithmes">{t('challengesPage.categories.algorithms')}</option>
+                <option value="Structures de données">
+                  {t('challengesPage.categories.dataStructures')}
+                </option>
+                <option value="Paradigmes">{t('challengesPage.categories.paradigms')}</option>
+                <option value="Web">{t('challengesPage.categories.web')}</option>
               </select>
             </div>
           </div>
@@ -75,17 +95,21 @@ export default function ChallengesPage() {
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(challenge.difficulty)}`}
                   >
-                    {challenge.difficulty}
+                    {getDifficultyTranslation(challenge.difficulty)}
                   </span>
                 </div>
                 <p className="text-gray-600 mb-4">{challenge.description}</p>
                 <div className="flex justify-between text-sm text-gray-500 mb-4">
-                  <span>Catégorie: {challenge.category}</span>
-                  <span>{challenge.points} points</span>
+                  <span>
+                    {t('challengesPage.category')}: {challenge.category}
+                  </span>
+                  <span>
+                    {challenge.points} {t('leaderboard.points')}
+                  </span>
                 </div>
                 <div className="mb-4">
                   <div className="flex justify-between text-sm mb-1">
-                    <span>Taux de réussite</span>
+                    <span>{t('challengesPage.successRate')}</span>
                     <span>{challenge.completionRate}%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
@@ -97,13 +121,13 @@ export default function ChallengesPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">
-                    {challenge.participants} participants
+                    {challenge.participants} {t('challengesPage.participants')}
                   </span>
                   <Link
                     href={`/dashboard/challenges/${challenge.id}`}
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                   >
-                    Participer
+                    {t('challengesPage.participate')}
                   </Link>
                 </div>
               </div>
