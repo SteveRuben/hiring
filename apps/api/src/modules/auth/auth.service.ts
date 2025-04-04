@@ -10,7 +10,6 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { createDigest, createRandomBytes } from '@otplib/plugin-crypto';
 import { keyDecoder, keyEncoder } from '@otplib/plugin-thirty-two';
-import type { Prisma } from '@prisma/client';
 import { Email, MfaMethod, User } from '@prisma/client';
 import axios from 'axios';
 import { compare, hash } from 'bcrypt';
@@ -70,7 +69,6 @@ import {
   TokenResponse,
   TotpTokenResponse,
 } from './auth.interface';
-
 
 @Injectable()
 export class AuthService {
@@ -208,12 +206,12 @@ export class AuthService {
       for await (const emailString of [email, emailSafe]) {
         const md5Email = createHash('md5').update(emailString).digest('hex');
         try {
-           const img = await  axios.get(
+          const img = await axios.get(
             `https://www.gravatar.com/avatar/${md5Email}?d=404`,
             { responseType: 'arraybuffer' },
           );
           if (img.data.byteLength > 1)
-            data.profilePictureUrl = `https://www.gravatar.com/avatar/${md5Email}?d=mp`; 
+            data.profilePictureUrl = `https://www.gravatar.com/avatar/${md5Email}?d=mp`;
         } catch (error) {}
       }
     }
@@ -222,9 +220,7 @@ export class AuthService {
     while (!id) {
       let tmp = await this.tokensService.generateRandomInt(6, '0123456789');
       this.logger.warn(tmp);
-      id = Number(
-        `10${tmp}`,
-      );
+      id = Number(`10${tmp}`);
       this.logger.warn(id);
       const users = await this.prisma.user.findMany({ where: { id }, take: 1 });
       if (users.length) id = undefined;

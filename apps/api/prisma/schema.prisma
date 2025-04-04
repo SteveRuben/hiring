@@ -44,6 +44,9 @@ model User {
   sessions             Session[]            @relation("userSession")
   account              Account?             @relation("userAccount")
 
+  ownedChallenges Challenge[]    @relation("ChallengeOwner")
+  userChallenges UserChallenge[]
+
   @@index([prefersEmailId], name: "prefersEmailId")
 }
 
@@ -900,4 +903,105 @@ enum IdentityType {
   GOOGLE
   APPLE
   SLACK
+}
+
+// *********************************** Challenges ***************************************
+
+/* Modèle représentant un challenge de codage.
+   Chaque challenge est créé par un utilisateur (owner) et possède plusieurs étapes. */
+model Challenge {
+  id          Int           @id @default(autoincrement()) // Identifiant unique du challenge
+  ownerId     Int                                         // Référence vers le propriétaire du challenge
+  title       String                                      // Titre du challenge
+  description String                                      // Description du challenge
+  status      ChallengeStatus        @default(DRAFT)      // Statut du challenge (ex: draft, published, completed)
+  createdAt   DateTime      @default(now())               // Date de création du challenge
+  updatedAt   DateTime      @updatedAt                    // Date de dernière mise à jour
+
+  owner         User            @relation("ChallengeOwner", fields: [ownerId], references: [id]) // Relation avec l'utilisateur propriétaire
+  userChallenge UserChallenge[] // Liste des utilisateurs participant au challenge
+  steps         ChallengeStep[] // Étapes du challenge
+  Leaderboard   LeaderboardChallenge[]   // Tableau des scores du challenge
+}
+
+/* Modèle représentant une étape dans un challenge. */
+model ChallengeStep {
+  id          Int       @id @default(autoincrement()) // Identifiant unique de l'étape
+  challengeId Int                                      // Référence vers le challenge associé
+  challenge   Challenge @relation(fields: [challengeId], references: [id]) // Relation avec le challenge
+  stepNumber  Int                                      // Numéro de l'étape dans le challenge
+  description String                                   // Description de l'étape
+  createdAt   DateTime      @default(now())               // Date de création du challenge
+  updatedAt   DateTime      @updatedAt                    // Date de dernière mise à jour
+  testCases   TestCaseChallenge[]                               // Liste des cas de test de l'étape
+  Submission  SubmissionChallenge[]                             // Soumissions associées à cette étape
+}
+
+/* Modèle représentant un cas de test pour une étape donnée. */
+model TestCaseChallenge {
+  id             Int           @id @default(autoincrement()) // Identifiant unique du cas de test
+  step           ChallengeStep @relation(fields: [stepId], references: [id]) // Étape associée
+  stepId         Int                                         // Référence vers l'étape concernée
+  inputData      String                                      // Données d'entrée pour le test (peut être JSON)
+  expectedOutput String                                      // Résultat attendu du test
+  score          Int           @default(0)                  // Score attribué à ce test case
+  description    String?                                     // Optionnel : description du test case
+  createdAt      DateTime      @default(now())              // Date de création
+  updatedAt      DateTime      @updatedAt                   // Date de mise à jour
+}
+
+
+/* Modèle représentant la participation d'un utilisateur à un challenge. */
+model UserChallenge {
+  id           Int         @id @default(autoincrement()) // Identifiant unique de la participation
+  userId       Int                                        // Référence vers l'utilisateur
+  challengeId  Int                                        // Référence vers le challenge
+  challenge    Challenge  @relation(fields: [challengeId], references: [id]) // Relation avec le challenge
+  user         User       @relation(fields: [userId], references: [id]) // Relation avec l'utilisateur
+  currentStep  Int        @default(1)                    // Étape actuelle atteinte par l'utilisateur
+  attempts     Int        @default(0)                    // Nombre de tentatives effectuées
+  status       String     @default("in_progress")        // Statut de la participation (ex: in_progress, completed)
+  Submission   SubmissionChallenge[]                              // Soumissions de l'utilisateur pour ce challenge
+
+  @@unique([userId, challengeId]) // Garantit qu'un utilisateur ne peut avoir qu'une seule participation par challenge
+  UserScore   UserScoreChallenge[]          // Scores obtenus par l'utilisateur
+  Leaderboard LeaderboardChallenge[]        // Classement de l'utilisateur
+}
+
+/* Modèle représentant une soumission de code par un utilisateur pour une étape d'un challenge. */
+model SubmissionChallenge {
+  id             Int           @id @default(autoincrement()) // Identifiant unique de la soumission
+  stepId         Int                                        // Référence vers l'étape concernée
+  userChallengeId Int                                       // Référence vers la participation utilisateur
+  step           ChallengeStep @relation(fields: [stepId], references: [id]) // Relation avec l'étape
+  userChallenge  UserChallenge @relation(fields: [userChallengeId], references: [id]) // Relation avec la participation
+  code           String                                     // Code soumis par l'utilisateur
+  result         Boolean                                    // Résultat de la soumission (true si réussite, false sinon)
+  submittedAt    DateTime  @default(now())                  // Date de soumission du code
+
+  @@unique([userChallengeId, stepId]) // Garantit une soumission unique par utilisateur et par étape
+}
+
+/* Modèle représentant le score d'un utilisateur dans un challenge. */
+model UserScoreChallenge {
+  id              Int          @id @default(autoincrement()) // Identifiant unique du score
+  userChallengeId Int                                       // Référence vers la participation utilisateur
+  userChallenge   UserChallenge @relation(fields: [userChallengeId], references: [id]) // Relation avec la participation
+  totalPoints     Int          @default(0)                  // Nombre total de points accumulés
+}
+
+/* Modèle représentant le classement d'un utilisateur dans un challenge. */
+model LeaderboardChallenge {
+  id              Int          @id @default(autoincrement()) // Identifiant unique du classement
+  userChallengeId Int                                       // Référence vers la participation utilisateur
+  challengeId     Int                                       // Référence vers le challenge concerné
+  userChallenge   UserChallenge @relation(fields: [userChallengeId], references: [id]) // Relation avec la participation utilisateur
+  challenge       Challenge @relation(fields: [challengeId], references: [id]) // Relation avec le challenge
+  rank            Int                                       // Rang de l'utilisateur dans le classement
+}
+
+enum ChallengeStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }

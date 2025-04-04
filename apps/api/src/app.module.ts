@@ -42,10 +42,15 @@ import { S3Module } from '@/providers/s3/s3.module';
 import { SharedModule } from '@/providers/shared/shared.module';
 import { TasksModule } from '@/providers/tasks/tasks.module';
 
+import { WebsocketModule } from '@/modules/websocket/websocket.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { WebsocketModule } from '@/modules/websocket/websocket.module';
 import serverConfig from './config/server.config';
+import { ChallengeStepModule } from './modules/challenges/challenge.step/challenge.step.module';
+import { ChallengeTestCaseController } from './modules/challenges/challenge.test-case/challenge.test-case.controller';
+import { ChallengeTestCaseModule } from './modules/challenges/challenge.test-case/challenge.test-case.module';
+import { ChallengeTestCaseService } from './modules/challenges/challenge.test-case/challenge.test-case.service';
+import { ChallengesModule } from './modules/challenges/challenge/challenges.module';
 
 @Module({
   imports: [
@@ -86,12 +91,18 @@ import serverConfig from './config/server.config';
     TalentModule,
     WallpapersModule,
     WebsocketModule,
+
+    ChallengesModule,
+
+    ChallengeStepModule,
+
+    ChallengeTestCaseModule,
     /*   CloudinaryModule,
     FirebaseModule,
     GitHubModule,
     GoogleMapsModule, */
   ],
-  controllers: [AppController],
+  controllers: [AppController, ChallengeTestCaseController],
   providers: [
     AppService,
     {
@@ -114,6 +125,7 @@ import serverConfig from './config/server.config';
       provide: APP_INTERCEPTOR,
       useClass: AuditLogger,
     },
+    ChallengeTestCaseService,
   ],
 })
 export class AppModule {
