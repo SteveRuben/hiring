@@ -5,11 +5,13 @@ import { fr } from 'date-fns/locale';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import { useTranslation } from '@/components/i18n';
 import { ChallengeService } from '@/lib/services/challenge.service';
 import { ChallengeStepService } from '@/lib/services/challenge-step.service';
 import { Challenge, ChallengeStatus } from '@/model/challenge';
 
 export default function AdminChallengesPage() {
+  const { t } = useTranslation();
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [filteredChallenges, setFilteredChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -45,14 +47,14 @@ export default function AdminChallengesPage() {
         setStepsCount(stepsCountMap);
       } catch (err) {
         console.error('Erreur lors du chargement des challenges:', err);
-        setError('Impossible de charger les challenges. Veuillez réessayer.');
+        setError(t('loadingError'));
       } finally {
         setLoading(false);
       }
     };
 
     fetchChallenges();
-  }, []);
+  }, [t]);
 
   // Filtrer les challenges en fonction de la recherche et du filtre de statut
   useEffect(() => {
@@ -77,7 +79,7 @@ export default function AdminChallengesPage() {
 
   // Fonction pour supprimer un challenge
   const handleDeleteChallenge = async (challengeId: number) => {
-    if (window.confirm('Êtes-vous sûr de vouloir supprimer ce challenge?')) {
+    if (window.confirm(t('confirmDelete'))) {
       try {
         setIsDeleting({ ...isDeleting, [challengeId]: true });
         await ChallengeService.deleteChallenge(challengeId);
@@ -86,7 +88,7 @@ export default function AdminChallengesPage() {
         setChallenges(challenges.filter((challenge) => challenge.id !== challengeId));
       } catch (err) {
         console.error(`Erreur lors de la suppression du challenge ${challengeId}:`, err);
-        alert('Une erreur est survenue lors de la suppression du challenge.');
+        alert(t('deleteError'));
       } finally {
         setIsDeleting({ ...isDeleting, [challengeId]: false });
       }
@@ -105,7 +107,7 @@ export default function AdminChallengesPage() {
       );
     } catch (err) {
       console.error(`Erreur lors de la publication du challenge ${challengeId}:`, err);
-      alert('Une erreur est survenue lors de la publication du challenge.');
+      alert(t('publishError'));
     } finally {
       setIsDeleting({ ...isDeleting, [challengeId]: false });
     }
@@ -121,11 +123,11 @@ export default function AdminChallengesPage() {
   const getStatusLabel = (status: ChallengeStatus) => {
     switch (status) {
       case ChallengeStatus.DRAFT:
-        return 'Brouillon';
+        return t('draft');
       case ChallengeStatus.PUBLISHED:
-        return 'Publié';
+        return t('active');
       case ChallengeStatus.COMPLETED:
-        return 'Terminé';
+        return t('completed');
       default:
         return status;
     }
@@ -165,10 +167,10 @@ export default function AdminChallengesPage() {
       <header className="bg-white shadow">
         <div className="mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Gestion des Challenges</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
             <div className="flex items-center gap-4">
               <Link href="/dashboard/admin/users" className="text-blue-600 hover:text-blue-800">
-                Utilisateurs
+                {t('users')}
               </Link>
             </div>
           </div>
@@ -188,7 +190,7 @@ export default function AdminChallengesPage() {
           <div className="flex gap-4">
             <input
               type="text"
-              placeholder="Rechercher un challenge..."
+              placeholder={t('searchPlaceholder')}
               className="px-4 py-2 border rounded-md"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -198,26 +200,26 @@ export default function AdminChallengesPage() {
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
             >
-              <option value="">Tous les statuts</option>
-              <option value={ChallengeStatus.DRAFT}>Brouillon</option>
-              <option value={ChallengeStatus.PUBLISHED}>Publié</option>
-              <option value={ChallengeStatus.COMPLETED}>Terminé</option>
+              <option value="">{t('allStatuses')}</option>
+              <option value={ChallengeStatus.DRAFT}>{t('draft')}</option>
+              <option value={ChallengeStatus.PUBLISHED}>{t('active')}</option>
+              <option value={ChallengeStatus.COMPLETED}>{t('archived')}</option>
             </select>
           </div>
           <Link
             href="/dashboard/admin/challenges/new"
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
           >
-            Créer un challenge
+            {t('createChallenge')}
           </Link>
         </div>
 
         {/* Challenges table */}
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           {loading ? (
-            <div className="p-6 text-center">Chargement des challenges...</div>
+            <div className="p-6 text-center">{t('loading')}</div>
           ) : filteredChallenges.length === 0 ? (
-            <div className="p-6 text-center">Aucun challenge trouvé</div>
+            <div className="p-6 text-center">{t('noChallenge')}</div>
           ) : (
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -226,31 +228,31 @@ export default function AdminChallengesPage() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Titre
+                    {t('challengeTitle')}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Étapes
+                    {t('steps')}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Statut
+                    {t('status')}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Date de création
+                    {t('createdAt')}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Actions
+                    {t('actions')}
                   </th>
                 </tr>
               </thead>
@@ -281,7 +283,7 @@ export default function AdminChallengesPage() {
                         href={`/dashboard/admin/challenges/${challenge.id}/edit`}
                         className="text-blue-600 hover:text-blue-900 mr-4"
                       >
-                        Modifier
+                        {t('edit')}
                       </Link>
                       {challenge.status === ChallengeStatus.DRAFT && (
                         <button
@@ -289,7 +291,7 @@ export default function AdminChallengesPage() {
                           onClick={() => handlePublishChallenge(challenge.id)}
                           disabled={isDeleting[challenge.id]}
                         >
-                          {isDeleting[challenge.id] ? 'Publication...' : 'Publier'}
+                          {isDeleting[challenge.id] ? t('publishing') : t('publish')}
                         </button>
                       )}
                       <button
@@ -297,7 +299,7 @@ export default function AdminChallengesPage() {
                         onClick={() => handleDeleteChallenge(challenge.id)}
                         disabled={isDeleting[challenge.id]}
                       >
-                        {isDeleting[challenge.id] ? 'Suppression...' : 'Supprimer'}
+                        {isDeleting[challenge.id] ? t('deleting') : t('delete')}
                       </button>
                     </td>
                   </tr>
@@ -310,17 +312,18 @@ export default function AdminChallengesPage() {
         {/* Pagination */}
         <div className="flex justify-between items-center mt-6">
           <div className="text-sm text-gray-700">
-            Affichage de 1 à {filteredChallenges.length} sur {challenges.length} challenges
+            {t('showing')} 1 {t('to')} {filteredChallenges.length} {t('of')} {challenges.length}{' '}
+            {t('challenges')}
           </div>
           <div className="flex gap-2">
             <button className="px-3 py-1 border rounded-md text-sm hover:bg-gray-50 text-gray-500">
-              Précédent
+              {t('previous')}
             </button>
             <button className="px-3 py-1 border rounded-md text-sm bg-blue-600 text-white">
               1
             </button>
             <button className="px-3 py-1 border rounded-md text-sm hover:bg-gray-50">
-              Suivant
+              {t('next')}
             </button>
           </div>
         </div>

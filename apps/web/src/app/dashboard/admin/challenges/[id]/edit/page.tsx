@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { useTranslation } from '@/components/i18n';
 import { ChallengeService } from '@/lib/services/challenge.service';
 import { ChallengeStepService } from '@/lib/services/challenge-step.service';
 import { ChallengeTestCaseService } from '@/lib/services/challenge-test-case.service';
@@ -12,6 +13,7 @@ import { UpdateChallengeStepDto } from '@/model/challenge-step';
 import { UpdateChallengeTestCaseDto } from '@/model/challenge-test-case';
 
 export default function EditChallengePage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const params = useParams();
   const challengeId = Number(params.id);
@@ -378,13 +380,13 @@ export default function EditChallengePage() {
       <header className="bg-white shadow">
         <div className="mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Modifier le challenge</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
             <div className="flex items-center gap-4">
               <Link
                 href="/dashboard/admin/challenges"
                 className="text-blue-600 hover:text-blue-800"
               >
-                Retour aux challenges
+                {t('backToChallenges')}
               </Link>
             </div>
           </div>
@@ -408,17 +410,17 @@ export default function EditChallengePage() {
         <form onSubmit={handleSubmit}>
           {/* Informations générales */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h2 className="text-lg font-medium mb-4">Informations générales</h2>
+            <h2 className="text-lg font-medium mb-4">{t('generalInfo')}</h2>
             <div className="grid grid-cols-1 gap-6">
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-                  Titre du challenge*
+                  {t('challengeTitle')}
                 </label>
                 <input
                   type="text"
                   id="title"
                   className="w-full px-3 py-2 border rounded-md"
-                  placeholder="Ex: Algorithmes de tri"
+                  placeholder={t('titlePlaceholder')}
                   value={challengeInfo.title}
                   onChange={(e) => updateChallengeInfo('title', e.target.value)}
                   required
@@ -430,12 +432,12 @@ export default function EditChallengePage() {
                   htmlFor="description"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Description*
+                  {t('description')}
                 </label>
                 <textarea
                   id="description"
                   className="w-full px-3 py-2 border rounded-md min-h-[100px]"
-                  placeholder="Décrivez le challenge et ses objectifs..."
+                  placeholder={t('descriptionPlaceholder')}
                   value={challengeInfo.description}
                   onChange={(e) => updateChallengeInfo('description', e.target.value)}
                   required
@@ -444,7 +446,7 @@ export default function EditChallengePage() {
 
               <div>
                 <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
-                  Statut
+                  {t('status')}
                 </label>
                 <div className="flex items-center gap-2">
                   <span
@@ -457,10 +459,10 @@ export default function EditChallengePage() {
                     }`}
                   >
                     {challengeInfo.status === ChallengeStatus.DRAFT
-                      ? 'Brouillon'
+                      ? t('draft')
                       : challengeInfo.status === ChallengeStatus.PUBLISHED
-                        ? 'Publié'
-                        : 'Archivé'}
+                        ? t('published')
+                        : t('archived')}
                   </span>
 
                   {challengeInfo.status === ChallengeStatus.DRAFT && (
@@ -470,7 +472,7 @@ export default function EditChallengePage() {
                       onClick={handlePublish}
                       disabled={isSaving}
                     >
-                      {isSaving ? 'Publication...' : 'Publier maintenant'}
+                      {isSaving ? t('publishing') : t('publishNow')}
                     </button>
                   )}
                 </div>
@@ -481,38 +483,40 @@ export default function EditChallengePage() {
           {/* Étapes */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-medium">Étapes du challenge</h2>
+              <h2 className="text-lg font-medium">{t('steps')}</h2>
               <button
                 type="button"
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                 onClick={addStep}
               >
-                Ajouter une étape
+                {t('addStep')}
               </button>
             </div>
 
             {steps.map((step, stepIndex) => (
               <div key={step.id || stepIndex} className="bg-white rounded-lg shadow-sm p-6 mb-4">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-md font-medium">Étape {step.stepNumber}</h3>
+                  <h3 className="text-md font-medium">
+                    {t('step')} {step.stepNumber}
+                  </h3>
                   <button
                     type="button"
                     className="px-3 py-1 text-red-600 hover:text-red-800"
                     onClick={() => removeStep(stepIndex)}
                     disabled={isSaving || steps.length <= 1}
                   >
-                    {isSaving ? 'Suppression...' : 'Supprimer'}
+                    {isSaving ? t('deleting') : t('delete')}
                   </button>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Description de l'étape*
+                      {t('stepDescription')}
                     </label>
                     <textarea
                       className="w-full px-3 py-2 border rounded-md min-h-[150px]"
-                      placeholder="Fournissez des instructions détaillées pour cette étape..."
+                      placeholder={t('stepPlaceholder')}
                       value={step.description}
                       onChange={(e) => updateStep(stepIndex, 'description', e.target.value)}
                       required
@@ -523,40 +527,42 @@ export default function EditChallengePage() {
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <label className="block text-sm font-medium text-gray-700">
-                        Cas de test*
+                        {t('testCases')}
                       </label>
                       <button
                         type="button"
                         className="px-3 py-1 text-blue-600 hover:text-blue-800 text-sm"
                         onClick={() => addTestCase(stepIndex)}
                       >
-                        Ajouter un cas de test
+                        {t('addTestCase')}
                       </button>
                     </div>
 
                     {step.testCases.map((testCase, testIndex) => (
                       <div key={testCase.id || testIndex} className="border rounded-md p-4 mb-2">
                         <div className="flex justify-between items-center mb-2">
-                          <h4 className="text-sm font-medium">Test {testIndex + 1}</h4>
+                          <h4 className="text-sm font-medium">
+                            {t('test')} {testIndex + 1}
+                          </h4>
                           <button
                             type="button"
                             className="text-red-600 hover:text-red-800 text-sm"
                             onClick={() => removeTestCase(stepIndex, testIndex)}
                             disabled={isSaving || step.testCases.length <= 1}
                           >
-                            {isSaving ? 'Suppression...' : 'Supprimer'}
+                            {isSaving ? t('deleting') : t('delete')}
                           </button>
                         </div>
 
                         <div className="grid grid-cols-1 gap-4">
                           <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1">
-                              Description du test
+                              {t('testDescription')}
                             </label>
                             <input
                               type="text"
                               className="w-full px-3 py-2 border rounded-md text-sm"
-                              placeholder="Ex: Test avec tableau trié"
+                              placeholder={t('testDescriptionPlaceholder')}
                               value={testCase.description}
                               onChange={(e) =>
                                 updateTestCase(stepIndex, testIndex, 'description', e.target.value)
@@ -566,11 +572,11 @@ export default function EditChallengePage() {
 
                           <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1">
-                              Entrée*
+                              {t('input')}
                             </label>
                             <textarea
                               className="w-full px-3 py-2 border rounded-md text-sm min-h-[80px]"
-                              placeholder="Ex: [5, 3, 8, 4, 2]"
+                              placeholder={t('inputPlaceholder')}
                               value={testCase.inputData}
                               onChange={(e) =>
                                 updateTestCase(stepIndex, testIndex, 'inputData', e.target.value)
@@ -581,11 +587,11 @@ export default function EditChallengePage() {
 
                           <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1">
-                              Sortie attendue*
+                              {t('expectedOutput')}
                             </label>
                             <textarea
                               className="w-full px-3 py-2 border rounded-md text-sm min-h-[80px]"
-                              placeholder="Ex: [2, 3, 4, 5, 8]"
+                              placeholder={t('outputPlaceholder')}
                               value={testCase.expectedOutput}
                               onChange={(e) =>
                                 updateTestCase(
@@ -601,12 +607,12 @@ export default function EditChallengePage() {
 
                           <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1">
-                              Score*
+                              {t('score')}
                             </label>
                             <input
                               type="number"
                               className="w-full px-3 py-2 border rounded-md text-sm"
-                              placeholder="Ex: 10"
+                              placeholder={t('scorePlaceholder')}
                               min="0"
                               value={testCase.score}
                               onChange={(e) =>
@@ -635,14 +641,14 @@ export default function EditChallengePage() {
               href="/dashboard/admin/challenges"
               className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
             >
-              Annuler
+              {t('cancel')}
             </Link>
             <button
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400"
               disabled={isSaving}
             >
-              {isSaving ? 'Enregistrement...' : 'Enregistrer les modifications'}
+              {isSaving ? t('saving') : t('saveChanges')}
             </button>
           </div>
         </form>

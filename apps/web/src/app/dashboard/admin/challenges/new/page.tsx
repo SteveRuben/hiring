@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { useTranslation } from '@/components/i18n';
 import { ChallengeService } from '@/lib/services/challenge.service';
 import { ChallengeStepService } from '@/lib/services/challenge-step.service';
 import { ChallengeTestCaseService } from '@/lib/services/challenge-test-case.service';
@@ -13,7 +14,7 @@ export default function NewChallengePage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const { t } = useTranslation();
   // État pour les informations générales du challenge
   const [challengeInfo, setChallengeInfo] = useState({
     title: '',
@@ -142,7 +143,7 @@ export default function NewChallengePage() {
       router.push('/dashboard/admin/challenges');
     } catch (err) {
       console.error('Erreur lors de la création du challenge:', err);
-      setError('Une erreur est survenue lors de la création du challenge. Veuillez réessayer.');
+      setError(t('errorMessage'));
     } finally {
       setIsSubmitting(false);
     }
@@ -154,13 +155,13 @@ export default function NewChallengePage() {
       <header className="bg-white shadow">
         <div className="mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Créer un nouveau challenge</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
             <div className="flex items-center gap-4">
               <Link
                 href="/dashboard/admin/challenges"
                 className="text-blue-600 hover:text-blue-800"
               >
-                Retour aux challenges
+                {t('backToChallenges')}
               </Link>
             </div>
           </div>
@@ -178,17 +179,17 @@ export default function NewChallengePage() {
         <form onSubmit={handleSubmit}>
           {/* Informations générales */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h2 className="text-lg font-medium mb-4">Informations générales</h2>
+            <h2 className="text-lg font-medium mb-4">{t('generalInfo')}</h2>
             <div className="grid grid-cols-1 gap-6">
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-                  Titre du challenge*
+                  {t('challengeTitle')}
                 </label>
                 <input
                   type="text"
                   id="title"
                   className="w-full px-3 py-2 border rounded-md"
-                  placeholder="Ex: Algorithmes de tri"
+                  placeholder={t('titlePlaceholder')}
                   value={challengeInfo.title}
                   onChange={(e) => updateChallengeInfo('title', e.target.value)}
                   required
@@ -200,12 +201,12 @@ export default function NewChallengePage() {
                   htmlFor="description"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Description*
+                  {t('description')}
                 </label>
                 <textarea
                   id="description"
                   className="w-full px-3 py-2 border rounded-md min-h-[100px]"
-                  placeholder="Décrivez le challenge et ses objectifs..."
+                  placeholder={t('descriptionPlaceholder')}
                   value={challengeInfo.description}
                   onChange={(e) => updateChallengeInfo('description', e.target.value)}
                   required
@@ -218,7 +219,7 @@ export default function NewChallengePage() {
                     htmlFor="difficulty"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Difficulté*
+                    {t('difficulty')}
                   </label>
                   <select
                     id="difficulty"
@@ -227,10 +228,10 @@ export default function NewChallengePage() {
                     onChange={(e) => updateChallengeInfo('difficulty', e.target.value)}
                     required
                   >
-                    <option value="">Sélectionner une difficulté</option>
-                    <option value="Facile">Facile</option>
-                    <option value="Intermédiaire">Intermédiaire</option>
-                    <option value="Difficile">Difficile</option>
+                    <option value="">{t('selectDifficulty')}</option>
+                    <option value="Facile">{t('easy')}</option>
+                    <option value="Intermédiaire">{t('medium')}</option>
+                    <option value="Difficile">{t('hard')}</option>
                   </select>
                 </div>
 
@@ -239,7 +240,7 @@ export default function NewChallengePage() {
                     htmlFor="category"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Catégorie*
+                    {t('category')}
                   </label>
                   <select
                     id="category"
@@ -248,12 +249,12 @@ export default function NewChallengePage() {
                     onChange={(e) => updateChallengeInfo('category', e.target.value)}
                     required
                   >
-                    <option value="">Sélectionner une catégorie</option>
-                    <option value="Algorithmes">Algorithmes</option>
-                    <option value="Structures de données">Structures de données</option>
-                    <option value="Paradigmes">Paradigmes</option>
-                    <option value="Web">Web</option>
-                    <option value="Base de données">Base de données</option>
+                    <option value="">{t('selectCategory')}</option>
+                    <option value="Algorithmes">{t('algorithms')}</option>
+                    <option value="Structures de données">{t('dataStructures')}</option>
+                    <option value="Paradigmes">{t('paradigms')}</option>
+                    <option value="Web">{t('web')}</option>
+                    <option value="Base de données">{t('database')}</option>
                   </select>
                 </div>
               </div>
@@ -261,13 +262,13 @@ export default function NewChallengePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="points" className="block text-sm font-medium text-gray-700 mb-1">
-                    Points*
+                    {t('points')}
                   </label>
                   <input
                     type="number"
                     id="points"
                     className="w-full px-3 py-2 border rounded-md"
-                    placeholder="Ex: 300"
+                    placeholder={t('pointsPlaceholder')}
                     min="0"
                     value={challengeInfo.points}
                     onChange={(e) => updateChallengeInfo('points', parseInt(e.target.value))}
@@ -277,7 +278,7 @@ export default function NewChallengePage() {
 
                 <div>
                   <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
-                    Statut*
+                    {t('status')}
                   </label>
                   <select
                     id="status"
@@ -286,8 +287,8 @@ export default function NewChallengePage() {
                     onChange={(e) => updateChallengeInfo('status', e.target.value)}
                     required
                   >
-                    <option value={ChallengeStatus.DRAFT}>Brouillon</option>
-                    <option value={ChallengeStatus.PUBLISHED}>Publié</option>
+                    <option value={ChallengeStatus.DRAFT}>{t('draft')}</option>
+                    <option value={ChallengeStatus.PUBLISHED}>{t('published')}</option>
                   </select>
                 </div>
               </div>
@@ -297,38 +298,40 @@ export default function NewChallengePage() {
           {/* Étapes */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-medium">Étapes du challenge</h2>
+              <h2 className="text-lg font-medium">{t('steps')}</h2>
               <button
                 type="button"
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                 onClick={addStep}
               >
-                Ajouter une étape
+                {t('addStep')}
               </button>
             </div>
 
             {steps.map((step, stepIndex) => (
               <div key={stepIndex} className="bg-white rounded-lg shadow-sm p-6 mb-4">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-md font-medium">Étape {step.stepNumber}</h3>
+                  <h3 className="text-md font-medium">
+                    {t('step')} {step.stepNumber}
+                  </h3>
                   <button
                     type="button"
                     className="px-3 py-1 text-red-600 hover:text-red-800"
                     onClick={() => removeStep(stepIndex)}
                     disabled={steps.length === 1}
                   >
-                    Supprimer
+                    {t('delete')}
                   </button>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Description de l'étape*
+                      {t('stepDescription')}
                     </label>
                     <textarea
                       className="w-full px-3 py-2 border rounded-md min-h-[150px]"
-                      placeholder="Fournissez des instructions détaillées pour cette étape..."
+                      placeholder={t('stepPlaceholder')}
                       value={step.description}
                       onChange={(e) => updateStep(stepIndex, 'description', e.target.value)}
                       required
@@ -339,40 +342,42 @@ export default function NewChallengePage() {
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <label className="block text-sm font-medium text-gray-700">
-                        Cas de test*
+                        {t('testCases')}
                       </label>
                       <button
                         type="button"
                         className="px-3 py-1 text-blue-600 hover:text-blue-800 text-sm"
                         onClick={() => addTestCase(stepIndex)}
                       >
-                        Ajouter un cas de test
+                        {t('addTestCase')}
                       </button>
                     </div>
 
                     {step.testCases.map((testCase, testIndex) => (
                       <div key={testIndex} className="border rounded-md p-4 mb-2">
                         <div className="flex justify-between items-center mb-2">
-                          <h4 className="text-sm font-medium">Test {testIndex + 1}</h4>
+                          <h4 className="text-sm font-medium">
+                            {t('test')} {testIndex + 1}
+                          </h4>
                           <button
                             type="button"
                             className="text-red-600 hover:text-red-800 text-sm"
                             onClick={() => removeTestCase(stepIndex, testIndex)}
                             disabled={step.testCases.length === 1}
                           >
-                            Supprimer
+                            {t('delete')}
                           </button>
                         </div>
 
                         <div className="grid grid-cols-1 gap-4">
                           <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1">
-                              Description du test
+                              {t('testDescription')}
                             </label>
                             <input
                               type="text"
                               className="w-full px-3 py-2 border rounded-md text-sm"
-                              placeholder="Ex: Test avec tableau trié"
+                              placeholder={t('testDescriptionPlaceholder')}
                               value={testCase.description}
                               onChange={(e) =>
                                 updateTestCase(stepIndex, testIndex, 'description', e.target.value)
@@ -382,11 +387,11 @@ export default function NewChallengePage() {
 
                           <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1">
-                              Entrée*
+                              {t('input')}
                             </label>
                             <textarea
                               className="w-full px-3 py-2 border rounded-md text-sm min-h-[80px]"
-                              placeholder="Ex: [5, 3, 8, 4, 2]"
+                              placeholder={t('inputPlaceholder')}
                               value={testCase.inputData}
                               onChange={(e) =>
                                 updateTestCase(stepIndex, testIndex, 'inputData', e.target.value)
@@ -397,11 +402,11 @@ export default function NewChallengePage() {
 
                           <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1">
-                              Sortie attendue*
+                              {t('expectedOutput')}
                             </label>
                             <textarea
                               className="w-full px-3 py-2 border rounded-md text-sm min-h-[80px]"
-                              placeholder="Ex: [2, 3, 4, 5, 8]"
+                              placeholder={t('outputPlaceholder')}
                               value={testCase.expectedOutput}
                               onChange={(e) =>
                                 updateTestCase(
@@ -451,14 +456,14 @@ export default function NewChallengePage() {
               href="/dashboard/admin/challenges"
               className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
             >
-              Annuler
+              {t('cancel')}
             </Link>
             <button
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Création en cours...' : 'Créer le challenge'}
+              {isSubmitting ? t('submitting') : t('createChallenge')}
             </button>
           </div>
         </form>

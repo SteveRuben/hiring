@@ -1,76 +1,33 @@
 import { BarChart2, CheckCircle, Clock, Eye, Filter, Plus, Search, Users } from 'lucide-react';
 import Link from 'next/link';
 
-export default function TestsPage() {
-  // Données fictives pour la démonstration
-  const tests = [
-    {
-      id: 1,
-      title: 'Test Frontend React',
-      challenge: 'Frontend React',
-      startDate: '15/05/2023',
-      endDate: '22/05/2023',
-      candidates: 8,
-      completedCandidates: 6,
-      status: 'active',
-      averageScore: 76,
-    },
-    {
-      id: 2,
-      title: 'Évaluation Algorithmes',
-      challenge: 'Algorithmes avancés',
-      startDate: '10/05/2023',
-      endDate: '17/05/2023',
-      candidates: 12,
-      completedCandidates: 10,
-      status: 'active',
-      averageScore: 68,
-    },
-    {
-      id: 3,
-      title: 'Test SQL pour Data Analysts',
-      challenge: 'Bases de données SQL',
-      startDate: '05/05/2023',
-      endDate: '12/05/2023',
-      candidates: 5,
-      completedCandidates: 5,
-      status: 'completed',
-      averageScore: 82,
-    },
-    {
-      id: 4,
-      title: 'Challenge DevOps',
-      challenge: 'DevOps et CI/CD',
-      startDate: '20/05/2023',
-      endDate: '27/05/2023',
-      candidates: 4,
-      completedCandidates: 0,
-      status: 'scheduled',
-      averageScore: null,
-    },
-  ];
+import { useTranslation } from '@/components/i18n';
+import { tests } from '@/data/tests';
 
-  const getStatusBadge = (status) => {
+export default function TestsPage() {
+  const { t } = useTranslation();
+
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
             <CheckCircle className="h-3 w-3 mr-1" />
-            En cours
+            {t('statusLabels.active')}
           </span>
         );
       case 'scheduled':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
             <Clock className="h-3 w-3 mr-1" />
-            Programmé
+            {t('statusLabels.scheduled')}
           </span>
         );
       case 'completed':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
             <CheckCircle className="h-3 w-3 mr-1" />
-            Terminé
+            {t('statusLabels.completed')}
           </span>
         );
       default:
@@ -81,13 +38,13 @@ export default function TestsPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Suivi des Tests</h1>
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
         <Link
           href="/admin/tests/new"
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center gap-2"
         >
           <Plus className="h-4 w-4" />
-          Lancer un nouveau test
+          {t('createTest')}
         </Link>
       </div>
 
@@ -96,7 +53,7 @@ export default function TestsPage() {
         <div className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm font-medium text-gray-500">Tests actifs</p>
+              <p className="text-sm font-medium text-gray-500">{t('activeTests')}</p>
               <h3 className="text-3xl font-bold mt-1">
                 {tests.filter((t) => t.status === 'active').length}
               </h3>
@@ -110,7 +67,7 @@ export default function TestsPage() {
         <div className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm font-medium text-gray-500">Candidats évalués</p>
+              <p className="text-sm font-medium text-gray-500">{t('evaluatedCandidates')}</p>
               <h3 className="text-3xl font-bold mt-1">
                 {tests.reduce((acc, curr) => acc + curr.completedCandidates, 0)}
               </h3>
@@ -124,7 +81,7 @@ export default function TestsPage() {
         <div className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm font-medium text-gray-500">Score moyen</p>
+              <p className="text-sm font-medium text-gray-500">{t('averageScore')}</p>
               <h3 className="text-3xl font-bold mt-1">
                 {Math.round(
                   tests
@@ -149,20 +106,20 @@ export default function TestsPage() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
-              placeholder="Rechercher un test..."
+              placeholder={t('searchPlaceholder')}
               className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="flex gap-2">
             <select className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="">Tous les statuts</option>
-              <option value="active">En cours</option>
-              <option value="scheduled">Programmés</option>
-              <option value="completed">Terminés</option>
+              <option value="">{t('allStatuses')}</option>
+              <option value="active">{t('statusLabels.active')}</option>
+              <option value="scheduled">{t('statusLabels.scheduled')}</option>
+              <option value="completed">{t('statusLabels.completed')}</option>
             </select>
             <button className="px-4 py-2 border rounded-md hover:bg-gray-50 flex items-center gap-2">
               <Filter className="h-4 w-4" />
-              Filtrer
+              {t('filter')}
             </button>
           </div>
         </div>
@@ -171,32 +128,32 @@ export default function TestsPage() {
       {/* Tests List */}
       <div className="bg-white rounded-lg border shadow-sm">
         <div className="p-6 border-b">
-          <h2 className="text-lg font-semibold">Liste des tests</h2>
+          <h2 className="text-lg font-semibold">{t('testsList')}</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50 text-left">
               <tr>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Titre
+                  {t('title')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Challenge
+                  {t('challenge')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Période
+                  {t('period')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Statut
+                  {t('status')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Candidats
+                  {t('candidates')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Score moyen
+                  {t('averageScore')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                  {t('actions')}
                 </th>
               </tr>
             </thead>
@@ -242,17 +199,17 @@ export default function TestsPage() {
         </div>
         <div className="p-4 border-t flex items-center justify-between">
           <div className="text-sm text-gray-500">
-            Affichage de 1 à {tests.length} sur {tests.length} tests
+            {t('showing')} 1 {t('to')} {tests.length} {t('of')} {tests.length} {t('tests')}
           </div>
           <div className="flex gap-2">
             <button className="px-3 py-1 border rounded-md text-sm hover:bg-gray-50 text-gray-500">
-              Précédent
+              {t('previous')}
             </button>
             <button className="px-3 py-1 border rounded-md text-sm bg-blue-600 text-white">
               1
             </button>
             <button className="px-3 py-1 border rounded-md text-sm hover:bg-gray-50">
-              Suivant
+              {t('next')}
             </button>
           </div>
         </div>

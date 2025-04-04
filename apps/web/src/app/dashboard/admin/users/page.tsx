@@ -1,21 +1,24 @@
 import Link from 'next/link';
 
+import { useTranslation } from '@/components/i18n';
 import { users } from '@/data/users';
 
 export default function AdminUsersPage() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow">
         <div className=" mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Gestion des Utilisateurs</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
             <div className="flex items-center gap-4">
               <Link
                 href="/dashboard/admin/challenges"
                 className="text-blue-600 hover:text-blue-800"
               >
-                Challenges
+                {t('challenges')}
               </Link>
             </div>
           </div>
@@ -29,17 +32,17 @@ export default function AdminUsersPage() {
           <div className="flex gap-4">
             <input
               type="text"
-              placeholder="Rechercher un utilisateur..."
+              placeholder={t('searchPlaceholder')}
               className="px-4 py-2 border rounded-md"
             />
             <select className="px-4 py-2 border rounded-md">
-              <option value="">Tous les utilisateurs</option>
-              <option value="active">Actifs</option>
-              <option value="inactive">Inactifs</option>
+              <option value="">{t('allUsers')}</option>
+              <option value="active">{t('active')}</option>
+              <option value="inactive">{t('inactive')}</option>
             </select>
           </div>
           <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-            Exporter les données
+            {t('exportData')}
           </button>
         </div>
 
@@ -52,37 +55,37 @@ export default function AdminUsersPage() {
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Utilisateur
+                  {t('user')}
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Challenges complétés
+                  {t('completedChallenges')}
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Points
+                  {t('points')}
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Progression
+                  {t('progress')}
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Dernière activité
+                  {t('lastActivity')}
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Actions
+                  {t('actions')}
                 </th>
               </tr>
             </thead>
@@ -125,9 +128,9 @@ export default function AdminUsersPage() {
                       href={`/admin/users/${user.id}`}
                       className="text-blue-600 hover:text-blue-900 mr-4"
                     >
-                      Détails
+                      {t('details')}
                     </Link>
-                    <button className="text-red-600 hover:text-red-900">Désactiver</button>
+                    <button className="text-red-600 hover:text-red-900">{t('deactivate')}</button>
                   </td>
                 </tr>
               ))}
@@ -138,17 +141,17 @@ export default function AdminUsersPage() {
         {/* Pagination */}
         <div className="flex justify-between items-center mt-6">
           <div className="text-sm text-gray-700">
-            Affichage de 1 à {users.length} sur {users.length} utilisateurs
+            {t('showing')} 1 {t('to')} {users.length} {t('of')} {users.length} {t('users')}
           </div>
           <div className="flex gap-2">
             <button className="px-3 py-1 border rounded-md text-sm hover:bg-gray-50 text-gray-500">
-              Précédent
+              {t('previous')}
             </button>
             <button className="px-3 py-1 border rounded-md text-sm bg-blue-600 text-white">
               1
             </button>
             <button className="px-3 py-1 border rounded-md text-sm hover:bg-gray-50">
-              Suivant
+              {t('next')}
             </button>
           </div>
         </div>

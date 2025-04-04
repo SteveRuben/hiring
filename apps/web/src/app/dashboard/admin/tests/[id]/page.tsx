@@ -1,3 +1,4 @@
+'use client';
 import {
   AlertTriangle,
   ArrowLeft,
@@ -12,9 +13,11 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+import { useTranslation } from '@/components/i18n';
 import { test } from '@/data/test';
 
 export default function TestDetailPage({ params }) {
+  const { t } = useTranslation();
   const testId = params.id;
   console.log(testId);
 
@@ -24,21 +27,21 @@ export default function TestDetailPage({ params }) {
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
             <CheckCircle className="h-3 w-3 mr-1" />
-            Terminé
+            {t('statusLabels.completed')}
           </span>
         );
       case 'in_progress':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
             <Clock className="h-3 w-3 mr-1" />
-            En cours
+            {t('statusLabels.in_progress')}
           </span>
         );
       case 'not_started':
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
             <AlertTriangle className="h-3 w-3 mr-1" />
-            Non commencé
+            {t('statusLabels.not_started')}
           </span>
         );
       default:
@@ -59,17 +62,19 @@ export default function TestDetailPage({ params }) {
           </Link>
           <div>
             <h1 className="text-2xl font-bold">{test.title}</h1>
-            <p className="text-sm text-gray-500">Challenge: {test.challenge}</p>
+            <p className="text-sm text-gray-500">
+              {t('challenge')} {test.challenge}
+            </p>
           </div>
         </div>
         <div className="flex gap-2">
           <button className="px-4 py-2 border rounded-md hover:bg-gray-50 flex items-center gap-2">
             <Mail className="h-4 w-4" />
-            Relancer les invitations
+            {t('resendInvitations')}
           </button>
           <button className="px-4 py-2 border rounded-md hover:bg-gray-50 flex items-center gap-2">
             <Download className="h-4 w-4" />
-            Exporter les résultats
+            {t('exportResults')}
           </button>
         </div>
       </div>
@@ -79,7 +84,7 @@ export default function TestDetailPage({ params }) {
         <div className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm font-medium text-gray-500">Période</p>
+              <p className="text-sm font-medium text-gray-500">{t('period')}</p>
               <h3 className="text-lg font-medium mt-1">
                 {test.startDate} - {test.endDate}
               </h3>
@@ -89,16 +94,16 @@ export default function TestDetailPage({ params }) {
             </div>
           </div>
           <div className="mt-4 text-sm text-gray-500">
-            Limite de temps: {test.timeLimit} minutes
+            {t('timeLimit')} {test.timeLimit} {t('minutes')}
           </div>
         </div>
 
         <div className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm font-medium text-gray-500">Candidats</p>
+              <p className="text-sm font-medium text-gray-500">{t('candidates')}</p>
               <h3 className="text-lg font-medium mt-1">
-                {completedCandidates}/{test.candidates.length} terminés
+                {completedCandidates}/{test.candidates.length} {t('completed')}
               </h3>
             </div>
             <div className="p-2 bg-green-100 rounded-md">
@@ -108,15 +113,15 @@ export default function TestDetailPage({ params }) {
           <div className="mt-4 grid grid-cols-3 gap-2 text-sm">
             <div>
               <span className="text-green-600 font-medium">{completedCandidates}</span>
-              <span className="text-gray-500"> terminés</span>
+              <span className="text-gray-500"> {t('completed')}</span>
             </div>
             <div>
               <span className="text-blue-600 font-medium">{inProgressCandidates}</span>
-              <span className="text-gray-500"> en cours</span>
+              <span className="text-gray-500"> {t('inProgress')}</span>
             </div>
             <div>
               <span className="text-gray-600 font-medium">{notStartedCandidates}</span>
-              <span className="text-gray-500"> non commencés</span>
+              <span className="text-gray-500"> {t('notStarted')}</span>
             </div>
           </div>
         </div>
@@ -124,7 +129,7 @@ export default function TestDetailPage({ params }) {
         <div className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm font-medium text-gray-500">Score moyen</p>
+              <p className="text-sm font-medium text-gray-500">{t('averageScore')}</p>
               <h3 className="text-lg font-medium mt-1">{test.averageScore}%</h3>
             </div>
             <div className="p-2 bg-purple-100 rounded-md">
@@ -145,7 +150,7 @@ export default function TestDetailPage({ params }) {
       {/* Candidates Progress */}
       <div className="bg-white rounded-lg border shadow-sm">
         <div className="p-6 border-b flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Progression des candidats</h2>
+          <h2 className="text-lg font-semibold">{t('candidatesProgress')}</h2>
           <button className="p-2 rounded-md text-gray-500 hover:bg-gray-100">
             <RefreshCw className="h-5 w-5" />
           </button>
@@ -155,25 +160,25 @@ export default function TestDetailPage({ params }) {
             <thead className="bg-gray-50 text-left">
               <tr>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Candidat
+                  {t('candidate')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Statut
+                  {t('status')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Début
+                  {t('start')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Fin
+                  {t('end')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Progression
+                  {t('progress')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Score
+                  {t('score')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                  {t('actions')}
                 </th>
               </tr>
             </thead>
@@ -228,23 +233,23 @@ export default function TestDetailPage({ params }) {
       {/* Exercise Performance */}
       <div className="bg-white rounded-lg border shadow-sm">
         <div className="p-6 border-b">
-          <h2 className="text-lg font-semibold">Performance par exercice</h2>
+          <h2 className="text-lg font-semibold">{t('exercisePerformance')}</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50 text-left">
               <tr>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Exercice
+                  {t('exercise')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Difficulté
+                  {t('difficulty')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Taux de complétion
+                  {t('completionRate')}
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Score moyen
+                  {t('averageScore')}
                 </th>
               </tr>
             </thead>
