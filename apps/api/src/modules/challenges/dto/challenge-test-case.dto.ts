@@ -1,10 +1,6 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { IsInt, IsOptional, IsString } from 'class-validator';
 
-export class CreateChallengeTestCaseDto {
-  @IsInt()
-  stepId: number;
-
+export class ChallengeTestCaseDto {
   @IsString()
   inputData: string;
 
@@ -19,7 +15,3 @@ export class CreateChallengeTestCaseDto {
   @IsOptional()
   description?: string;
 }
-
-export class UpdateChallengeTestCaseDto extends PartialType(
-  CreateChallengeTestCaseDto,
-) {}
