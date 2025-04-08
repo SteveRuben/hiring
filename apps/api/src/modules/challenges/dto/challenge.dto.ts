@@ -1,8 +1,8 @@
-import { IsInt, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class ChallengeDto {
-  @IsInt()
-  ownerId: number;
+  // @IsInt()
+  // ownerId: number;
 
   @IsString()
   title: string;

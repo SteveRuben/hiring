@@ -1,4 +1,3 @@
-import { Public } from '@/modules/auth/public.decorator';
 import {
   Body,
   Controller,
@@ -7,14 +6,17 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import {
-  CreateChallengeStepDto,
-  UpdateChallengeStepDto,
-} from '../dto/challenge-step.dto';
+
+import { IsOwner } from '@/common/decorators/is-owner.decorator';
+import { IsOwnerGuard } from '@/common/guards/is-owner.guard';
+
+import { ChallengeStepDto } from '../dto/challenge-step.dto';
 import { ChallengeStepService } from './challenge.step.service';
 
-@Public()
+@UseGuards(IsOwnerGuard)
+@IsOwner('Challenge', 'ownerId', 'challengeId')
 @Controller('challenges/:challengeId/steps')
 export class ChallengeStepController {
   constructor(private readonly challengeStepService: ChallengeStepService) {}
@@ -22,12 +24,9 @@ export class ChallengeStepController {
   @Post()
   async create(
     @Param('challengeId') challengeId: string,
-    @Body() data: Omit<CreateChallengeStepDto, 'challengeId'>,
+    @Body() data: ChallengeStepDto,
   ) {
-    return this.challengeStepService.createStep({
-      ...data,
-      challengeId: Number(challengeId),
-    });
+    return this.challengeStepService.createStep(data, +challengeId);
   }
 
   @Get(':id')
@@ -50,7 +49,7 @@ export class ChallengeStepController {
   async update(
     @Param('challengeId') challengeId: string,
     @Param('id') id: string,
-    @Body() data: UpdateChallengeStepDto,
+    @Body() data: ChallengeStepDto,
   ) {
     return this.challengeStepService.updateStep(
       Number(challengeId),

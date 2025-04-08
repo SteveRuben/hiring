@@ -8,49 +8,65 @@ import {
   Post,
 } from '@nestjs/common';
 import { Challenge } from '@prisma/client';
-import { Public } from '../../auth/public.decorator';
+
+import { CurrentUser } from '@/modules/auth/current-user.decorator';
+
 import { ChallengeDto } from '../dto/challenge.dto';
 import { ChallengesService } from './challenges.service';
 
-@Public()
 @Controller('challenges')
 export class ChallengesController {
   constructor(private readonly challengeService: ChallengesService) {}
 
   @Post()
-  async create(@Body() data: ChallengeDto): Promise<Challenge> {
+  async create(
+    @CurrentUser() user: { id: string },
+    @Body() data: ChallengeDto,
+  ): Promise<Challenge> {
     return this.challengeService.createChallenge({
-      owner: { connect: { id: data.ownerId } }, // Associer l'owner
+      owner: { connect: { id: +user.id } }, // Associer l'owner
       title: data.title,
       description: data.description,
     });
   }
 
   @Get()
-  async findAll(): Promise<Challenge[]> {
-    return this.challengeService.getAllChallenges();
+  async findAll(@CurrentUser() user: { id: string }): Promise<Challenge[]> {
+    return this.challengeService.getAllChallenges(+user.id);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Challenge | null> {
-    return this.challengeService.getChallengeById(Number(id));
+  async findOne(
+    @CurrentUser() user: { id: string },
+    @Param('id') id: string,
+  ): Promise<Challenge | null> {
+    return this.challengeService.getChallengeById(+id, +user.id);
   }
 
   @Patch(':id')
   async update(
+    @CurrentUser() user: { id: string },
     @Param('id') id: string,
-    @Body() data: Omit<Partial<ChallengeDto>, 'ownerId'>,
+    @Body() data: Partial<ChallengeDto>,
   ): Promise<Challenge> {
-    return this.challengeService.updateChallenge(Number(id), data);
+    return this.challengeService.updateChallenge(+id, +user.id, data);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<Challenge> {
-    return this.challengeService.deleteChallenge(Number(id));
+  async remove(
+    @CurrentUser() user: { id: string },
+    @Param('id') id: string,
+  ): Promise<Challenge> {
+    return this.challengeService.deleteChallenge(+id, +user.id);
   }
 
   @Patch(':id/publish')
-  async publish(@Param('id') id: string): Promise<Challenge> {
-    return this.challengeService.deleteChallenge(Number(id));
+  // @UseGuards(IsOwnerGuard)
+  // @IsOwner('Challenge', 'ownerId')
+  async publish(
+    @CurrentUser() user: { id: string },
+    @Param('id') id: string,
+  ): Promise<Challenge> {
+    return this.challengeService.publish(+id, +user.id);
   }
 }

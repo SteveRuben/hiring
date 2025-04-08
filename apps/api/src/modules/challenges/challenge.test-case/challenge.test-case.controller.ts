@@ -1,4 +1,3 @@
-import { Public } from '@/modules/auth/public.decorator';
 import {
   Body,
   Controller,
@@ -9,15 +8,16 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import {
-  CreateChallengeTestCaseDto,
-  UpdateChallengeTestCaseDto,
-} from '../dto/challenge-test-case.dto';
+
+import { IsOwner } from '@/common/decorators/is-owner.decorator';
+import { IsOwnerGuard } from '@/common/guards/is-owner.guard';
+
+import { ChallengeTestCaseDto } from '../dto/challenge-test-case.dto';
 import { StepBelongsToChallengeGuard } from '../guards/step-belongs-to-challenge.guard';
-import { TestCaseBelongsToStepGuard } from '../guards/test-case-belongs-to-step.guard';
 import { ChallengeTestCaseService } from './challenge.test-case.service';
 
-@Public()
+@UseGuards(IsOwnerGuard)
+@IsOwner('Challenge', 'ownerId', 'challengeId')
 @Controller('challenges/:challengeId/steps/:stepId/test-case')
 @UseGuards(StepBelongsToChallengeGuard)
 export class ChallengeTestCaseController {
@@ -26,33 +26,27 @@ export class ChallengeTestCaseController {
   ) {}
 
   @Post()
-  create(
-    @Param('stepId') stepId: string,
-    @Body() data: Omit<CreateChallengeTestCaseDto, 'stepId'>,
-  ) {
-    return this.challengeTestCaseService.create({
-      ...data,
-      stepId: Number(stepId),
-    });
+  create(@Param('stepId') stepId: string, @Body() data: ChallengeTestCaseDto) {
+    return this.challengeTestCaseService.create(data, +stepId);
   }
 
   @Get()
   findAll(@Param('stepId') stepId: string) {
-    return this.challengeTestCaseService.findAll(Number(stepId));
+    return this.challengeTestCaseService.findAll(+stepId);
   }
 
   @Get(':id')
-  @UseGuards(TestCaseBelongsToStepGuard)
+  // @UseGuards(TestCaseBelongsToStepGuard)
   findOne(@Param('id') id: string, @Param('stepId') stepId: string) {
     return this.challengeTestCaseService.findOne(+id, +stepId);
   }
 
   @Patch(':id')
-  @UseGuards(TestCaseBelongsToStepGuard)
+  // @UseGuards(TestCaseBelongsToStepGuard)
   update(
     @Param('id') id: string,
     @Param('stepId') stepId: string,
-    @Body() updateTestCaseDto: UpdateChallengeTestCaseDto,
+    @Body() updateTestCaseDto: ChallengeTestCaseDto,
   ) {
     return this.challengeTestCaseService.update(
       +id,
@@ -62,8 +56,8 @@ export class ChallengeTestCaseController {
   }
 
   @Delete(':id')
-  @UseGuards(TestCaseBelongsToStepGuard)
+  // @UseGuards(TestCaseBelongsToStepGuard)
   remove(@Param('id') id: string, @Param('stepId') stepId: string) {
-    return this.challengeTestCaseService.remove(+id, +stepId);
+    return this.challengeTestCaseService.delete(+id, +stepId);
   }
 }
