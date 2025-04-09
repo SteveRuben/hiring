@@ -950,7 +950,6 @@ model TestCaseChallenge {
   updatedAt      DateTime      @updatedAt                   // Date de mise à jour
 }
 
-
 /* Modèle représentant la participation d'un utilisateur à un challenge. */
 model UserChallenge {
   id           Int         @id @default(autoincrement()) // Identifiant unique de la participation
@@ -958,9 +957,9 @@ model UserChallenge {
   challengeId  Int                                        // Référence vers le challenge
   challenge    Challenge  @relation(fields: [challengeId], references: [id]) // Relation avec le challenge
   user         User       @relation(fields: [userId], references: [id]) // Relation avec l'utilisateur
-  currentStep  Int        @default(1)                    // Étape actuelle atteinte par l'utilisateur
+  currentStep  Int        @default(0)                    // Étape actuelle atteinte par l'utilisateur
   attempts     Int        @default(0)                    // Nombre de tentatives effectuées
-  status       String     @default("in_progress")        // Statut de la participation (ex: in_progress, completed)
+  status       UserChallengeStatus     @default(PENDING)        // Statut de la participation
   Submission   SubmissionChallenge[]                              // Soumissions de l'utilisateur pour ce challenge
 
   @@unique([userId, challengeId]) // Garantit qu'un utilisateur ne peut avoir qu'une seule participation par challenge
@@ -1004,4 +1003,14 @@ enum ChallengeStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
+}
+
+/* Statut de la participation d'un utilisateur à un challenge Codingame*/
+enum UserChallengeStatus {
+  PENDING         // L'utilisateur a rejoint le challenge mais ne l'a pas encore commencé
+  IN_PROGRESS     // L'utilisateur a commencé à résoudre le challenge
+  FAILED          // L'utilisateur a échoué et ne peut plus continuer
+  COMPLETED       // L'utilisateur a terminé toutes les étapes du challenge avec succès
+  ABANDONED       // L'utilisateur a abandonné le challenge avant la fin
+  DISQUALIFIED    // L'utilisateur a été disqualifié (triche, non-respect des règles, etc.)
 }

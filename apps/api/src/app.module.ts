@@ -33,6 +33,7 @@ import { TemplatesModule } from '@/modules/templates/templates.module';
 import { UsersModule } from '@/modules/users/users.module';
 import { WallpapersModule } from '@/modules/wallpapers/wallpapers.module';
 import { WebhooksModule } from '@/modules/webhooks/webhooks.module';
+import { WebsocketModule } from '@/modules/websocket/websocket.module';
 import { PrismaModule } from '@/prisma/prisma.module';
 import { DnsModule } from '@/providers/dns/dns.module';
 import { ElasticSearchModule } from '@/providers/elasticsearch/elasticsearch.module';
@@ -42,7 +43,6 @@ import { S3Module } from '@/providers/s3/s3.module';
 import { SharedModule } from '@/providers/shared/shared.module';
 import { TasksModule } from '@/providers/tasks/tasks.module';
 
-import { WebsocketModule } from '@/modules/websocket/websocket.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import serverConfig from './config/server.config';
@@ -50,6 +50,7 @@ import { ChallengeStepModule } from './modules/challenges/challenge.step/challen
 import { ChallengeTestCaseController } from './modules/challenges/challenge.test-case/challenge.test-case.controller';
 import { ChallengeTestCaseModule } from './modules/challenges/challenge.test-case/challenge.test-case.module';
 import { ChallengeTestCaseService } from './modules/challenges/challenge.test-case/challenge.test-case.service';
+import { UserChallengeModule } from './modules/challenges/challenge.user-challenge/challenge.user-challenge.module';
 import { ChallengesModule } from './modules/challenges/challenge/challenges.module';
 
 @Module({
@@ -97,6 +98,8 @@ import { ChallengesModule } from './modules/challenges/challenge/challenges.modu
     ChallengeStepModule,
 
     ChallengeTestCaseModule,
+
+    UserChallengeModule,
     /*   CloudinaryModule,
     FirebaseModule,
     GitHubModule,
