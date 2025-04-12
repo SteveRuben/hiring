@@ -30,34 +30,31 @@ export class UserChallengeController {
     return this.service.register(+challengeId, +user.id);
   }
 
-  @Get()
+  @Get('admin')
   @UseGuards(IsOwnerGuard)
   @IsOwner('Challenge', 'ownerId', 'challengeId')
-  findAll(@Param('challengeId') challengeId: string) {
-    return this.service.findUsers(+challengeId);
+  findAll(
+    @CurrentUser() user: { id: string },
+    @Param('challengeId') challengeId: string,
+  ) {
+    return this.service.findUsers(+challengeId, +user.id);
   }
 
-  @Get(':id')
+  @Get(':id/admin')
   @UseGuards(IsOwnerGuard)
   @IsOwner('Challenge', 'ownerId', 'challengeId')
   findOne(@Param('id') id: string, @Param('challengeId') challengeId: string) {
     return this.service.findUser(+id, +challengeId);
   }
 
-  // TODO À revoir
-  @Get('me/get')
-  currentUserChallenges(@CurrentUser() user: { id: string }) {
-    return this.service.currentUserChallenges(+user.id);
-  }
-
-  @Delete(':id')
+  @Delete(':id/admin')
   @UseGuards(IsOwnerGuard)
   @IsOwner('Challenge', 'ownerId', 'challengeId')
   remove(@Param('id') id: string, @Param('challengeId') challengeId: string) {
     return this.service.remove(+id, +challengeId);
   }
 
-  @Patch('me/abandon')
+  @Patch('abandon')
   @UseGuards(IsNotAbandonedGuard)
   abandon(
     @CurrentUser() user: { id: string },
@@ -66,7 +63,7 @@ export class UserChallengeController {
     return this.service.abandon(+user.id, +challengeId);
   }
 
-  @Patch(':id/disqualify')
+  @Patch(':id/disqualify/admin')
   @UseGuards(IsOwnerGuard, IsNotDisqualifiedGuard)
   @IsOwner('Challenge', 'ownerId', 'challengeId')
   disqualify(

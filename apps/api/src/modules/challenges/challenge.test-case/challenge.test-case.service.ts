@@ -30,6 +30,43 @@ export class ChallengeTestCaseService {
     }
   }
 
+  async userFindAll(
+    userId: number,
+    stepId: number,
+  ): Promise<{ inputData: string }[]> {
+    try {
+      // Vérifie si ce step appartient bien à un challenge auquel le user participe
+      const step = await this.prisma.challengeStep.findUnique({
+        where: { id: stepId },
+        include: {
+          challenge: {
+            include: {
+              userChallenge: {
+                where: { userId },
+              },
+            },
+          },
+        },
+      });
+
+      if (!step || !step.challenge.userChallenge.length) {
+        throw new Error(
+          'Access denied: You do not participate in the challenge associated with this step.',
+        );
+      }
+
+      // Récupère les inputs
+      const testCaseInputs = await this.prisma.testCaseChallenge.findMany({
+        where: { stepId },
+        select: { inputData: true },
+      });
+
+      return testCaseInputs;
+    } catch (error) {
+      prismaError(error, 'challenge test case');
+    }
+  }
+
   async findOne(id: number, stepId: number) {
     try {
       const getTestCaseChallenge =

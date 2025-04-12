@@ -47,6 +47,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import serverConfig from './config/server.config';
 import { ChallengeStepModule } from './modules/challenges/challenge.step/challenge.step.module';
+import { SubmissionChallengeModule } from './modules/challenges/challenge.submission-challenge/challenge.submission-challenge.module';
 import { ChallengeTestCaseController } from './modules/challenges/challenge.test-case/challenge.test-case.controller';
 import { ChallengeTestCaseModule } from './modules/challenges/challenge.test-case/challenge.test-case.module';
 import { ChallengeTestCaseService } from './modules/challenges/challenge.test-case/challenge.test-case.service';
@@ -100,6 +101,8 @@ import { ChallengesModule } from './modules/challenges/challenge/challenges.modu
     ChallengeTestCaseModule,
 
     UserChallengeModule,
+
+    SubmissionChallengeModule,
     /*   CloudinaryModule,
     FirebaseModule,
     GitHubModule,

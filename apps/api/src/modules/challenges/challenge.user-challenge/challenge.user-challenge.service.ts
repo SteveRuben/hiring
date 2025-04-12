@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { USER_CHALLENGE_STATUS } from '@/lib/challenge';
+import { USER_CHALLENGE_STATUS } from '@/modules/challenges/lib/challenge';
 import { PrismaService } from '@/prisma/prisma.service';
 import { prismaError } from '@/utililies/prisma-exception';
 
@@ -23,11 +23,12 @@ export class UserChallengeService {
     }
   }
 
-  async findUsers(challengeId: number) {
+  async findUsers(challengeId: number, userId: number) {
     try {
       const usersChallenge = await this.prisma.userChallenge.findMany({
         where: {
-          challengeId: challengeId,
+          challengeId,
+          userId,
         },
         include: {
           user: true,
@@ -62,25 +63,25 @@ export class UserChallengeService {
     }
   }
 
-  async currentUserChallenges(userId: number) {
-    try {
-      const deletedUserChallenge = await this.prisma.userChallenge.findMany({
-        where: {
-          userId,
-        },
-        include: {
-          challenge: true,
-          Submission: true,
-          UserScore: true,
-          Leaderboard: true,
-        },
-      });
+  // async currentUserChallenges(userId: number) {
+  //   try {
+  //     const deletedUserChallenge = await this.prisma.userChallenge.findMany({
+  //       where: {
+  //         userId,
+  //       },
+  //       include: {
+  //         challenge: true,
+  //         Submission: true,
+  //         UserScore: true,
+  //         Leaderboard: true,
+  //       },
+  //     });
 
-      return deletedUserChallenge;
-    } catch (error) {
-      prismaError(error, 'user challenge');
-    }
-  }
+  //     return deletedUserChallenge;
+  //   } catch (error) {
+  //     prismaError(error, 'user challenge');
+  //   }
+  // }
 
   async remove(id: number, challengeId: number) {
     try {

@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Challenge, Prisma } from '@prisma/client';
 
-import { STATUS_CHALLENGE } from '@/lib/challenge';
+import { STATUS_CHALLENGE } from '@/modules/challenges/lib/challenge';
 import { PrismaService } from '@/prisma/prisma.service';
 import { prismaError } from '@/utililies/prisma-exception';
+
+import { GetChallengeByUser } from '../types/challenges';
 
 @Injectable()
 export class ChallengesService {
@@ -22,7 +24,37 @@ export class ChallengesService {
     try {
       const getAllChallenges = await this.prisma.challenge.findMany({
         where: { ownerId: ownerId },
+        include: {
+          steps: true,
+          Leaderboard: true,
+        },
       });
+      return getAllChallenges;
+    } catch (error) {
+      prismaError(error, 'challenge');
+    }
+  }
+
+  async userGetAllChallenges(userId: number): Promise<GetChallengeByUser[]> {
+    try {
+      const getAllChallenges = await this.prisma.challenge.findMany({
+        where: {
+          OR: [
+            {
+              status: STATUS_CHALLENGE.PUBLISHED,
+            },
+            {
+              status: STATUS_CHALLENGE.ARCHIVED,
+              userChallenge: {
+                some: {
+                  userId,
+                },
+              },
+            },
+          ],
+        },
+      });
+
       return getAllChallenges;
     } catch (error) {
       prismaError(error, 'challenge');
@@ -36,7 +68,41 @@ export class ChallengesService {
     try {
       const getChallenge = await this.prisma.challenge.findUnique({
         where: { id, ownerId },
+        include: {
+          steps: true,
+          Leaderboard: true,
+        },
       });
+      return getChallenge;
+    } catch (error) {
+      prismaError(error, 'challenge');
+    }
+  }
+
+  async userGetChallengeById(
+    id: number,
+    userId: number,
+  ): Promise<GetChallengeByUser | null> {
+    try {
+      const getChallenge = await this.prisma.challenge.findFirst({
+        where: {
+          id,
+          OR: [
+            {
+              status: STATUS_CHALLENGE.PUBLISHED,
+            },
+            {
+              status: STATUS_CHALLENGE.ARCHIVED,
+              userChallenge: {
+                some: {
+                  userId,
+                },
+              },
+            },
+          ],
+        },
+      });
+
       return getChallenge;
     } catch (error) {
       prismaError(error, 'challenge');
@@ -77,6 +143,18 @@ export class ChallengesService {
         data: { status: STATUS_CHALLENGE.PUBLISHED },
       });
       return publishedChallenge;
+    } catch (error) {
+      prismaError(error, 'challenge');
+    }
+  }
+
+  async archive(id: number, ownerId: number): Promise<Challenge> {
+    try {
+      const archivedChallenge = await this.prisma.challenge.update({
+        where: { id, ownerId },
+        data: { status: STATUS_CHALLENGE.ARCHIVED },
+      });
+      return archivedChallenge;
     } catch (error) {
       prismaError(error, 'challenge');
     }
