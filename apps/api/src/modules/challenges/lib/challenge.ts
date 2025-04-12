@@ -1,4 +1,7 @@
-import { challengeStatus, userChallengeStatus } from '@/types/challenges';
+import {
+  challengeStatus,
+  userChallengeStatus,
+} from '@/modules/challenges/types/challenges';
 
 export const STATUS_CHALLENGE: Record<challengeStatus, challengeStatus> = {
   DRAFT: 'DRAFT',

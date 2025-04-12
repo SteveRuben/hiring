@@ -958,7 +958,7 @@ model UserChallenge {
   challenge    Challenge  @relation(fields: [challengeId], references: [id]) // Relation avec le challenge
   user         User       @relation(fields: [userId], references: [id]) // Relation avec l'utilisateur
   currentStep  Int        @default(0)                    // Étape actuelle atteinte par l'utilisateur
-  attempts     Int        @default(0)                    // Nombre de tentatives effectuées
+  // attempts     Int        @default(0)                    // Nombre de tentatives effectuées
   status       UserChallengeStatus     @default(PENDING)        // Statut de la participation
   Submission   SubmissionChallenge[]                              // Soumissions de l'utilisateur pour ce challenge
 
@@ -974,7 +974,7 @@ model SubmissionChallenge {
   userChallengeId Int                                       // Référence vers la participation utilisateur
   step           ChallengeStep @relation(fields: [stepId], references: [id]) // Relation avec l'étape
   userChallenge  UserChallenge @relation(fields: [userChallengeId], references: [id]) // Relation avec la participation
-  code           String                                     // Code soumis par l'utilisateur
+  // outputUserCode String                                     // Code soumis par l'utilisateur
   result         Boolean                                    // Résultat de la soumission (true si réussite, false sinon)
   submittedAt    DateTime  @default(now())                  // Date de soumission du code
 

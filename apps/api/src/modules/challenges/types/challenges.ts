@@ -6,3 +6,10 @@ export type userChallengeStatus =
   | 'COMPLETED'
   | 'ABANDONED'
   | 'DISQUALIFIED';
+
+export interface GetChallengeByUser {
+  id: number;
+  title: string;
+  description: string;
+  status: string;
+}
