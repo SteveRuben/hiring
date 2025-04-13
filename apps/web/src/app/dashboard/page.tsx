@@ -22,7 +22,7 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="p-4 border rounded-md hover:bg-gray-50 transition-colors">
-            <Link href="/dashboard/challenges" className="block">
+            <Link href="/dashboard/problems" className="block">
               <h2 className="text-lg font-medium text-blue-600">
                 {t('homePage.visitorInterface.title')}
               </h2>

@@ -19,7 +19,7 @@ export interface Challenge {
   title: string;
   description: string;
   category: string;
-  exercises: Exercise[];
+  exercises: Exercise;
   languageOptions: string[];
   difficulty: string;
   participants: number;

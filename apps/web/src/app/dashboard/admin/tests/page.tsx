@@ -1,3 +1,5 @@
+'use client';
+
 import { BarChart2, CheckCircle, Clock, Eye, Filter, Plus, Search, Users } from 'lucide-react';
 import Link from 'next/link';
 
